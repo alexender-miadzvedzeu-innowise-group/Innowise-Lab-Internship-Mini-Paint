@@ -10,15 +10,7 @@ const firebaseConfig = {
   messagingSenderId: "119099483352",
   appId: "1:119099483352:web:a0f462457e4b521adf63ad"
 };
-
+console.log(process.env);
 firebase.initializeApp(firebaseConfig);
 
-export const auth = firebase.auth();
-
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
-
 export default firebase;
-
-// https://www.youtube.com/watch?v=di5-n3kcsvc

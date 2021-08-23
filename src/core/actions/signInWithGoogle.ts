@@ -1,1 +1,0 @@
-export const SIGN_IN_WITH_GOOGLE: string = 'SIGN_IN_WITH_GOOGLE';

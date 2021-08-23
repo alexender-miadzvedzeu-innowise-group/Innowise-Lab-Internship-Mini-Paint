@@ -2,7 +2,7 @@
 	width: 100vw;
 	height: 100vh;
 	display: flex;
-  flex-direction: column;
+	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
 }
@@ -32,10 +32,6 @@
 	box-shadow: 0 0 5px 1px #000;
 }
 
-.button {
-	width: 40%;
-}
-
 .text {
 	margin-top: 1%;
 	color: #fff;
@@ -43,6 +39,6 @@
 }
 
 .button__link {
-	color: #fff;
+	color: #123456;
 	text-decoration: none;
 }
