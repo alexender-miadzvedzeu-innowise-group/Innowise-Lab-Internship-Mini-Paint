@@ -3,14 +3,14 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAoLqxNBQknN7yi-XySmAjMju9AC8Lm4f4",
-  authDomain: "mini-paint-f6330.firebaseapp.com",
-  projectId: "mini-paint-f6330",
-  storageBucket: "mini-paint-f6330.appspot.com",
-  messagingSenderId: "119099483352",
-  appId: "1:119099483352:web:a0f462457e4b521adf63ad"
+  apiKey: `${process.env.REACT_APP_API_KEY}`,
+  authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
+  projectId: `${process.env.REACT_APP_PROJECT_ID}`,
+  storageBucket: `${process.env.REACT_APP_STORAGE_BUCKET}`,
+  messagingSenderId: `${process.env.REACT_APP_MESSAGING_SENDER_ID}`,
+  appId: `${process.env.REACT_APP_APP_ID}`,
 };
-console.log(process.env);
+
 firebase.initializeApp(firebaseConfig);
 
 export default firebase;
