@@ -14,7 +14,7 @@ interface State {
 }
 
 const initialState: State = {
-  lineColor: '#fff',
+  lineColor: '#000',
   lineWeight: '1',
   instrumentName: ''
 }

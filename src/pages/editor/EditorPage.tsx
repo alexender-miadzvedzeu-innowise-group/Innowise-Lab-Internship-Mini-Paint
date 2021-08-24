@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './EditorPage.module.css';
 import { fadeIn } from 'react-animations';
+import Canvas from '../../core/components/Canvas/Canvas';
 import Radium from 'radium';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
@@ -25,7 +26,7 @@ const styles: Istyles = {
 const EditorPage: React.FunctionComponent = ({
   lineColor, lineWeight, instrumentName, setLineColor, setLineWeight, setInstrument
 }: any) => {
-  console.log(instrumentName);
+
   const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value)
   const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'))
   const onClicksetInstrument = (type: string) => setInstrument(type)
@@ -56,6 +57,7 @@ const EditorPage: React.FunctionComponent = ({
           </div>
           <input type="color" onChange={onChangeColor} />
         </div>
+        <Canvas />
       </div>
     </Radium.StyleRoot>
   )
