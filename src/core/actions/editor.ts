@@ -1,0 +1,3 @@
+export const SET_LINE_WEIGHT = 'SET_LINE_WEIGHT';
+export const SET_LINE_COLOR = 'SET_LINE_COLOR';
+export const SET_INSTRUMENT = 'SET_INSTRUMENT';
