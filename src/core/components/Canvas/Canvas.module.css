@@ -1,12 +1,15 @@
 .wrapper {
   position: relative;
-  top: 10%;
+  top: 5%;
   width: 80%;
   max-width: 762px;
   margin: 0 auto;
-  height: 300px;
+  height: 80%;
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 0 3px 3px #000;
   cursor: crosshair;
+}
+.canvas {
+  position: absolute;
 }

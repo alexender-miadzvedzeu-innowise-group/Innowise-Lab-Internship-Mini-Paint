@@ -1,3 +1,10 @@
 export const SET_LINE_WEIGHT = 'SET_LINE_WEIGHT';
 export const SET_LINE_COLOR = 'SET_LINE_COLOR';
 export const SET_INSTRUMENT = 'SET_INSTRUMENT';
+
+export const SET_CANVAS_SIZE = 'SET_CANVAS_SIZE';
+
+export const SET_MOUSE_DOWN_POSITION = 'SET_MOUSE_DOWN_POSITION';
+
+export const SET_MAIN_CTX = 'SET_MAIN_CTX';
+export const SET_SUB_CTX = 'SET_SUB_CTX';
