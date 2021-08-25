@@ -3,7 +3,7 @@ import { createUserWithEmailAC } from '../../core/reducers/authReducer';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import classes from './RegisterPage.module.css';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {Link} from 'react-router-dom'
 import { fadeIn } from 'react-animations';
 import Radium from 'radium';
@@ -25,12 +25,14 @@ interface Idata {
   confirmPassword: string;
 }
 
-const RegisterPage: React.FC = ({createUser}: any) => {
+const RegisterPage: React.FC = () => {
   const [data, setData] = useState<Idata>({
     email: '',
     password: '',
     confirmPassword: ''
   });
+
+  const dispatch = useDispatch();
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({
@@ -47,6 +49,10 @@ const RegisterPage: React.FC = ({createUser}: any) => {
     ) {
       createUser(data)
     }
+  }
+
+  const createUser = (payload: object) => {
+    dispatch(createUserWithEmailAC(payload))
   }
 
   return(
@@ -104,8 +110,4 @@ const RegisterPage: React.FC = ({createUser}: any) => {
   )
 }
 
-const mapDispatchToProps = (dispatch:any) => ({
-  createUser: (payload: object) => dispatch(createUserWithEmailAC(payload))
-})
-
-export default connect(null, mapDispatchToProps)(RegisterPage);
+export default RegisterPage

@@ -9,8 +9,10 @@ import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import CreateIcon from '@material-ui/icons/Create';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setInstrumentAC, setLineColorAC, setLineWeightAC } from '../../core/reducers/editorReducer';
+import Button from '@material-ui/core/Button';
+import { State } from '../../core/types/types';
 
 interface Istyles {
   fadeIn: any
@@ -23,9 +25,20 @@ const styles: Istyles = {
   }
 }
 
-const EditorPage: React.FunctionComponent = ({
-  lineColor, lineWeight, instrumentName, setLineColor, setLineWeight, setInstrument
-}: any) => {
+const EditorPage: React.FunctionComponent = () => {
+
+  const dispatch = useDispatch();
+  const setLineColor = (lineColor: string) => {
+    dispatch(setLineColorAC(lineColor))
+  }
+  const setLineWeight = (lineWeight: string) => {
+    dispatch(setLineWeightAC(lineWeight))
+  }
+  const setInstrument = (instrumentName: string) => {
+    dispatch(setInstrumentAC(instrumentName))
+  }
+
+  const instrumentName = useSelector((state: State) => state.editorReducer.instrumentName);
 
   const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value)
   const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'))
@@ -56,6 +69,14 @@ const EditorPage: React.FunctionComponent = ({
             />
           </div>
           <input type="color" onChange={onChangeColor} />
+          <Button 
+            style={{
+              background: '#969fa5',
+              position: 'absolute',
+              right: '1%'
+            }} 
+            variant="contained"
+          >Upload</Button>
         </div>
         <Canvas />
       </div>
@@ -63,16 +84,4 @@ const EditorPage: React.FunctionComponent = ({
   )
 }
 
-const mapStateToProps = (state: any) => ({
-  lineColor: state.editorReducer.lineColor,
-  lineWeight: state.editorReducer.lineWeight,
-  instrumentName: state.editorReducer.instrumentName
-})
-
-const mapDispatchToProps = (dispatch: any) => ({
-  setLineColor: (lineColor: string) => dispatch(setLineColorAC(lineColor)),
-  setLineWeight: (lineWeight: string) => dispatch(setLineWeightAC(lineWeight)),
-  setInstrument: (instrumentName: string) => dispatch(setInstrumentAC(instrumentName))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditorPage)
+export default EditorPage;

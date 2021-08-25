@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signInWithEmailAC } from '../../core/reducers/authReducer';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -24,16 +24,22 @@ interface Idata {
   password: string;
 }
 
-const LoginPage: React.FC = ({signIn}: any) => {
+const LoginPage: React.FC = () => {  
   const [data, setData] = useState<Idata>({
     email: '',
     password: ''
   });
 
+  const dispatch = useDispatch();
+
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({
       ...prev, [e.target.name]: e.target.value
     }))
+  }
+
+  const signIn = (payload: object) => {
+    dispatch(signInWithEmailAC(payload))
   }
 
   const onSubmit = (e: any) => {
@@ -89,8 +95,4 @@ const LoginPage: React.FC = ({signIn}: any) => {
   )
 }
 
-const mapDispatchToProps = (dispatch:any) => ({
-  signIn: (payload: object) => dispatch(signInWithEmailAC(payload))
-})
-
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default LoginPage;

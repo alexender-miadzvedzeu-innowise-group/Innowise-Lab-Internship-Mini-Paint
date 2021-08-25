@@ -3,6 +3,7 @@
 	position: relative;
 }
 .buttons_navbar {
+	position: relative;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
