@@ -18,30 +18,26 @@ const Canvas: React.FunctionComponent = () => {
   const setMouseDownPosition = (mouseDownPosition: object) => {
     dispatch(setMouseDownPositionAC(mouseDownPosition))
   }
-  const setMainCtx = (context: object) => {
+  const setMainCtx = (context: any) => {
     dispatch(setMainCtxAC(context))
   }
-  const setSubCtx = (context: object) => {
+  const setSubCtx = (context: any) => {
     dispatch(setSubCtxAC(context))
   }
-  const lineColor = useSelector((state: State) => state.editorReducer.lineColor,)
-  const lineWeight = useSelector((state: State) => state.editorReducer.lineWeight)
-  const instrumentName = useSelector((state: State) => state.editorReducer.instrumentName)
-  const canvasSize = useSelector((state: State) => state.editorReducer.canvasSize)
-  const mouseDownPosition = useSelector((state: State) => state.editorReducer.mouseDownPosition)
+  const lineColor = useSelector((state: any) => state.editorReducer.lineColor,)
+  const lineWeight = useSelector((state: any) => state.editorReducer.lineWeight)
+  const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName)
+  const canvasSize = useSelector((state: any) => state.editorReducer.canvasSize)
+  const mouseDownPosition = useSelector((state: any) => state.editorReducer.mouseDownPosition)
   const mainCtx = useSelector((state: State) => state.editorReducer.mainCtx)
-  const subCtx = useSelector((state: State) => state.editorReducer.subCtx)
+  const subCtx = useSelector((state: any) => state.editorReducer.subCtx)
 
   useEffect(() => {
     if (canvasRef.current && subCanvasRef.current && wrapperRef.current?.clientWidth) {
       setCanvasSize({width: wrapperRef.current.offsetWidth, height: wrapperRef.current.offsetHeight})
       const mainCtx = canvasRef.current.getContext('2d');
       const subCtx = subCanvasRef.current.getContext('2d');
-          //@ts-ignore
-
       setMainCtx(mainCtx);
-          //@ts-ignore
-
       setSubCtx(subCtx);
     }
   }, [])
@@ -56,90 +52,46 @@ const Canvas: React.FunctionComponent = () => {
   const onMouseDown = (e: any) => {
     //@ts-ignore
     console.log(`clientY=${e.clientY} pageY=${e.pageY} wrapperRef.current.offsetTop=${wrapperRef.current.offsetTop}`);
-    // console.log(e);
-    //@ts-ignore
     if (instrumentName) setMouseDownPosition({x: e.clientX, y: e.clientY});
   }
   
   const onMouseMove = (e: any) => {
     if (!isEmpty(mouseDownPosition) && wrapperRef.current && canvasRef.current) {
-          //@ts-ignore
-
       mainCtx.strokeStyle = lineColor;
-    //@ts-ignore
-
       mainCtx.lineWidth = lineWeight;
-    //@ts-ignore
-
       mainCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
       switch (instrumentName) {
         case 'rectangle':
-    //@ts-ignore
-
           mainCtx.strokeRect(
-                //@ts-ignore
-
             mouseDownPosition.x - wrapperRef.current.offsetLeft, 
-                //@ts-ignore
-
             mouseDownPosition.y - wrapperRef.current.offsetTop, 
-                //@ts-ignore
-
             e.clientX - mouseDownPosition.x, 
-                //@ts-ignore
-
             e.clientY - mouseDownPosition.y
           )
-                //@ts-ignore
-
           mainCtx.stroke(); 
           break;
         case 'circle':
-              //@ts-ignore
-
           mainCtx.beginPath();
-              //@ts-ignore
-
           mainCtx.arc(
-                //@ts-ignore
-
             mouseDownPosition.x - wrapperRef.current.offsetLeft, 
-                //@ts-ignore
-
             mouseDownPosition.y - wrapperRef.current.offsetTop, 
-                //@ts-ignore
-
             Math.sqrt((e.clientX - mouseDownPosition.x) ** 2 + (e.clientY - mouseDownPosition.y) ** 2), 
             0,
             Math.PI*2,
             true
           );
-              //@ts-ignore
-
           mainCtx.stroke(); 
           break;
         case 'line':
-              //@ts-ignore
-
           mainCtx.beginPath(); 
-              //@ts-ignore
-
           mainCtx.moveTo(
-                //@ts-ignore
-
             mouseDownPosition.x - wrapperRef.current.offsetLeft, 
-                //@ts-ignore
-
             mouseDownPosition.y - wrapperRef.current.offsetTop
           );
-              //@ts-ignore
-
           mainCtx.lineTo(
             e.clientX - wrapperRef.current.offsetLeft,
             e.clientY - wrapperRef.current.offsetTop
           );
-              //@ts-ignore
-
           mainCtx.stroke();
           break;
         case 'pencil':
@@ -152,8 +104,6 @@ const Canvas: React.FunctionComponent = () => {
   }
 
   const onMouseUp = (e: any) => {
-        //@ts-ignore
-
     subCtx.drawImage(canvasRef.current, 0, 0);
     setMouseDownPosition({})
   }
