@@ -4,19 +4,12 @@ import { AnyAction } from "redux";
 import { db } from '../firebase/firebase'
 import { uploadImageFailedAC, uploadImageSuccessedAC } from "../reducers/editorReducer";
 
-export function* uploadImageFetch(dataUrl: AnyAction) {
-  const response = db.collection("images").doc("aaa").set({
-    url: 'dataUrl'
-  })
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve('done')
-    }, 2000);
-  })
+export function* uploadImageFetch(dataUrl: AnyAction): Generator {
   try {
-    // yield response
-    yield promise
-    yield put(uploadImageSuccessedAC(promise))
+    const response = yield db.collection("images").doc("aaa").set({
+      url: dataUrl
+    })
+    yield put(uploadImageSuccessedAC(response))
   } catch (error) {
     yield put(uploadImageFailedAC(error))
   }
