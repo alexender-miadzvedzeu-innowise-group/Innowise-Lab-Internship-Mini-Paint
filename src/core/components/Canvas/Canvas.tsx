@@ -3,7 +3,7 @@ import classes from './Canvas.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from '../../helpers/isEmptyObj';
 import { setCanvasSizeAC, setMainCtxAC, setMouseDownPositionAC, setSubCtxAC } from '../../reducers/editorReducer';
-import { State, Context } from '../../types/types';
+import { State } from '../../types/types';
 
 const Canvas: React.FunctionComponent = () => {
   
@@ -24,6 +24,7 @@ const Canvas: React.FunctionComponent = () => {
   const setSubCtx = (context: any) => {
     dispatch(setSubCtxAC(context))
   }
+
   const lineColor = useSelector((state: any) => state.editorReducer.lineColor,)
   const lineWeight = useSelector((state: any) => state.editorReducer.lineWeight)
   const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName)

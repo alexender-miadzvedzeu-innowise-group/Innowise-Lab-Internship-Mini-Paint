@@ -10,7 +10,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { setInstrumentAC, setLineColorAC, setLineWeightAC } from '../../core/reducers/editorReducer';
+import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC } from '../../core/reducers/editorReducer';
 import Button from '@material-ui/core/Button';
 import { State } from '../../core/types/types';
 
@@ -37,13 +37,21 @@ const EditorPage: React.FunctionComponent = () => {
   const setInstrument = (instrumentName: string) => {
     dispatch(setInstrumentAC(instrumentName))
   }
+  const setDataUrl = (dataUrl: string) => {
+    dispatch(setDataUrlAC(dataUrl))
+  }
 
   const instrumentName = useSelector((state: State) => state.editorReducer.instrumentName);
+  const subCtx = useSelector((state: any) => state.editorReducer.subCtx);
 
   const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value)
   const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'))
   const onClicksetInstrument = (type: string) => setInstrument(type)
   const valuetext = (value: any) => value
+  const uploadImage = async() => {
+    setDataUrl(subCtx.canvas.toDataURL())
+    // await 
+  }
 
   return(
     <Radium.StyleRoot>
@@ -70,6 +78,7 @@ const EditorPage: React.FunctionComponent = () => {
           </div>
           <input type="color" onChange={onChangeColor} />
           <Button 
+            onClick={uploadImage}
             style={{
               background: '#969fa5',
               position: 'absolute',

@@ -5,7 +5,10 @@ import {
   SET_CANVAS_SIZE, 
   SET_MOUSE_DOWN_POSITION,
   SET_MAIN_CTX,
-  SET_SUB_CTX 
+  SET_SUB_CTX,
+  SET_DATA_URL,
+  UPLOAD_IMAGE_SUCCEEDED,
+  UPLOAD_IMAGE_FAILED
 } from '../actions/editor'
 
 interface Action {
@@ -21,7 +24,9 @@ interface Action {
     x: number,
     y: number
   },
-  readonly context: object
+  readonly context: object,
+  readonly dataUrl: string,
+  readonly payload: any
 }
 
 interface State {
@@ -37,7 +42,11 @@ interface State {
     y?: number
   },
   mainCtx: object,
-  subCtx: object
+  subCtx: object,
+  subCtxDataUrl: string,
+  loading: boolean,
+  error: boolean,
+  successed: boolean
 }
 
 const initialState: State = {
@@ -50,7 +59,11 @@ const initialState: State = {
   },
   mouseDownPosition: {},
   mainCtx: {},
-  subCtx: {}
+  subCtx: {},
+  subCtxDataUrl: '',
+  loading: false,
+  error: false,
+  successed: false
 }
 
 export const editorReducer = (state = initialState, action: Action ):object => {
@@ -75,6 +88,14 @@ export const editorReducer = (state = initialState, action: Action ):object => {
       return {...state, mainCtx: action.context}
     case SET_SUB_CTX:
       return {...state, subCtx: action.context}
+    case SET_DATA_URL:
+      return {...state, subCtxDataUrl: action.dataUrl, loading: true, error: false, successed: false}
+    case UPLOAD_IMAGE_SUCCEEDED:
+      console.log(action.payload);
+      return {...state, loading: false, error: false, successed: true}
+    case UPLOAD_IMAGE_FAILED:
+      debugger;
+      return {...state, loading: false, error: true, successed: false}
     default:
       return state;
   }
@@ -90,5 +111,9 @@ export const setMouseDownPositionAC = (mouseDownPosition: object) => ({ type: SE
 
 export const setMainCtxAC = (context: object) => ({ type: SET_MAIN_CTX, context})
 export const setSubCtxAC = (context: object) => ({ type: SET_SUB_CTX, context})
+
+export const setDataUrlAC = (dataUrl: string) => ({ type: SET_DATA_URL, dataUrl})
+export const uploadImageSuccessedAC = (payload: any) => ({type: UPLOAD_IMAGE_SUCCEEDED, payload})
+export const uploadImageFailedAC = (payload: any) => ({type: UPLOAD_IMAGE_FAILED, payload})
 
 export default editorReducer;

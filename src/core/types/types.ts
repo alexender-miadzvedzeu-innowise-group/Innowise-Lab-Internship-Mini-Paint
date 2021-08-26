@@ -9,7 +9,8 @@ export type State = {
     canvasSize: {
       width: number,
       height: number
-    }
+    },
+    subCtxDataUrl: string
   }
 }
 
