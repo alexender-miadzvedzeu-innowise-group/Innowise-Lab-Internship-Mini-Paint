@@ -9,7 +9,8 @@ const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(combineReducers({
   authReducer,
-  editorReducer
+  editorReducer,
+  
 }),applyMiddleware(sagaMiddleware))
 
 sagaMiddleware.run(rootSaga)

@@ -1,4 +1,3 @@
-import { getCookie } from '../helpers/getCookie'
 import { 
   SET_LINE_WEIGHT, 
   SET_LINE_COLOR, 
