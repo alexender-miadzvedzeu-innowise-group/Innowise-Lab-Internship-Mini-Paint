@@ -10,7 +10,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC } from '../../core/reducers/editorReducer';
+import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC } from '../../core/actions/editor';
 import Button from '@material-ui/core/Button';
 import { State } from '../../core/types/types';
 

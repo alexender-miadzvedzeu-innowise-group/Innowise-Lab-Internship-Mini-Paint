@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { checkUserAftorizationAC } from '../../reducers/authReducer';
+import { checkUserAftorizationAC } from '../../actions/auth';
 import classes from './App.module.css';
 import LoginPage from '../../../pages/login/LoginPage';
 import RegisterPage from '../../../pages/register/RegisterPage';

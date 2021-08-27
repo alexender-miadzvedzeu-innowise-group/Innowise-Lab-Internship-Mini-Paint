@@ -1,15 +1,28 @@
-export const SET_LINE_WEIGHT = 'SET_LINE_WEIGHT';
-export const SET_LINE_COLOR = 'SET_LINE_COLOR';
-export const SET_INSTRUMENT = 'SET_INSTRUMENT';
+import { 
+  SET_LINE_WEIGHT, 
+  SET_LINE_COLOR, 
+  SET_INSTRUMENT, 
+  SET_CANVAS_SIZE, 
+  SET_MOUSE_DOWN_POSITION,
+  SET_MAIN_CTX,
+  SET_SUB_CTX,
+  SET_DATA_URL,
+  UPLOAD_IMAGE_SUCCEEDED,
+  UPLOAD_IMAGE_FAILED
+} from './actions.types';
 
-export const SET_CANVAS_SIZE = 'SET_CANVAS_SIZE';
 
-export const SET_MOUSE_DOWN_POSITION = 'SET_MOUSE_DOWN_POSITION';
+export const setLineWeightAC = (lineWeight: string) => ({ type: SET_LINE_WEIGHT, lineWeight})
+export const setLineColorAC = (lineColor: string) => ({ type: SET_LINE_COLOR, lineColor})
+export const setInstrumentAC = (instrumentName: string) => ({ type: SET_INSTRUMENT, instrumentName})
 
-export const SET_MAIN_CTX = 'SET_MAIN_CTX';
-export const SET_SUB_CTX = 'SET_SUB_CTX';
+export const setCanvasSizeAC = (windowsSize: object) => ({ type: SET_CANVAS_SIZE, windowsSize})
 
-export const SET_DATA_URL = 'SET_DATA_URL';
+export const setMouseDownPositionAC = (mouseDownPosition: object) => ({ type: SET_MOUSE_DOWN_POSITION, mouseDownPosition})
 
-export const UPLOAD_IMAGE_SUCCEEDED = 'UPLOAD_IMAGE_SUCCEEDED';
-export const UPLOAD_IMAGE_FAILED = 'UPLOAD_IMAGE_FAILED' 
+export const setMainCtxAC = (context: object) => ({ type: SET_MAIN_CTX, context})
+export const setSubCtxAC = (context: object) => ({ type: SET_SUB_CTX, context})
+
+export const setDataUrlAC = (dataUrl: string) => ({ type: SET_DATA_URL, dataUrl})
+export const uploadImageSuccessedAC = (payload: any) => ({type: UPLOAD_IMAGE_SUCCEEDED, payload})
+export const uploadImageFailedAC = (payload: any) => ({type: UPLOAD_IMAGE_FAILED, payload})

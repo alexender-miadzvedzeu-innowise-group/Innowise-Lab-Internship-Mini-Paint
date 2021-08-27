@@ -1,8 +1,8 @@
 import { takeEvery, call, all, put } from "@redux-saga/core/effects";
-import { SET_DATA_URL } from '../actions/editor';
+import { SET_DATA_URL } from '../actions/actions.types';
 import { AnyAction } from "redux";
-import { db } from '../firebase/firebase'
-import { uploadImageFailedAC, uploadImageSuccessedAC } from "../reducers/editorReducer";
+import { uploadImageFailedAC, uploadImageSuccessedAC } from "../../core/actions/editor";
+import { db } from '../firebase/firebase';
 
 export function* uploadImageFetch(dataUrl: AnyAction): Generator {
   try {

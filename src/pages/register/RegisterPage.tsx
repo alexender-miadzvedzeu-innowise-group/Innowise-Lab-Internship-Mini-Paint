@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAC } from '../../core/reducers/authReducer';
+import { createUserWithEmailAC } from '../../core/actions/auth';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import classes from './RegisterPage.module.css';

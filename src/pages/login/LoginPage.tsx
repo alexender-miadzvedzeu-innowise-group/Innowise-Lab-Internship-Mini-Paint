@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { signInWithEmailAC } from '../../core/reducers/authReducer';
+import { signInWithEmailAC } from '../../core/actions/auth';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import classes from './LoginPage.module.css';

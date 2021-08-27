@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './HomePage.module.css';
 import { connect } from 'react-redux';
-import { signOutAC } from '../../core/reducers/authReducer';
+import { signOutAC } from '../../core/actions/auth';
 import Button from '@material-ui/core/Button';
 import { fadeIn } from 'react-animations';
 import Radium from 'radium';
