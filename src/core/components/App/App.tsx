@@ -1,19 +1,25 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { checkUserAftorizationAC } from '../../actions/auth';
 import classes from './App.module.css';
 import LoginPage from '../../../pages/login/LoginPage';
-import RegisterPage from '../../../pages/register/RegisterPage';
 import { Switch, Route } from "react-router-dom";
 import HomePage from '../../../pages/home/HomePage';
 import Navbar from '../Navbar/Navbar';
 import EditorPage from '../../../pages/editor/EditorPage';
 import ProfilePage from '../../../pages/profile/ProfilePage';
 
-const App: React.FunctionComponent = ({isLoged, checkUserAftorization}:any) => {
+const App: React.FunctionComponent = () => {
   useEffect(() => {
     checkUserAftorization()
-  },[checkUserAftorization])
+  },[])
+
+  const dispatch = useDispatch();
+  const checkUserAftorization = () => {
+    dispatch(checkUserAftorizationAC())
+  }
+  const isLoged = useSelector((state: any) => state.authReducer.isLoged)
+
   return(
     <div className={classes.wrapper}>
       {isLoged ? 
@@ -32,28 +38,12 @@ const App: React.FunctionComponent = ({isLoged, checkUserAftorization}:any) => {
           </Switch>
           
         </div> : 
-        <Switch>
-          <Route path='/signin'>
-            <RegisterPage />
-          </Route>
-          <Route path='/'>
-            <LoginPage />
-          </Route>
-          
-        </Switch>
-    
+        <Route path='/'>
+          <LoginPage />
+        </Route>
       }
-      
     </div>
   )
 }
 
-const mapStateToProps = (state: any) => ({
-  isLoged: state.authReducer.isLoged
-})
-
-const mapDispatchToProps = (dispatch: any) => ({
-  checkUserAftorization: () => dispatch(checkUserAftorizationAC()),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App

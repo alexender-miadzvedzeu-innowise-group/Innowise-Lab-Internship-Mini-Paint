@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { signInWithEmailAC } from '../../core/actions/auth';
+import { signInWithEmailAC, createUserWithEmailAC } from '../../core/actions/auth';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import classes from './LoginPage.module.css';
-import {Link} from 'react-router-dom'
 import { fadeIn } from 'react-animations';
 import Radium from 'radium';
 
@@ -22,13 +21,17 @@ const styles: Istyles = {
 interface Idata {
   email: string;
   password: string;
+  confirmPassword: string
 }
+
 
 const LoginPage: React.FC = () => {  
   const [data, setData] = useState<Idata>({
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
+  const [login, setlogin] = useState(true)
 
   const dispatch = useDispatch();
 
@@ -42,15 +45,32 @@ const LoginPage: React.FC = () => {
     dispatch(signInWithEmailAC(payload))
   }
 
-  const onSubmit = (e: any) => {
-    if (
-      data.email.length !== 0 &&
-      data.password.length !== 0
-    ) {
-      signIn(data)
-    }
+  const createUser = (payload: object) => {
+    dispatch(createUserWithEmailAC(payload))
   }
 
+  const onSubmit = (e: any) => {
+    switch (login) {
+      case true:
+        if (
+          data.email.length !== 0 &&
+          data.password.length !== 0
+        ) {
+          signIn(data)
+        }
+      break; 
+      case false: 
+        if (
+          data.email.length !== 0 &&
+          data.password.length !== 0 &&
+          data.confirmPassword.length !== 0 &&
+          data.password === data.confirmPassword
+        ) {
+          createUser(data)
+        }
+    }
+  }
+  
   return(
     <Radium.StyleRoot>
       <div className={classes.wrapper} style={styles.fadeIn}>
@@ -80,14 +100,34 @@ const LoginPage: React.FC = () => {
               margin='dense'
               value={data.password}
             />
+            {
+              login ? 
+              null : 
+              <TextField
+              onChange={onInputChange}
+              className={classes.password}
+              variant="outlined"
+              name="confirmPassword"
+              label="Confirm password"
+              type="password"
+              id="confirm_password"
+              fullWidth
+              margin='dense'
+              value={data.confirmPassword}
+            />
+            }
             <Button onClick={onSubmit} className={classes.button} variant="contained" color="primary">
-              <Link to='/' className={classes.button__link}>Log in</Link>
+              {login ? 'Sign in' : 'Create login'}
             </Button>
           </form>
         </div>
-        <p className={classes.text}>or you can create new account</p>
-        <Button style={{background: '#1cb43d'}} variant="contained">
-          <Link to='/signin' className={classes.button__link}>Create account</Link>
+        <p className={classes.text}>
+          {login ? 
+          'or you can create new account':
+          'or you can use your account'}
+          </p>
+        <Button onClick={()=>setlogin(!login)} style={{background: '#1cb43d'}} variant="contained">
+          {login ? 'Create login' : 'Sign in'}
         </Button>
       </div>
     </Radium.StyleRoot>
