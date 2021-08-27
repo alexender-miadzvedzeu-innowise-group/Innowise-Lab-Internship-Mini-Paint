@@ -10,7 +10,8 @@ export type State = {
       width: number,
       height: number
     },
-    subCtxDataUrl: string
+    subCtxDataUrl: string,
+    userID: string
   }
 }
 

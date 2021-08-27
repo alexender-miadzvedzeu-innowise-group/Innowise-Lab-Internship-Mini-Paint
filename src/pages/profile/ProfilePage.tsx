@@ -18,7 +18,7 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
   return(
     <Radium.StyleRoot>
       <div className={classes.wrapper} style={styles.fadeIn}>
-        Profile page
+
       </div>
     </Radium.StyleRoot>
   )

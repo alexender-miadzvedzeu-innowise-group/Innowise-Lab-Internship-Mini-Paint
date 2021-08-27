@@ -1,3 +1,4 @@
+import { getCookie } from '../helpers/getCookie'
 import { 
   SET_LINE_WEIGHT, 
   SET_LINE_COLOR, 
@@ -8,8 +9,8 @@ import {
   SET_SUB_CTX,
   SET_DATA_URL,
   UPLOAD_IMAGE_SUCCEEDED,
-  UPLOAD_IMAGE_FAILED
-} from '../actions/_editor'
+  UPLOAD_IMAGE_FAILED,
+} from '../actions/actions.types'
 
 interface Action {
   readonly type: string,
@@ -26,7 +27,8 @@ interface Action {
   },
   readonly context: object,
   readonly dataUrl: string,
-  readonly payload: any
+  readonly imgName: number,
+  readonly payload: any,
 }
 
 interface State {
@@ -44,6 +46,7 @@ interface State {
   mainCtx: object,
   subCtx: object,
   subCtxDataUrl: string,
+  imgName: string,
   loading: boolean,
   error: boolean,
   successed: boolean
@@ -61,6 +64,7 @@ const initialState: State = {
   mainCtx: {},
   subCtx: {},
   subCtxDataUrl: '',
+  imgName: '',
   loading: false,
   error: false,
   successed: false
@@ -89,12 +93,15 @@ export const editorReducer = (state = initialState, action: Action ):object => {
     case SET_SUB_CTX:
       return {...state, subCtx: action.context}
     case SET_DATA_URL:
-      return {...state, subCtxDataUrl: action.dataUrl, loading: true, error: false, successed: false}
+       return {...state, 
+        subCtxDataUrl: action.dataUrl, 
+        loading: true, 
+        error: false, 
+        successed: false
+      }
     case UPLOAD_IMAGE_SUCCEEDED:
-      console.log(action.payload);
       return {...state, loading: false, error: false, successed: true}
     case UPLOAD_IMAGE_FAILED:
-      debugger;
       return {...state, loading: false, error: true, successed: false}
     default:
       return state;

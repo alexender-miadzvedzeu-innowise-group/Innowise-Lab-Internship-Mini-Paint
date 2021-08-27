@@ -4,10 +4,12 @@ import { AnyAction } from "redux";
 import { uploadImageFailedAC, uploadImageSuccessedAC } from "../../core/actions/editor";
 import { db } from '../firebase/firebase';
 
-export function* uploadImageFetch(dataUrl: AnyAction): Generator {
+export function* uploadImageFetch(payload: AnyAction): Generator {
+  const {dataUrl, imgName, userID} = payload;
   try {
-    const response = yield db.collection("images").doc("aaa").set({
-      url: dataUrl
+    const response = yield db.collection("images").doc(imgName.toString()).set({
+      dataUrl,
+      userID
     })
     yield put(uploadImageSuccessedAC(response))
   } catch (error) {

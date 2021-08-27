@@ -39,7 +39,6 @@ export const authReducer = (state = initialState, action: Action ):object => {
       setCookie('user', JSON.stringify(action.payload.user), 60)
       return {...state, loading: false, error: false, isLoged: true}
     case CREATE_USER_WITH_E_MAIL_FAILED:
-      console.log(action.error)
       return {...state, loading: false, error: true}
     case SIGN_IN_WITH_E_MAIL:
       return {...state, loading: true, error: false}

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC } from '../../core/actions/editor';
 import Button from '@material-ui/core/Button';
 import { State } from '../../core/types/types';
+import { getCookie } from '../../core/helpers/getCookie'
 
 interface Istyles {
   fadeIn: any
@@ -38,7 +39,7 @@ const EditorPage: React.FunctionComponent = () => {
     dispatch(setInstrumentAC(instrumentName))
   }
   const setDataUrl = (dataUrl: string) => {
-    dispatch(setDataUrlAC(dataUrl))
+    dispatch(setDataUrlAC(dataUrl, JSON.parse(getCookie('user')).uid, Date.now()))
   }
 
   const instrumentName = useSelector((state: State) => state.editorReducer.instrumentName);
@@ -48,9 +49,8 @@ const EditorPage: React.FunctionComponent = () => {
   const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'))
   const onClicksetInstrument = (type: string) => setInstrument(type)
   const valuetext = (value: any) => value
-  const uploadImage = async() => {
-    setDataUrl(subCtx.canvas.toDataURL())
-    // await 
+  const uploadImage = () => {
+    setDataUrl(subCtx.canvas.toDataURL());
   }
 
   return(

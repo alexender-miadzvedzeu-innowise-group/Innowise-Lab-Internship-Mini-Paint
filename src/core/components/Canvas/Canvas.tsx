@@ -52,10 +52,10 @@ const Canvas: React.FunctionComponent = () => {
 
   const onMouseDown = (e: any) => {
     //@ts-ignore
-    console.log(`clientY=${e.clientY} pageY=${e.pageY} wrapperRef.current.offsetTop=${wrapperRef.current.offsetTop}`);
+    // console.log(`clientY=${e.clientY} pageY=${e.pageY} wrapperRef.current.offsetTop=${wrapperRef.current.offsetTop}`);
     if (instrumentName) setMouseDownPosition({x: e.clientX, y: e.clientY});
   }
-  
+
   const onMouseMove = (e: any) => {
     if (!isEmpty(mouseDownPosition) && wrapperRef.current && canvasRef.current) {
       mainCtx.strokeStyle = lineColor;
