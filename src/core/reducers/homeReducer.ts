@@ -1,3 +1,4 @@
+import { ImageAspectRatio } from '@material-ui/icons';
 import { 
   GET_IMAGES_FROM_DB,
   GET_IMAGES_FROM_DB_SUCCEEDED,
@@ -5,19 +6,22 @@ import {
 } from '../actions/actions.types'
 
 interface Action {
-  type: string
+  type: string,
+  payload: []
 }
 
 interface State {
   loading: boolean,
   error: boolean,
-  successed: boolean
+  successed: boolean,
+  imagesData: {}
 }
 
 const initialState: State = {
   loading: false,
   error: false,
-  successed: false
+  successed: false,
+  imagesData: {}
 }
 
 export const homeReducer = (state = initialState, action: Action ):object => {
@@ -25,7 +29,20 @@ export const homeReducer = (state = initialState, action: Action ):object => {
     case GET_IMAGES_FROM_DB:
       return {...state, loading: true, error: false, successed: false}
     case GET_IMAGES_FROM_DB_SUCCEEDED:
-      return {...state, loading: false, error: false, successed: true}
+      let sortedData = {}
+      action.payload.forEach((img) => {
+        //@ts-ignore
+        if (sortedData[img.userName]) {
+          //@ts-ignore
+          sortedData[img.userName].push(img.imgUrl);
+        } else {
+          //@ts-ignore
+          sortedData[img.userName] = [];
+          //@ts-ignore
+          sortedData[img.userName].push(img.imgUrl);
+        }
+      })
+      return {...state, imagesData: sortedData};
     case GET_IMAGES_FROM_DB_FAILED:
       return {...state, loading: false, error: true, successed: false}
       default:

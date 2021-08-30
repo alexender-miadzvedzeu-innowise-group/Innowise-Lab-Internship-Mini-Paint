@@ -23,6 +23,6 @@ export const setMouseDownPositionAC = (mouseDownPosition: object) => ({ type: SE
 export const setMainCtxAC = (context: object) => ({ type: SET_MAIN_CTX, context})
 export const setSubCtxAC = (context: object) => ({ type: SET_SUB_CTX, context})
 
-export const setDataUrlAC = (dataUrl: string, userID: string, imgName: number) => ({type: SET_DATA_URL, dataUrl, userID, imgName})
+export const setDataUrlAC = (dataUrl: string, userName: string, imgName: number) => ({type: SET_DATA_URL, dataUrl, userName, imgName})
 export const uploadImageSuccessedAC = (payload: any) => ({type: UPLOAD_IMAGE_SUCCEEDED, payload})
 export const uploadImageFailedAC = (payload: any) => ({type: UPLOAD_IMAGE_FAILED, payload})

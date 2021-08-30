@@ -2,16 +2,21 @@ import { takeEvery, call, all, put } from "@redux-saga/core/effects";
 import { SET_DATA_URL } from '../actions/actions.types';
 import { AnyAction } from "redux";
 import { uploadImageFailedAC, uploadImageSuccessedAC } from "../../core/actions/editor";
-import { db } from '../firebase/firebase';
+import { db, storage, storageRef } from '../firebase/firebase';
 
 export function* uploadImageFetch(payload: AnyAction): Generator {
-  const {dataUrl, imgName, userID} = payload;
+  const {dataUrl, imgName, userName} = payload;
   try {
+    const path = `library/${userName}/photo:${Date.now()}`;
+    const imgRef = yield storageRef.child(path);
+    //@ts-ignore
+    yield imgRef.putString(dataUrl, 'data_url');
+    const imgUrl = yield storage.refFromURL(`gs://${process.env.REACT_APP_STORAGE_BUCKET}/${path}`).getDownloadURL()
     const response = yield db.collection("images").doc(imgName.toString()).set({
-      dataUrl,
-      userID
+      imgUrl,
+      userName
     })
-    yield put(uploadImageSuccessedAC(response))
+    yield put(uploadImageSuccessedAC(response));
   } catch (error) {
     yield put(uploadImageFailedAC(error))
   }

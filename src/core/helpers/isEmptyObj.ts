@@ -5,4 +5,4 @@ export const isEmpty = (obj: {} | null) => {
   return true;
 }
 
-// export const isEmpty:any = (obj: any) => obj.keys?(obj).length === 0:
+// export const isEmpty:any = (obj: any) => Object.keys?(obj).length === 0:

@@ -1,0 +1,29 @@
+.user_name {
+  font-weight: normal;
+  color: #fff;
+  margin: 3% 1% 1%;
+
+}
+.container {
+  background: #A0A0A0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 1%;
+  grid-gap: 5px;
+  margin: 0 1%;
+  border-radius: 3px;
+  box-shadow: 0 0 3px 1px #000;
+}
+.imgWrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  box-shadow: 0 0 3px 1px #000;
+  background: #fff;
+}
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
