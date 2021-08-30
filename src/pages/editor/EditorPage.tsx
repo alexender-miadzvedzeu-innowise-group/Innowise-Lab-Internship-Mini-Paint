@@ -82,7 +82,8 @@ const EditorPage: React.FunctionComponent = () => {
             style={{
               background: '#969fa5',
               position: 'absolute',
-              right: '1%'
+              right: '1%',
+              height: '25px'
             }} 
             variant="contained"
           >Upload</Button>

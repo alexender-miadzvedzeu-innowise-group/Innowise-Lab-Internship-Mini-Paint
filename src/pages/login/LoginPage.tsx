@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import classes from './LoginPage.module.css';
 import { fadeIn } from 'react-animations';
 import Radium from 'radium';
+import { isNotEmpty } from '../../core/helpers/isNotEmpty';
 
 interface Istyles {
     fadeIn: any
