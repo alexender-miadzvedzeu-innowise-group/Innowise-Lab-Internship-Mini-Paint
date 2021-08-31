@@ -5,15 +5,17 @@ import { uploadImageFailedAC, uploadImageSuccessedAC } from "../../core/actions/
 import { db, storage, storageRef } from '../firebase/firebase';
 
 export function* uploadImageFetch(payload: AnyAction): Generator {
-  const {dataUrl, imgName, userName} = payload;
+  const {dataUrl, userName} = payload;
+  const id = Date.now();
   try {
-    const path = `library/${userName}/photo:${Date.now()}`;
+    const path = `library/${userName}/photo:${id}`;
     const imgRef: any = yield storageRef.child(path);
     yield imgRef.putString(dataUrl, 'data_url');
     const imgUrl = yield storage.refFromURL(`gs://${process.env.REACT_APP_STORAGE_BUCKET}/${path}`).getDownloadURL()
-    const response = yield db.collection("images").doc(imgName.toString()).set({
+    const response = yield db.collection("images").doc(id.toString()).set({
       imgUrl,
-      userName
+      userName,
+      id
     })
     yield put(uploadImageSuccessedAC(response));
   } catch (error) {

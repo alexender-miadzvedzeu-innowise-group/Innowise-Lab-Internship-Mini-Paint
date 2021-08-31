@@ -1,7 +1,7 @@
 import { 
   GET_IMAGES_FROM_DB,
   GET_IMAGES_FROM_DB_SUCCEEDED,
-  GET_IMAGES_FROM_DB_FAILED
+  GET_IMAGES_FROM_DB_FAILED,
 } from './actions.types';
 
 export const getimagesFromDbAC = () => ({ type: GET_IMAGES_FROM_DB})

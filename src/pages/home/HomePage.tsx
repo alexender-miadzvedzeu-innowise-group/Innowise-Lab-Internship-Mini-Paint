@@ -24,7 +24,6 @@ const HomePage: React.FunctionComponent = ({signOut}:any) => {
   const getImages = () => dispatch(getimagesFromDbAC());
 
   const imagesData = useSelector((state: any) => state.homeReducer.imagesData)
-  
   useEffect(() => {
     getImages();
   }, [])

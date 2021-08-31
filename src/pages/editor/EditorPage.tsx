@@ -41,7 +41,7 @@ const EditorPage: React.FunctionComponent = () => {
   }
   const setDataUrl = (dataUrl: string) => {
     let userName = JSON.parse(getCookie('user')).email.split('@').slice(0,1).join();
-    dispatch(setDataUrlAC(dataUrl, userName, Date.now()));
+    dispatch(setDataUrlAC(dataUrl, userName));
   }
 
   const instrumentName = useSelector((state: State) => state.editorReducer.instrumentName);
