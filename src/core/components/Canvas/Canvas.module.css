@@ -1,11 +1,10 @@
 .wrapper {
   position: relative;
-  top: 5%;
-  width: 80%;
-  max-width: 762px;
+  top: 5px;
+  width: 90%;
+  max-width: 800px;
   margin: 0 auto;
-  height: 80%;
-  min-height: 500px;
+  height: 800px;
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 0 3px 3px #000;
@@ -13,4 +12,11 @@
 }
 .canvas {
   position: absolute;
+}
+.progress_wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

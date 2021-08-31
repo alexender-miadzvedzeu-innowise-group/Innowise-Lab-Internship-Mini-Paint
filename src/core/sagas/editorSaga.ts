@@ -8,8 +8,7 @@ export function* uploadImageFetch(payload: AnyAction): Generator {
   const {dataUrl, imgName, userName} = payload;
   try {
     const path = `library/${userName}/photo:${Date.now()}`;
-    const imgRef = yield storageRef.child(path);
-    //@ts-ignore
+    const imgRef: any = yield storageRef.child(path);
     yield imgRef.putString(dataUrl, 'data_url');
     const imgUrl = yield storage.refFromURL(`gs://${process.env.REACT_APP_STORAGE_BUCKET}/${path}`).getDownloadURL()
     const response = yield db.collection("images").doc(imgName.toString()).set({

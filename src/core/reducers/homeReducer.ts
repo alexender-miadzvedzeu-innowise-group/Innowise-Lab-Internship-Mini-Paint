@@ -24,21 +24,18 @@ const initialState: State = {
   imagesData: {}
 }
 
+
 export const homeReducer = (state = initialState, action: Action ):object => {
   switch (action.type) {
     case GET_IMAGES_FROM_DB:
       return {...state, loading: true, error: false, successed: false}
     case GET_IMAGES_FROM_DB_SUCCEEDED:
-      let sortedData = {}
-      action.payload.forEach((img) => {
-        //@ts-ignore
+      let sortedData: any = {};
+      action.payload.forEach((img:any) => {
         if (sortedData[img.userName]) {
-          //@ts-ignore
           sortedData[img.userName].push(img.imgUrl);
         } else {
-          //@ts-ignore
           sortedData[img.userName] = [];
-          //@ts-ignore
           sortedData[img.userName].push(img.imgUrl);
         }
       })

@@ -19,8 +19,8 @@ const Navbar: React.FunctionComponent = (props:any) => {
     createStyles({
       toolBar: {
         background: 'none',
-        margin: '1% 0%',
-        padding: '1%',
+        margin: '5px 0%',
+        padding: '5px',
         display: 'grid',
         gridTemplateColumns: 'repeat(12, 1fr)',
         gridGap: '10px'

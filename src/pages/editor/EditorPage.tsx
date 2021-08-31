@@ -14,6 +14,7 @@ import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC } from '
 import Button from '@material-ui/core/Button';
 import { State } from '../../core/types/types';
 import { getCookie } from '../../core/helpers/getCookie'
+import { useRef } from 'react';
 
 interface Istyles {
   fadeIn: any
@@ -43,8 +44,6 @@ const EditorPage: React.FunctionComponent = () => {
     dispatch(setDataUrlAC(dataUrl, userName, Date.now()));
   }
 
-
-
   const instrumentName = useSelector((state: State) => state.editorReducer.instrumentName);
   const subCtx = useSelector((state: any) => state.editorReducer.subCtx);
 
@@ -65,7 +64,7 @@ const EditorPage: React.FunctionComponent = () => {
           <div className={instrumentName === 'line' ? classes.button_checked : classes.button} onClick={() => onClicksetInstrument('line')}><LinearScaleIcon /></div>
           <div className={instrumentName === 'pencil' ? classes.button_checked : classes.button} onClick={() => onClicksetInstrument('pencil')}><CreateIcon /></div>
           <div className = {classes.size_slider}>
-            <Typography style={{fontSize: '0.8rem', margin: '0', color: '#969fa5'}} id="discrete-slider" gutterBottom>Line weight</Typography>
+            <Typography style={{fontSize: '0.6rem', margin: '0', color: '#969fa5'}} id="discrete-slider" gutterBottom>Line weight</Typography>
             <Slider
               onChange={onChangeWeight}
               style={{padding: '0', color: '#969fa5'}}

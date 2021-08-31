@@ -4,6 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { isEmpty } from '../../helpers/isEmptyObj';
 import { setCanvasSizeAC, setMainCtxAC, setMouseDownPositionAC, setSubCtxAC } from '../../actions/editor';
 import { State } from '../../types/types';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+interface IProps {
+  ref: object
+}
 
 const Canvas: React.FunctionComponent = () => {
   
@@ -32,6 +37,7 @@ const Canvas: React.FunctionComponent = () => {
   const mouseDownPosition = useSelector((state: any) => state.editorReducer.mouseDownPosition)
   const mainCtx = useSelector((state: State) => state.editorReducer.mainCtx)
   const subCtx = useSelector((state: any) => state.editorReducer.subCtx)
+  const loading = useSelector((state: any) => state.editorReducer.loading)
 
   useEffect(() => {
     if (canvasRef.current && subCanvasRef.current && wrapperRef.current?.clientWidth) {
@@ -48,35 +54,33 @@ const Canvas: React.FunctionComponent = () => {
       canvasRef.current.width = subCanvasRef.current.width = canvasSize.width;
       canvasRef.current.height = subCanvasRef.current.height = canvasSize.height;
     }
-  }, [canvasSize])
+  }, [canvasSize, loading])
 
-  const onMouseDown = (e: any) => {
-    //@ts-ignore
-    // console.log(`clientY=${e.clientY} pageY=${e.pageY} wrapperRef.current.offsetTop=${wrapperRef.current.offsetTop}`);
-    if (instrumentName) setMouseDownPosition({x: e.clientX, y: e.clientY});
+  const onMouseDown = (e: any) => {   
+    if (instrumentName && wrapperRef.current?.offsetLeft) setMouseDownPosition({x: e.clientX - wrapperRef.current?.offsetLeft, y: e.clientY - 104});
   }
 
   const onMouseMove = (e: any) => {
-    if (!isEmpty(mouseDownPosition) && wrapperRef.current && canvasRef.current) {
+    if (mouseDownPosition.x && mouseDownPosition.y && wrapperRef.current && canvasRef.current) {
       mainCtx.strokeStyle = lineColor;
       mainCtx.lineWidth = lineWeight;
       mainCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
       switch (instrumentName) {
         case 'rectangle':
           mainCtx.strokeRect(
-            mouseDownPosition.x - wrapperRef.current.offsetLeft, 
-            mouseDownPosition.y - wrapperRef.current.offsetTop, 
-            e.clientX - mouseDownPosition.x, 
-            e.clientY - mouseDownPosition.y
+            mouseDownPosition.x,
+            mouseDownPosition.y,
+            e.clientX - mouseDownPosition.x - wrapperRef.current.offsetLeft,
+            e.clientY - mouseDownPosition.y - 104
           )
           mainCtx.stroke(); 
           break;
         case 'circle':
           mainCtx.beginPath();
           mainCtx.arc(
-            mouseDownPosition.x - wrapperRef.current.offsetLeft, 
-            mouseDownPosition.y - wrapperRef.current.offsetTop, 
-            Math.sqrt((e.clientX - mouseDownPosition.x) ** 2 + (e.clientY - mouseDownPosition.y) ** 2), 
+            mouseDownPosition.x, 
+            mouseDownPosition.y, 
+            Math.sqrt((e.clientX - mouseDownPosition.x - wrapperRef.current.offsetLeft) ** 2 + (e.clientY - mouseDownPosition.y - 104) ** 2), 
             0,
             Math.PI*2,
             true
@@ -86,17 +90,21 @@ const Canvas: React.FunctionComponent = () => {
         case 'line':
           mainCtx.beginPath(); 
           mainCtx.moveTo(
-            mouseDownPosition.x - wrapperRef.current.offsetLeft, 
-            mouseDownPosition.y - wrapperRef.current.offsetTop
+            mouseDownPosition.x, 
+            mouseDownPosition.y
           );
           mainCtx.lineTo(
             e.clientX - wrapperRef.current.offsetLeft,
-            e.clientY - wrapperRef.current.offsetTop
+            e.clientY - 104
           );
           mainCtx.stroke();
           break;
         case 'pencil':
-          
+          mainCtx.lineTo(
+            e.clientX - wrapperRef.current.offsetLeft,
+            e.clientY - 104
+          )
+          mainCtx.stroke();
           break
         default:
           break;
@@ -106,6 +114,7 @@ const Canvas: React.FunctionComponent = () => {
 
   const onMouseUp = (e: any) => {
     subCtx.drawImage(canvasRef.current, 0, 0);
+    mainCtx.beginPath();
     setMouseDownPosition({})
   }
 
@@ -113,6 +122,9 @@ const Canvas: React.FunctionComponent = () => {
     <div className={classes.wrapper} ref={wrapperRef}>
       <canvas ref={subCanvasRef} className={classes.canvas}></canvas>
       <canvas onMouseDown={onMouseDown} onMouseMove={onMouseMove} onMouseUp={onMouseUp} ref={canvasRef} className={classes.canvas}></canvas>
+      <div className={classes.progress_wrapper}>
+        {loading ? <CircularProgress color="inherit"/> : null}
+      </div>
     </div>
   )
 }

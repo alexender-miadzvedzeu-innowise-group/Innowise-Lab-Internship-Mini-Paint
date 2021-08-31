@@ -4,13 +4,15 @@ import { AnyAction } from "redux";
 import { getimagesFromDbSucceededAC, getimagesFromDbFailedAC } from "../actions/home";
 import { db, storageRef } from '../firebase/firebase';
 
+interface IDoc {
+  data: () => never
+}
+
 export function* getImageFetch(payload: AnyAction): Generator {
   let data:[] = [];
   try {
     const fetchImages:any = yield db.collection('images').get();
-    //@ts-ignore
-    yield fetchImages.docs.map((doc) => data.push(doc.data()));
-    //@ts-ignore
+    yield fetchImages.docs.map((doc: IDoc) => data.push(doc.data()));
     yield put(getimagesFromDbSucceededAC(data));
   } catch (error) {
     yield put(getimagesFromDbFailedAC(error))
