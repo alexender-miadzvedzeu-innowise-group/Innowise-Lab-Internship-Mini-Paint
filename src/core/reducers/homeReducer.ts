@@ -2,26 +2,30 @@ import { ImageAspectRatio } from '@material-ui/icons';
 import { 
   GET_IMAGES_FROM_DB,
   GET_IMAGES_FROM_DB_SUCCEEDED,
-  GET_IMAGES_FROM_DB_FAILED
+  GET_IMAGES_FROM_DB_FAILED,
+  SORT_IMAGES_DATA
 } from '../actions/actions.types'
 
 interface Action {
   type: string,
-  payload: []
+  payload: [],
+  userName: string
 }
 
 interface State {
   loading: boolean,
   error: boolean,
   successed: boolean,
-  imagesData: {}
+  imagesData: {},
+  sortedImagesData: {}
 }
 
 const initialState: State = {
   loading: false,
   error: false,
   successed: false,
-  imagesData: {}
+  imagesData: {},
+  sortedImagesData: {}
 }
 
 
@@ -42,7 +46,17 @@ export const homeReducer = (state = initialState, action: Action ):object => {
       return {...state, imagesData: sortedData};
     case GET_IMAGES_FROM_DB_FAILED:
       return {...state, loading: false, error: true, successed: false}
-      default:
+    case SORT_IMAGES_DATA:
+      let index = action.userName.length;
+      let sortedImagesData: any = {};
+      Object.keys(state.imagesData).forEach((user: string) => {
+        if (user.substr(0, index) === action.userName) {
+          //@ts-ignore
+          sortedImagesData[user] = state.imagesData[user]
+        }
+      })
+      return {...state, sortedImagesData: sortedImagesData}
+    default:
       return state;
   }
 }

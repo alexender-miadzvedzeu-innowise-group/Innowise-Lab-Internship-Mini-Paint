@@ -6,9 +6,9 @@ import { signOutAC } from '../../actions/auth';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
+import Logo from '../../../assets/icons/Logo.jpg'
 
 const Navbar: React.FunctionComponent = (props:any) => {
-
 
   const dispatch = useDispatch();
   const signOut = () => {
@@ -42,6 +42,9 @@ const Navbar: React.FunctionComponent = (props:any) => {
   return(
     <div className={classes.wrapper}>
       <AppBar position="static" className={materialStyles.toolBar} >
+          <div className={classes.logo_container}>
+            <img className={classes.logo} src={Logo} alt="LOGO" />
+          </div>
           <Button className={materialStyles.nav__link}>
             <NavLink to='/ ' activeClassName={classes.activeNav__link} className={classes.nav__link}>Home</NavLink>
           </Button>

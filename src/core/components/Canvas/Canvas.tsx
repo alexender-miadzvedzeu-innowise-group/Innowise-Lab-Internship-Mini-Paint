@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import classes from './Canvas.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { isEmpty } from '../../helpers/isEmptyObj';
 import { setCanvasSizeAC, setMainCtxAC, setMouseDownPositionAC, setSubCtxAC } from '../../actions/editor';
 import { State } from '../../types/types';
 import CircularProgress from '@material-ui/core/CircularProgress';

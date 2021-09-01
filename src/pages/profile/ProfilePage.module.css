@@ -65,6 +65,8 @@
 .modal_window {
   width: 30%;
   height: 30%;
+  max-width: 255px;
+  max-height: 190px;
   background: #fff;
   border-radius: 3px;
   display: flex;

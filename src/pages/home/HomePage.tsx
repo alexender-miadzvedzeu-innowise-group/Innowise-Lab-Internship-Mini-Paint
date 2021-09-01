@@ -3,9 +3,12 @@ import classes from './HomePage.module.css';
 import { fadeIn } from 'react-animations';
 import Radium from 'radium';
 import { useDispatch, useSelector } from 'react-redux';
-import { getimagesFromDbAC } from '../../core/actions/home';
+import { getimagesFromDbAC, sortImagesDataAC } from '../../core/actions/home';
 import { useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
+import { TextField } from '@material-ui/core';
+import { useState } from 'react';
+import { isEmpty } from '../../core/helpers/isEmptyObj';
 
 interface Istyles {
     fadeIn: any
@@ -20,10 +23,18 @@ const styles: Istyles = {
 
 const HomePage: React.FunctionComponent = ({signOut}:any) => {
 
+  const [inputValue, setInputValue] = useState('')
+
   const dispatch = useDispatch();
   const getImages = () => dispatch(getimagesFromDbAC());
+  const sortImagesData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+    return dispatch(sortImagesDataAC(e.target.value))
+  }
 
   const imagesData = useSelector((state: any) => state.homeReducer.imagesData)
+  const sortedImagesData = useSelector((state: any) => state.homeReducer.sortedImagesData)
+  
   useEffect(() => {
     getImages();
   }, [])
@@ -31,8 +42,23 @@ const HomePage: React.FunctionComponent = ({signOut}:any) => {
   return(
     <Radium.StyleRoot>
       <div className={classes.wrapper} style={styles.fadeIn}>
+        <div className={classes.search_input_wrapper}>
+          <span className={classes.search_input_head}>Find user</span>
+          <TextField
+              onChange={sortImagesData}
+              className={classes.search_input}
+              variant="outlined"
+              id="email"
+              placeholder="User name"
+              name="email"
+              fullWidth
+              margin='dense'
+              disabled={Object.keys(imagesData).length ? false : true}
+              value={inputValue}
+            />
+        </div>
         {
-          Object.keys(imagesData).map((elem, key) => {
+          Object.keys(isEmpty(sortedImagesData) ? imagesData : sortedImagesData).map((elem, key) => {
             return (
               <div className={classes.user_container} key={key}>
                 <div className={classes.name_container}>
