@@ -3,7 +3,8 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin: 5% 0 0;
+  margin: 5% auto 0;
+  max-width: 1000px;
 }
 .user_info {
   display: flex;
@@ -86,4 +87,7 @@
 }
 .progress {
   position: absolute;
+}
+.user_info {
+  color: #fff;
 }

@@ -4,9 +4,8 @@ import { signInWithEmailAC, createUserWithEmailAC, resetErrorMessageAC, setLocal
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import classes from './LoginPage.module.css';
-import { fadeIn, zoomIn } from 'react-animations';
+import { fadeIn } from 'react-animations';
 import Radium from 'radium';
-import { isNotEmpty } from '../../core/helpers/isNotEmpty';
 import Alert from '@material-ui/lab/Alert';
 
 interface Istyles {
@@ -93,7 +92,7 @@ const LoginPage: React.FC = () => {
             <Alert className={classes.alert} severity="error">{errorMessage}</Alert> :
             null
           }
-          <h3 className={classes.header}>Log in</h3>
+          <h3 className={classes.header}>{login ? 'Sign in' : 'Log in'}</h3>
           <form className={classes.form}>
             <TextField
               onChange={onInputChange}
@@ -138,18 +137,15 @@ const LoginPage: React.FC = () => {
             />
             }
             <Button onClick={onSubmit} className={classes.button} variant="contained" color="primary">
-              {login ? 'Sign in' : 'Create login'}
+              {login ? 'Sign in' : 'Log in'}
             </Button>
           </form>
         </div>
         <p className={classes.text}>
-          {login ? 
-          'or you can create new account':
-          'or you can use your account'}
-          </p>
-        <Button onClick={()=>setlogin(!login)} style={{background: '#1cb43d'}} variant="contained">
-          {login ? 'Create login' : 'Sign in'}
-        </Button>
+          { login ?
+          <span>or you can <span className={classes.span_link} onClick={()=>setlogin(!login)}>log in</span> with account</span>: 
+          <span>or you can <span className={classes.span_link} onClick={()=>setlogin(!login)}>sign in</span> with account</span>}
+        </p>
       </div>
     </Radium.StyleRoot>
     

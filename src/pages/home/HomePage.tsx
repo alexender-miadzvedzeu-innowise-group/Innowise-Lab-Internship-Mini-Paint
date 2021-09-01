@@ -8,7 +8,8 @@ import { useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { TextField } from '@material-ui/core';
 import { useState } from 'react';
-import { isEmpty } from '../../core/helpers/isEmptyObj';
+import { isEmptyObj } from '../../core/helpers/isEmptyObj';
+import Alert from '@material-ui/lab/Alert';
 
 interface Istyles {
     fadeIn: any
@@ -45,24 +46,29 @@ const HomePage: React.FunctionComponent = ({signOut}:any) => {
         <div className={classes.search_input_wrapper}>
           <span className={classes.search_input_head}>Find user</span>
           <TextField
-              onChange={sortImagesData}
-              className={classes.search_input}
-              variant="outlined"
-              id="email"
-              placeholder="User name"
-              name="email"
-              fullWidth
-              margin='dense'
-              disabled={Object.keys(imagesData).length ? false : true}
-              value={inputValue}
-            />
+            onChange={sortImagesData}
+            className={classes.search_input}
+            variant="outlined"
+            id="email"
+            placeholder="User name"
+            name="email"
+            fullWidth
+            margin='dense'
+            disabled={Object.keys(imagesData).length ? false : true}
+            value={inputValue}
+          />
+          {
+            isEmptyObj(sortedImagesData) && inputValue ?
+            <Alert className={classes.alert} severity="warning">No such users found</Alert> :
+            null
+          }
         </div>
         {
-          Object.keys(isEmpty(sortedImagesData) ? imagesData : sortedImagesData).map((elem, key) => {
+          Object.keys(isEmptyObj(sortedImagesData) ? imagesData : sortedImagesData).map((elem, key) => {
             return (
               <div className={classes.user_container} key={key}>
                 <div className={classes.name_container}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg">{elem.substr(0, 1).toUpperCase()}</Avatar>
+                  <Avatar alt="Remy Sharp" >{elem.substr(0, 1).toUpperCase()}</Avatar>
                   <h3 className={classes.user_name}>{elem}</h3>
                 </div>
                 <div className={classes.container}>

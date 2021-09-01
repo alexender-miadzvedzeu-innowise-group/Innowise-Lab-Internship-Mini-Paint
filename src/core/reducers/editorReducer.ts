@@ -99,7 +99,7 @@ export const editorReducer = (state = initialState, action: Action ):object => {
         successed: false
       }
     case UPLOAD_IMAGE_SUCCEEDED:
-      return {...state, loading: false, error: false, successed: true}
+      return {...state, loading: false, error: false, successed: true, lineColor: '#000', lineWeight: '1', instrumentName: ''}
     case UPLOAD_IMAGE_FAILED:
       return {...state, loading: false, error: true, successed: false}
     default:

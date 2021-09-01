@@ -14,7 +14,6 @@ import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC } from '
 import Button from '@material-ui/core/Button';
 import { State } from '../../core/types/types';
 import { getCookie } from '../../core/helpers/getCookie'
-import { useRef } from 'react';
 
 interface Istyles {
   fadeIn: any

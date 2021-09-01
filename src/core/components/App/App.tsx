@@ -36,7 +36,6 @@ const App: React.FunctionComponent = () => {
               <HomePage />
             </Route>
           </Switch>
-          
         </div> : 
         <Route path='/'>
           <LoginPage />

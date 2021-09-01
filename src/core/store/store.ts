@@ -13,7 +13,7 @@ const store = createStore(combineReducers({
   editorReducer,
   homeReducer,
   profileReducer
-}),applyMiddleware(sagaMiddleware))
+}), applyMiddleware(sagaMiddleware))
 
 sagaMiddleware.run(rootSaga)
 

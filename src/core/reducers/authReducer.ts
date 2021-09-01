@@ -16,14 +16,14 @@ import {
 } from '../actions/actions.types'
 
 interface Action {
-  readonly type: string
-  readonly payload: {} | any
+  readonly type: string,
+  readonly payload: {} | any,
   error?: any
 }
 
 interface State {
-  loading: boolean
-  error: boolean
+  loading: boolean,
+  error: boolean,
   isLoged: boolean,
   errorMessage: string | null
 }

@@ -19,7 +19,6 @@ export function* getUserImageFetch(payload: AnyAction): Generator {
   }
 }
 
-// eslint-disable-next-line require-yield
 export function* delImageFetch(payload: AnyAction): Generator {
   const { id, userName } = payload;
   try {

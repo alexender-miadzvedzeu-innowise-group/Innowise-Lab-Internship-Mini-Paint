@@ -1,3 +1,8 @@
+.wrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
 .user_name {
   font-weight: normal;
   color: #fff;
@@ -52,4 +57,9 @@
 .search_input {
   background: #fff;
   border-radius: 5px;
+}
+.alert {
+  position: absolute;
+  width: 200px;
+  margin: 0 auto;
 }
