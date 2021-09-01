@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { signInWithEmailAC, createUserWithEmailAC } from '../../core/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInWithEmailAC, createUserWithEmailAC, resetErrorMessageAC, setLocalUserErrorMessageAC } from '../../core/actions/auth';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import classes from './LoginPage.module.css';
-import { fadeIn } from 'react-animations';
+import { fadeIn, zoomIn } from 'react-animations';
 import Radium from 'radium';
 import { isNotEmpty } from '../../core/helpers/isNotEmpty';
+import Alert from '@material-ui/lab/Alert';
 
 interface Istyles {
-    fadeIn: any
+    fadeIn: any,
   }
 
 const styles: Istyles = {
@@ -24,7 +25,6 @@ interface Idata {
   password: string;
   confirmPassword: string
 }
-
 
 const LoginPage: React.FC = () => {  
   const [data, setData] = useState<Idata>({
@@ -42,12 +42,22 @@ const LoginPage: React.FC = () => {
     }))
   }
 
+  const errorMessage = useSelector((state: any) => state.authReducer.errorMessage);
+
   const signIn = (payload: object) => {
     dispatch(signInWithEmailAC(payload))
   }
 
   const createUser = (payload: object) => {
     dispatch(createUserWithEmailAC(payload))
+  }
+
+  const resetErrorMessage = () => {
+    dispatch(resetErrorMessageAC())
+  }
+
+  const setLocalUserErrorMessage = (error: string) => {
+    dispatch(setLocalUserErrorMessageAC(error))
   }
 
   const onSubmit = (e: any) => {
@@ -68,18 +78,26 @@ const LoginPage: React.FC = () => {
           data.password === data.confirmPassword
         ) {
           createUser(data)
+        } else {
+          setLocalUserErrorMessage('Passwords must be at least 6 characters long and be the same')
         }
     }
   }
   
   return(
     <Radium.StyleRoot>
-      <div className={classes.wrapper} style={styles.fadeIn}>
+      <div className={classes.wrapper} style={styles.fadeIn} >
         <div className={classes.form_wrapper}>
+          {
+            errorMessage ? 
+            <Alert className={classes.alert} severity="error">{errorMessage}</Alert> :
+            null
+          }
           <h3 className={classes.header}>Log in</h3>
           <form className={classes.form}>
             <TextField
               onChange={onInputChange}
+              onFocus={resetErrorMessage}
               className={classes.login}
               variant="outlined"
               id="email"
@@ -91,6 +109,7 @@ const LoginPage: React.FC = () => {
             />
             <TextField
               onChange={onInputChange}
+              onFocus={resetErrorMessage}
               className={classes.password}
               variant="outlined"
               name="password"
@@ -106,6 +125,7 @@ const LoginPage: React.FC = () => {
               null : 
               <TextField
               onChange={onInputChange}
+              onFocus={resetErrorMessage}
               className={classes.password}
               variant="outlined"
               name="confirmPassword"
