@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { delClickedAC, } from '../../core/actions/profile';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface Istyles {
   fadeIn: any
@@ -28,6 +29,7 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
   const images = useSelector((state:any) => state.profileReducer.imagesData)
   const isClicked = useSelector((state:any) => state.profileReducer.delCicked)
   const idToDel = useSelector((state: any) => state.profileReducer.idTodell)
+  const loading = useSelector((state: any) => state.profileReducer.loading)
 
   const delCicked = (id: number | null) => dispatch(delClickedAC(id));
   const getUserImagesFromDB = () => dispatch(getUserImagesFromDbAC())
@@ -70,11 +72,12 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
                 <Button onClick={() => delCicked(null)} variant="contained">No</Button>
                 <Button onClick={delUserImageFromDB} variant="contained" color="secondary">Yes</Button>
               </div>
+              { loading ? <CircularProgress className={classes.progress} color="inherit"/> : null }
+               
             </div>
           </div> 
         : null
         }
-        
       </div>
     </Radium.StyleRoot>
   )
