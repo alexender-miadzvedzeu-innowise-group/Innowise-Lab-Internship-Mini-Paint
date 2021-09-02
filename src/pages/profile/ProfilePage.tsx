@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { delUserImageFromDbAC, getUserImagesFromDbAC, getUserNameAC } from '../../core/actions/profile';
 import { useEffect } from 'react';
 import { delClickedAC, } from '../../core/actions/profile';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled, { keyframes } from 'styled-components';
@@ -67,8 +66,7 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
             })
           }
         </div>
-        {
-          isClicked ?
+        {isClicked ?
           <div className={classes.modal_window_background}>
             <FlashDiv className={classes.animation_wrapper}>
               <div className={classes.modal_window}>
@@ -81,8 +79,7 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
               </div>
             </FlashDiv>
           </div> 
-        : null
-        }
+        : null}
       </div>
     </Radium.StyleRoot>
   )

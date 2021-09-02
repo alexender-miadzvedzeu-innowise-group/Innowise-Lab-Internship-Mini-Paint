@@ -36,9 +36,7 @@ const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData((prev) => ({
-      ...prev, [e.target.name]: e.target.value
-    }))
+    setData({...data, [e.target.name]: e.target.value})
   }
 
   const errorMessage = useSelector((state: any) => state.authReducer.errorMessage);

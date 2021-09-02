@@ -8,6 +8,7 @@ export const SET_SUB_CTX: string = 'SET_SUB_CTX';
 export const SET_DATA_URL: string = 'SET_DATA_URL';
 export const UPLOAD_IMAGE_SUCCEEDED: string = 'UPLOAD_IMAGE_SUCCEEDED';
 export const UPLOAD_IMAGE_FAILED: string = 'UPLOAD_IMAGE_FAILED';
+export const OPEN_STAR_PROP_WINDOW: string = 'OPEN_STAR_PROP_WINDOW';
 
 export const CREATE_USER_WITH_E_MAIL: string = 'CREATE_USER_WITH_E_MAIL';
 export const CREATE_USER_WITH_E_MAIL_SUCCEEDED: string = 'CREATE_USER_WITH_E_MAIL_SUCCEEDED';

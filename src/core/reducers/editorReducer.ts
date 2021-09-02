@@ -9,6 +9,7 @@ import {
   SET_DATA_URL,
   UPLOAD_IMAGE_SUCCEEDED,
   UPLOAD_IMAGE_FAILED,
+  OPEN_STAR_PROP_WINDOW
 } from '../actions/actions.types'
 
 interface Action {
@@ -48,7 +49,8 @@ interface State {
   imgName: string,
   loading: boolean,
   error: boolean,
-  successed: boolean
+  successed: boolean,
+  starPropWindowsOpened: boolean
 }
 
 const initialState: State = {
@@ -66,7 +68,8 @@ const initialState: State = {
   imgName: '',
   loading: false,
   error: false,
-  successed: false
+  successed: false,
+  starPropWindowsOpened: false
 }
 
 export const editorReducer = (state = initialState, action: Action ):object => {
@@ -98,6 +101,8 @@ export const editorReducer = (state = initialState, action: Action ):object => {
         error: false, 
         successed: false
       }
+    case OPEN_STAR_PROP_WINDOW:
+      return {...state, starPropWindowsOpened: !state.starPropWindowsOpened}
     case UPLOAD_IMAGE_SUCCEEDED:
       return {...state, loading: false, error: false, successed: true, lineColor: '#000', lineWeight: '1', instrumentName: ''}
     case UPLOAD_IMAGE_FAILED:
