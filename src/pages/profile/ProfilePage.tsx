@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './ProfilePage.module.css';
-import { fadeIn } from 'react-animations';
+import { fadeIn, fadeInDown } from 'react-animations';
 import Radium from 'radium';
 import Avatar from '@material-ui/core/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { delClickedAC, } from '../../core/actions/profile';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import styled, { keyframes } from 'styled-components';
 
 interface Istyles {
   fadeIn: any
@@ -21,6 +22,9 @@ const styles: Istyles = {
     animationName: Radium.keyframes(fadeIn, 'fadeIn')
   }
 }
+
+const flashAnimation = keyframes`${fadeInDown}`;
+const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
 
 const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
   
@@ -56,7 +60,7 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
                     <img className={classes.img} src={image.imgUrl} alt={image.imgUrl} />
                   </div>
                   <div className={classes.delete_button}>
-                    <HighlightOffIcon onClick={() => delCicked(image.id)} className={classes.button_icon} fontSize="large" />
+                    <Button onClick={() => delCicked(image.id)} className={classes.button_icon} variant="contained" color="secondary" >Delete</Button>
                   </div>
                 </div>
               )
@@ -66,15 +70,16 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
         {
           isClicked ?
           <div className={classes.modal_window_background}>
-            <div className={classes.modal_window}>
-              <p className={classes.modal_window__text}>Are you really want to delete this image?</p>
-              <div className={classes.modal_window__buttonst_container}>
-                <Button onClick={() => delCicked(null)} variant="contained">No</Button>
-                <Button onClick={delUserImageFromDB} variant="contained" color="secondary">Yes</Button>
+            <FlashDiv className={classes.animation_wrapper}>
+              <div className={classes.modal_window}>
+                  <p className={classes.modal_window__text}>Are you really want to delete this image?</p>
+                  <div className={classes.modal_window__buttonst_container}>
+                    <Button onClick={() => delCicked(null)} variant="contained">No</Button>
+                    <Button onClick={delUserImageFromDB} variant="contained" color="secondary">Yes</Button>
+                  </div>
+                  { loading ? <CircularProgress className={classes.progress} color="inherit"/> : null }
               </div>
-              { loading ? <CircularProgress className={classes.progress} color="inherit"/> : null }
-               
-            </div>
+            </FlashDiv>
           </div> 
         : null
         }
