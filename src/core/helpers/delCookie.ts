@@ -1,5 +1,3 @@
 import { setCookie } from "./setCookie";
 
-export const delCookie = (cname: string) => {
-  return setCookie(cname, '', -1000)
-}
+export const delCookie = (cname: string) => setCookie(cname, '', -1000);

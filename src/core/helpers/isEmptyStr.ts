@@ -1,3 +1,1 @@
-export const isNotEmpty = (values: []) => {
-  values.forEach((val: string) => val.length !== 0)
-}
+export const isNotEmpty = (values: []) => values.forEach((val: string) => val.length !== 0);

@@ -90,7 +90,7 @@ const LoginPage: React.FC = () => {
             <Alert className={classes.alert} severity="error">{errorMessage}</Alert> :
             null
           }
-          <h3 className={classes.header}>{login ? 'Sign in' : 'Log in'}</h3>
+          <h3 className={classes.header}>{login ? 'Login' : 'Register'}</h3>
           <form className={classes.form}>
             <TextField
               onChange={onInputChange}
@@ -135,14 +135,14 @@ const LoginPage: React.FC = () => {
             />
             }
             <Button onClick={onSubmit} className={classes.button} variant="contained" color="primary">
-              {login ? 'Sign in' : 'Log in'}
+              {login ? 'Login' : 'Register'}
             </Button>
           </form>
         </div>
         <p className={classes.text}>
           { login ?
-          <span>or you can <span className={classes.span_link} onClick={()=>setlogin(!login)}>log in</span> with account</span>: 
-          <span>or you can <span className={classes.span_link} onClick={()=>setlogin(!login)}>sign in</span> with account</span>}
+          <span>or you can <span className={classes.span_link} onClick={()=>setlogin(!login)}>Register</span> with account</span>: 
+          <span>or you can <span className={classes.span_link} onClick={()=>setlogin(!login)}>Login</span> with account</span>}
         </p>
       </div>
     </Radium.StyleRoot>

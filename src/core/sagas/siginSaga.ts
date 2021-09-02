@@ -2,7 +2,7 @@ import { takeEvery, put, call, all } from "@redux-saga/core/effects";
 import { SIGN_IN_WITH_E_MAIL } from '../actions/actions.types';
 import { signInWithEmailSucceededAC, signInWithEmailFailedAC } from '../actions/auth'
 import { AnyAction } from "redux";
-import firebase from "../firebase/firebase";
+import { signInUser } from '../services/firebase/authFetches'
 
 interface FirebaseSignInResonse {
     userCredentional?: any
@@ -11,7 +11,7 @@ interface FirebaseSignInResonse {
 export function* signInWithEmailFetch(data: AnyAction) {
     const { payload } = data;
     try {
-        const response: FirebaseSignInResonse = yield firebase.auth().signInWithEmailAndPassword(payload.email, payload.password);
+        const response: FirebaseSignInResonse = yield signInUser(payload)
         yield put(signInWithEmailSucceededAC(response));
     } catch (error) {
         yield put(signInWithEmailFailedAC(error));
