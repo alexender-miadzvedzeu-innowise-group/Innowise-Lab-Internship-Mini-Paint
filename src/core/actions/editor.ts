@@ -9,7 +9,7 @@ import {
   SET_DATA_URL,
   UPLOAD_IMAGE_SUCCEEDED,
   UPLOAD_IMAGE_FAILED,
-  OPEN_STAR_PROP_WINDOW
+  OPEN_UPLOAD_WINDOW
 } from './actions.types';
 
 
@@ -21,7 +21,7 @@ export const setCanvasSizeAC = (windowsSize: object) => ({ type: SET_CANVAS_SIZE
 
 export const setMouseDownPositionAC = (mouseDownPosition: object) => ({ type: SET_MOUSE_DOWN_POSITION, mouseDownPosition})
 
-export const openStarPropWindowsAC = () => ({ type: OPEN_STAR_PROP_WINDOW })
+export const openUploadWindowsAC = () => ({ type: OPEN_UPLOAD_WINDOW })
 
 export const setMainCtxAC = (context: object) => ({ type: SET_MAIN_CTX, context})
 export const setSubCtxAC = (context: object) => ({ type: SET_SUB_CTX, context})
