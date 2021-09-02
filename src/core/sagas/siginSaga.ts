@@ -1,6 +1,6 @@
 import { takeEvery, put, call, all } from "@redux-saga/core/effects";
-import { SIGN_IN_WITH_E_MAIL } from '../actions/users';
-import { signInWithEmailSucceededAC, signInWithEmailFailedAC } from '../reducers/authReducer'
+import { SIGN_IN_WITH_E_MAIL } from '../actions/actions.types';
+import { signInWithEmailSucceededAC, signInWithEmailFailedAC } from '../actions/auth'
 import { AnyAction } from "redux";
 import firebase from "../firebase/firebase";
 

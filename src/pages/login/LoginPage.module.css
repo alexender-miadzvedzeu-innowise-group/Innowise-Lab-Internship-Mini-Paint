@@ -7,6 +7,7 @@
 	align-items: center;
 }
 .form_wrapper {
+	position: relative;
 	width: 30%;
 	max-width: 300px;
 	margin: 0 auto;
@@ -33,7 +34,8 @@
 }
 
 .button {
-	width: 40%;
+	width: 60%;
+	min-width: 135px;
 }
 
 .text {
@@ -45,4 +47,13 @@
 .button__link {
 	color: #fff;
 	text-decoration: none;
+}
+.alert {
+	position: absolute;
+	top: 3%;
+}
+.span_link {
+	color: #3f51b5;
+	font-weight: 800;
+	cursor: pointer;
 }

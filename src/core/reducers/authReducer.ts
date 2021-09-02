@@ -1,34 +1,38 @@
 import { setCookie } from '../helpers/setCookie';
 import { getCookie } from '../helpers/getCookie';
 import { delCookie } from '../helpers/delCookie';
-import { 
-  CREATE_USER_WITH_E_MAIL, 
-  CREATE_USER_WITH_E_MAIL_SUCCEEDED, 
-  CREATE_USER_WITH_E_MAIL_FAILED, 
+
+import {
+  CREATE_USER_WITH_E_MAIL,
+  CREATE_USER_WITH_E_MAIL_SUCCEEDED,
+  CREATE_USER_WITH_E_MAIL_FAILED,
   SIGN_IN_WITH_E_MAIL,
   SIGN_IN_WITH_E_MAIL_SUCCEEDED,
   SIGN_IN_WITH_E_MAIL_FAILED,
   SIGN_OUT,
-  CHECK_USER_AFTORIZATION
-} from '../actions/users';
-
+  CHECK_USER_AFTORIZATION,
+  RESET_ERROR_MESSAGE,
+  SET_LOCAL_USER_ERROR_MESSAGE
+} from '../actions/actions.types'
 
 interface Action {
-  readonly type: string
-  readonly payload: {} | any
+  readonly type: string,
+  readonly payload: {} | any,
   error?: any
 }
 
 interface State {
-  loading: boolean
-  error: boolean
-  isLoged: boolean
+  loading: boolean,
+  error: boolean,
+  isLoged: boolean,
+  errorMessage: string | null
 }
 
 const initialState: State = {
   loading: false,
   error: false,
-  isLoged: false
+  isLoged: false,
+  errorMessage: null
 }
 
 export const authReducer = (state = initialState, action: Action ):object => {
@@ -39,15 +43,14 @@ export const authReducer = (state = initialState, action: Action ):object => {
       setCookie('user', JSON.stringify(action.payload.user), 60)
       return {...state, loading: false, error: false, isLoged: true}
     case CREATE_USER_WITH_E_MAIL_FAILED:
-      console.log(action.error)
-      return {...state, loading: false, error: true}
+      return {...state, loading: false, error: true, errorMessage: action.error.message}
     case SIGN_IN_WITH_E_MAIL:
       return {...state, loading: true, error: false}
     case SIGN_IN_WITH_E_MAIL_SUCCEEDED:
       setCookie('user', JSON.stringify(action.payload.user), 60)
       return {...state, loading: false, error: false, isLoged: true}
     case SIGN_IN_WITH_E_MAIL_FAILED:
-      return {...state, loading: false, error: true}
+      return {...state, loading: false, error: true, errorMessage: action.error.message}
     case SIGN_OUT:
       delCookie('user');
       return {...state, isLoged: false}
@@ -57,21 +60,15 @@ export const authReducer = (state = initialState, action: Action ):object => {
       } else {
         return {...state, isLoged: false}
       }
+    case RESET_ERROR_MESSAGE:
+      if (state.error) {
+        return {...state, error: false, errorMessage: null}
+      } else return state
+    case SET_LOCAL_USER_ERROR_MESSAGE:
+      return {...state, error: true, errorMessage: action.error}
     default:
       return state;
   }
 }
-
-export const createUserWithEmailAC = (payload: any) => ({ type: CREATE_USER_WITH_E_MAIL, payload})
-export const createUserWithEmailSucceededAC = (payload: any) => ({ type: CREATE_USER_WITH_E_MAIL_SUCCEEDED, payload})
-export const createUserWithEmailFailedAC = (error: any) => ({ type: CREATE_USER_WITH_E_MAIL_FAILED, error})
-
-export const signInWithEmailAC = (payload: any) => ({ type: SIGN_IN_WITH_E_MAIL, payload})
-export const signInWithEmailSucceededAC = (payload: any) => ({ type: SIGN_IN_WITH_E_MAIL_SUCCEEDED, payload})
-export const signInWithEmailFailedAC = (error: any) => ({ type: SIGN_IN_WITH_E_MAIL_FAILED, error})
-
-export const signOutAC = () => ({ type: SIGN_OUT})
-export const checkUserAftorizationAC = () => ({ type: CHECK_USER_AFTORIZATION})
-
 
 export default authReducer;
