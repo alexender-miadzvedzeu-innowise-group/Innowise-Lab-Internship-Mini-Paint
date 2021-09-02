@@ -35,13 +35,13 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
   const loading = useSelector((state: any) => state.profileReducer.loading)
 
   const delCicked = (id: number | null) => dispatch(delClickedAC(id));
-  const getUserImagesFromDB = () => dispatch(getUserImagesFromDbAC())
+  const onClickDel = (id: number | null) => (e:any) => delCicked(id)
   const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(idToDel, user))
 
   useEffect(() => {
     dispatch(getUserNameAC());
-    getUserImagesFromDB()
-  }, [])
+    dispatch(getUserImagesFromDbAC())
+  }, [dispatch])
 
   return(
     <Radium.StyleRoot>
@@ -59,27 +59,26 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
                     <img className={classes.img} src={image.imgUrl} alt={image.imgUrl} />
                   </div>
                   <div className={classes.delete_button}>
-                    <Button onClick={() => delCicked(image.id)} className={classes.button_icon} variant="contained" color="secondary" >Delete</Button>
+                    <Button onClick={onClickDel(image.id)} className={classes.button_icon} variant="contained" color="secondary" >Delete</Button>
                   </div>
                 </div>
               )
             })
           }
         </div>
-        {isClicked ?
+        {isClicked &&
           <div className={classes.modal_window_background}>
             <FlashDiv className={classes.animation_wrapper}>
               <div className={classes.modal_window}>
                   <p className={classes.modal_window__text}>Are you really want to delete this image?</p>
                   <div className={classes.modal_window__buttonst_container}>
-                    <Button onClick={() => delCicked(null)} variant="contained">No</Button>
+                    <Button onClick={onClickDel(null)} variant="contained">No</Button>
                     <Button onClick={delUserImageFromDB} variant="contained" color="secondary">Yes</Button>
                   </div>
-                  { loading ? <CircularProgress className={classes.progress} color="inherit"/> : null }
+                  { loading && <CircularProgress className={classes.progress} color="inherit"/> }
               </div>
             </FlashDiv>
-          </div> 
-        : null}
+          </div> }
       </div>
     </Radium.StyleRoot>
   )

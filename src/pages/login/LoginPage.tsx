@@ -7,6 +7,7 @@ import classes from './LoginPage.module.css';
 import { fadeIn } from 'react-animations';
 import Radium from 'radium';
 import Alert from '@material-ui/lab/Alert';
+import { isEmptyFields } from '../../core/helpers/isEmptyFields';
 
 interface Istyles {
     fadeIn: any,
@@ -60,18 +61,12 @@ const LoginPage: React.FC = () => {
   const onSubmit = (e: any) => {
     switch (login) {
       case true:
-        if (
-          data.email.length !== 0 &&
-          data.password.length !== 0
-        ) {
+        if (!isEmptyFields([data.email, data.password])) {
           signIn(data)
         }
       break; 
       case false: 
-        if (
-          data.email.length !== 0 &&
-          data.password.length !== 0 &&
-          data.confirmPassword.length !== 0 &&
+        if (!isEmptyFields([data.email, data.password, data.confirmPassword]) &&
           data.password === data.confirmPassword
         ) {
           createUser(data)
@@ -80,6 +75,8 @@ const LoginPage: React.FC = () => {
         }
     }
   }
+
+  const onClickSetlogin = () => setlogin(!login)
   
   return(
     <Radium.StyleRoot>
@@ -141,8 +138,8 @@ const LoginPage: React.FC = () => {
         </div>
         <p className={classes.text}>
           { login ?
-          <span>or you can <span className={classes.span_link} onClick={()=>setlogin(!login)}>Register</span> with account</span>: 
-          <span>or you can <span className={classes.span_link} onClick={()=>setlogin(!login)}>Login</span> with account</span>}
+          <span>or you can <span className={classes.span_link} onClick={onClickSetlogin}>Register</span> with account</span>: 
+          <span>or you can <span className={classes.span_link} onClick={onClickSetlogin}>Login</span> with account</span>}
         </p>
       </div>
     </Radium.StyleRoot>

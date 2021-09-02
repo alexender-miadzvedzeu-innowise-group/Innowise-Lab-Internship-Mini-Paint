@@ -27,7 +27,6 @@ const HomePage: React.FunctionComponent = ({signOut}:any) => {
   const [inputValue, setInputValue] = useState('')
 
   const dispatch = useDispatch();
-  const getImages = () => dispatch(getimagesFromDbAC());
   const sortImagesData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
     return dispatch(sortImagesDataAC(e.target.value))
@@ -37,8 +36,8 @@ const HomePage: React.FunctionComponent = ({signOut}:any) => {
   const sortedImagesData = useSelector((state: any) => state.homeReducer.sortedImagesData)
   
   useEffect(() => {
-    getImages();
-  }, [])
+    dispatch(getimagesFromDbAC())
+  }, [dispatch])
 
   return(
     <Radium.StyleRoot>

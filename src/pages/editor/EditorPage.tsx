@@ -44,7 +44,7 @@ const EditorPage: React.FunctionComponent = () => {
     dispatch(setInstrumentAC(instrumentName))
   }
   const setDataUrl = (dataUrl: string) => {
-    let userName = JSON.parse(getCookie('user')).email.split('@').slice(0,1).join();
+    let userName = JSON.parse(getCookie('user')).split('@').slice(0,1).join();
     dispatch(setDataUrlAC(dataUrl, userName));
   }
   const showHideUploadWindow = () => {
@@ -57,7 +57,7 @@ const EditorPage: React.FunctionComponent = () => {
 
   const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value)
   const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'))
-  const onClicksetInstrument = (type: string) => setInstrument(type)
+  const onClicksetInstrument = (type:string) => (e: React.MouseEvent) => setInstrument(type);
   const valuetext = (value: any) => value
   const uploadImage = () => {
     setDataUrl(subCtx.canvas.toDataURL());
@@ -65,13 +65,14 @@ const EditorPage: React.FunctionComponent = () => {
   }
 
   return(
+    //@ts-ignore
     <Radium.StyleRoot>
       <div className={classes.wrapper} style={styles.fadeIn}>
         <div className={classes.buttons_navbar}>
-          <div className={instrumentName === 'rectangle' ? classes.button_checked : classes.button} onClick={() => onClicksetInstrument('rectangle')}><CheckBoxOutlineBlankIcon /></div>
-          <div className={instrumentName === 'circle' ? classes.button_checked : classes.button} onClick={() => onClicksetInstrument('circle')}><RadioButtonUncheckedIcon /></div>
-          <div className={instrumentName === 'line' ? classes.button_checked : classes.button} onClick={() => onClicksetInstrument('line')}><LinearScaleIcon /></div>
-          <div className={instrumentName === 'pencil' ? classes.button_checked : classes.button} onClick={() => onClicksetInstrument('pencil')}><CreateIcon /></div>
+          <div className={instrumentName === 'rectangle' ? classes.button_checked : classes.button} onClick={onClicksetInstrument('rectangle')}><CheckBoxOutlineBlankIcon /></div>
+          <div className={instrumentName === 'circle' ? classes.button_checked : classes.button} onClick={onClicksetInstrument('circle')}><RadioButtonUncheckedIcon /></div>
+          <div className={instrumentName === 'line' ? classes.button_checked : classes.button} onClick={onClicksetInstrument('line')}><LinearScaleIcon /></div>
+          <div className={instrumentName === 'pencil' ? classes.button_checked : classes.button} onClick={onClicksetInstrument('pencil')}><CreateIcon /></div>
           
           <div className = {classes.size_slider}>
             <Typography style={{fontSize: '0.6rem', margin: '0', color: '#969fa5'}} id="discrete-slider" gutterBottom>Line weight</Typography>
@@ -90,7 +91,6 @@ const EditorPage: React.FunctionComponent = () => {
           </div>
           <input type="color" onChange={onChangeColor} />
           <Button 
-            // onClick={uploadImage}
             onClick={showHideUploadWindow}
             style={{
               background: '#969fa5',
@@ -103,7 +103,7 @@ const EditorPage: React.FunctionComponent = () => {
         </div>
         <Canvas />
       </div>
-      {uploadWindowsOpened ?
+      {uploadWindowsOpened &&
         <div className={classes.modal_window_background}>
           <FlashDiv className={classes.animation_wrapper}>
             <div className={classes.modal_window}>
@@ -114,7 +114,7 @@ const EditorPage: React.FunctionComponent = () => {
                 </div>
             </div>
           </FlashDiv>
-        </div> : null}
+        </div>}
     </Radium.StyleRoot>
   )
 }

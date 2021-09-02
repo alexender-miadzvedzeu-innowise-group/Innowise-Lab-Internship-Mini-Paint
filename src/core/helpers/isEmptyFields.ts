@@ -1,0 +1,1 @@
+export const isEmptyFields = (values: any) => values.forEach((val: string) => val.length !== 0);

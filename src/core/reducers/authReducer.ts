@@ -40,14 +40,14 @@ export const authReducer = (state = initialState, action: Action ):object => {
     case CREATE_USER_WITH_E_MAIL:
       return {...state, loading: true, error: false}
     case CREATE_USER_WITH_E_MAIL_SUCCEEDED:
-      setCookie('user', JSON.stringify(action.payload.user), 60)
+      setCookie('user', JSON.stringify(action.payload.user.email), 60)
       return {...state, loading: false, error: false, isLoged: true}
     case CREATE_USER_WITH_E_MAIL_FAILED:
       return {...state, loading: false, error: true, errorMessage: action.error.message}
     case SIGN_IN_WITH_E_MAIL:
       return {...state, loading: true, error: false}
     case SIGN_IN_WITH_E_MAIL_SUCCEEDED:
-      setCookie('user', JSON.stringify(action.payload.user), 60)
+      setCookie('user', JSON.stringify(action.payload.user.email), 60)
       return {...state, loading: false, error: false, isLoged: true}
     case SIGN_IN_WITH_E_MAIL_FAILED:
       return {...state, loading: false, error: true, errorMessage: action.error.message}
@@ -55,7 +55,7 @@ export const authReducer = (state = initialState, action: Action ):object => {
       delCookie('user');
       return {...state, isLoged: false}
     case CHECK_USER_AFTORIZATION:
-      if (getCookie('user')) {
+      if (getCookie('accessToken')) {
         return {...state, isLoged: true}
       } else {
         return {...state, isLoged: false}
