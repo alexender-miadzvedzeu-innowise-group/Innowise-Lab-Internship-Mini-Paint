@@ -22,8 +22,6 @@ const App: React.FunctionComponent = () => {
 
   const isLoged = useSelector((state: any) => state.authReducer.isLoged)
 
-  // console.log(JSON.parse(getCookie('user')).stsTokenManager.accessToken); 
-
   return(
     <div className={classes.wrapper}>
       {isLoged ? 

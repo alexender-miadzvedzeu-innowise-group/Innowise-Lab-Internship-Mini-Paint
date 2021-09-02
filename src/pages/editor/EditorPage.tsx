@@ -44,8 +44,9 @@ const EditorPage: React.FunctionComponent = () => {
     dispatch(setInstrumentAC(instrumentName))
   }
   const setDataUrl = (dataUrl: string) => {
+    let userID = JSON.parse(getCookie('userID'));
     let userName = JSON.parse(getCookie('user')).split('@').slice(0,1).join();
-    dispatch(setDataUrlAC(dataUrl, userName));
+    dispatch(setDataUrlAC(dataUrl, userID, userName));
   }
   const showHideUploadWindow = () => {
     dispatch(openUploadWindowsAC())  

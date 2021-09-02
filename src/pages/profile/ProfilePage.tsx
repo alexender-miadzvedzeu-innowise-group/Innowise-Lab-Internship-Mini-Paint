@@ -4,7 +4,7 @@ import { fadeIn, fadeInDown } from 'react-animations';
 import Radium from 'radium';
 import Avatar from '@material-ui/core/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
-import { delUserImageFromDbAC, getUserImagesFromDbAC, getUserNameAC } from '../../core/actions/profile';
+import { delUserImageFromDbAC, getUserImagesFromDbAC, getUserNameAC, getUserIDAC } from '../../core/actions/profile';
 import { useEffect } from 'react';
 import { delClickedAC, } from '../../core/actions/profile';
 import Button from '@material-ui/core/Button';
@@ -29,6 +29,7 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
   
   const dispatch= useDispatch()
   const user = useSelector((state:any) => state.profileReducer.userName);
+  const userID = useSelector((state:any) => state.profileReducer.userID);
   const images = useSelector((state:any) => state.profileReducer.imagesData)
   const isClicked = useSelector((state:any) => state.profileReducer.delCicked)
   const idToDel = useSelector((state: any) => state.profileReducer.idTodell)
@@ -36,10 +37,11 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
 
   const delCicked = (id: number | null) => dispatch(delClickedAC(id));
   const onClickDel = (id: number | null) => (e:any) => delCicked(id)
-  const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(idToDel, user))
+  const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(idToDel, userID))
 
   useEffect(() => {
     dispatch(getUserNameAC());
+    dispatch(getUserIDAC());
     dispatch(getUserImagesFromDbAC())
   }, [dispatch])
 

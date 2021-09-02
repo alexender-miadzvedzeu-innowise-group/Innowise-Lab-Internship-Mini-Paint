@@ -5,10 +5,10 @@ import { uploadImageFailedAC, uploadImageSuccessedAC } from "../../core/actions/
 import { uploadImage } from "../services/firebase/currentUserFetches"
 
 export function* uploadImageFetch(payload: AnyAction): Generator {
-  const {dataUrl, userName} = payload;
+  const {dataUrl, userID, userName} = payload;
   const id = Date.now();
   try {
-    const response = yield uploadImage(dataUrl, userName, id);
+    const response = yield uploadImage(dataUrl, userID, userName, id);
     yield put(uploadImageSuccessedAC(response));
   } catch (error) {
     yield put(uploadImageFailedAC(error))
