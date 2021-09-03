@@ -1,4 +1,3 @@
-import { ImageAspectRatio } from '@material-ui/icons';
 import { 
   GET_IMAGES_FROM_DB,
   GET_IMAGES_FROM_DB_SUCCEEDED,
@@ -12,7 +11,7 @@ interface Action {
   userName: string
 }
 
-interface State {
+interface IhomeState {
   loading: boolean,
   error: boolean,
   successed: boolean,
@@ -20,7 +19,7 @@ interface State {
   sortedImagesData: {}
 }
 
-const initialState: State = {
+const initialState: IhomeState = {
   loading: false,
   error: false,
   successed: false,

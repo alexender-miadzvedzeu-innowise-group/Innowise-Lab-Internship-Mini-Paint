@@ -11,7 +11,6 @@ import Slider from '@material-ui/core/Slider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC, openUploadWindowsAC } from '../../core/actions/editor';
 import Button from '@material-ui/core/Button';
-import { State } from '../../core/types/types';
 import { getCookie } from '../../core/helpers/getCookie'
 import styled, { keyframes } from 'styled-components';
 import { withStyles, Theme } from '@material-ui/core/styles';
@@ -63,8 +62,9 @@ const UploadButton = withStyles((theme: Theme) => ({
 }))(Button);
 
 const EditorPage: React.FunctionComponent = () => {
-  
+
   const dispatch = useDispatch();
+  
   const setLineColor = (lineColor: string) => {
     dispatch(setLineColorAC(lineColor))
   }
@@ -83,12 +83,12 @@ const EditorPage: React.FunctionComponent = () => {
     dispatch(openUploadWindowsAC())  
   }
 
-  const instrumentName = useSelector((state: State) => state.editorReducer.instrumentName);
+  const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName);
   const subCtx = useSelector((state: any) => state.editorReducer.subCtx);
   const uploadWindowsOpened = useSelector((state: any) => state.editorReducer.uploadWindowsOpened)
 
   const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value)
-  const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'))
+  const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'));
   const onClicksetInstrument = (type:string) => (e: React.MouseEvent) => setInstrument(type);
   const valuetext = (value: any) => value
   const uploadImage = () => {

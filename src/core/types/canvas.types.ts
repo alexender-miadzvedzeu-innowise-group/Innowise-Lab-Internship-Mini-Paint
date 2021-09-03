@@ -1,20 +1,3 @@
-export type State = {
-  editorReducer: {
-    lineColor: string,
-    lineWeight: string,
-    instrumentName: string,
-    mouseDownPosition: string,
-    mainCtx: Context,
-    subCtx: Context,
-    canvasSize: {
-      width: number,
-      height: number
-    },
-    subCtxDataUrl: string,
-    userID: string
-  }
-}
-
 export type Context = {
   strokeStyle: string,
   lineWidth: string,

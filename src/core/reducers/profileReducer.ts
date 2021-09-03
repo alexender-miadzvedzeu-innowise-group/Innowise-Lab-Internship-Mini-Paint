@@ -1,8 +1,8 @@
 import { 
   GET_USER_NAME,
-  GET_IMAGES_FROM_DB,
-  GET_IMAGES_FROM_DB_SUCCEEDED,
-  GET_IMAGES_FROM_DB_FAILED,
+  GET_USER_IMAGES_FROM_DB,
+  GET_USER_IMAGES_FROM_DB_SUCCEEDED,
+  GET_USER_IMAGES_FROM_DB_FAILED,
   DEL_CLICKED,
   DEL_USER_IMAGE_FROM_DB,
   DEL_USER_IMAGE_FROM_DB_SUCCEEDED,
@@ -17,7 +17,7 @@ interface Action {
   id: number | null
 }
 
-interface State {
+interface IprofileState {
   userName: string,
   loading: boolean,
   error: boolean,
@@ -28,7 +28,7 @@ interface State {
   idTodell: number | null
 }
 
-const initialState: State = {
+const initialState: IprofileState = {
   userName: '',
   loading: false,
   error: false,
@@ -45,11 +45,11 @@ export const profileReducer = (state = initialState, action: Action ):object => 
       return {...state, userName: JSON.parse(getCookie('user')).split('@').slice(0,1).join()};
     case GET_USER_ID:
       return {...state, userID: JSON.parse(getCookie('userID'))}
-    case GET_IMAGES_FROM_DB:
+    case GET_USER_IMAGES_FROM_DB:
       return {...state, loading: true, error: false, successed: false, delCicked: false};
-    case GET_IMAGES_FROM_DB_SUCCEEDED:
+    case GET_USER_IMAGES_FROM_DB_SUCCEEDED:
       return {...state, loading: false, imagesData: action.payload.filter((img: any) => img.userName === state.userName)};
-    case GET_IMAGES_FROM_DB_FAILED:
+    case GET_USER_IMAGES_FROM_DB_FAILED:
       return {...state, loading: false};
     case DEL_CLICKED:
       return {...state, delCicked: !state.delCicked, idTodell: action.id}
