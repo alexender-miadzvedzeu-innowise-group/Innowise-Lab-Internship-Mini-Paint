@@ -4,7 +4,7 @@ import { fadeIn, fadeInDown } from 'react-animations';
 import Radium from 'radium';
 import Avatar from '@material-ui/core/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
-import { delUserImageFromDbAC, getUserImagesFromDbAC, getUserNameAC } from '../../core/actions/profile';
+import { delUserImageFromDbAC, getUserImagesFromDbAC, getUserNameAC, getUserIDAC } from '../../core/actions/profile';
 import { useEffect } from 'react';
 import { delClickedAC, } from '../../core/actions/profile';
 import Button from '@material-ui/core/Button';
@@ -29,19 +29,21 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
   
   const dispatch= useDispatch()
   const user = useSelector((state:any) => state.profileReducer.userName);
+  const userID = useSelector((state:any) => state.profileReducer.userID);
   const images = useSelector((state:any) => state.profileReducer.imagesData)
   const isClicked = useSelector((state:any) => state.profileReducer.delCicked)
   const idToDel = useSelector((state: any) => state.profileReducer.idTodell)
   const loading = useSelector((state: any) => state.profileReducer.loading)
 
   const delCicked = (id: number | null) => dispatch(delClickedAC(id));
-  const getUserImagesFromDB = () => dispatch(getUserImagesFromDbAC())
-  const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(idToDel, user))
+  const onClickDel = (id: number | null) => (e:any) => delCicked(id)
+  const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(idToDel, userID))
 
   useEffect(() => {
     dispatch(getUserNameAC());
-    getUserImagesFromDB()
-  }, [])
+    dispatch(getUserIDAC());
+    dispatch(getUserImagesFromDbAC())
+  }, [dispatch])
 
   return(
     <Radium.StyleRoot>
@@ -59,27 +61,26 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
                     <img className={classes.img} src={image.imgUrl} alt={image.imgUrl} />
                   </div>
                   <div className={classes.delete_button}>
-                    <Button onClick={() => delCicked(image.id)} className={classes.button_icon} variant="contained" color="secondary" >Delete</Button>
+                    <Button onClick={onClickDel(image.id)} className={classes.button_icon} variant="contained" color="secondary" >Delete</Button>
                   </div>
                 </div>
               )
             })
           }
         </div>
-        {isClicked ?
+        {isClicked &&
           <div className={classes.modal_window_background}>
             <FlashDiv className={classes.animation_wrapper}>
               <div className={classes.modal_window}>
                   <p className={classes.modal_window__text}>Are you really want to delete this image?</p>
                   <div className={classes.modal_window__buttonst_container}>
-                    <Button onClick={() => delCicked(null)} variant="contained">No</Button>
+                    <Button onClick={onClickDel(null)} variant="contained">No</Button>
                     <Button onClick={delUserImageFromDB} variant="contained" color="secondary">Yes</Button>
                   </div>
-                  { loading ? <CircularProgress className={classes.progress} color="inherit"/> : null }
+                  { loading && <CircularProgress className={classes.progress} color="inherit"/> }
               </div>
             </FlashDiv>
-          </div> 
-        : null}
+          </div> }
       </div>
     </Radium.StyleRoot>
   )

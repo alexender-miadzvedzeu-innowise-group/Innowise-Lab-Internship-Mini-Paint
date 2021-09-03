@@ -11,15 +11,16 @@ export const getUserImages = async () => {
   return data;
 }
 
-export const delUserImage = async (id: string | number, userName: string) => {
+export const delUserImage = async (id: string | number, userID: string) => {
   await db.collection('images').doc(`${id}`).delete();
-  const path = `library/${userName}/photo:${id}`;
+  const path = `library/${userID}/photo:${id}`;
   const imgRef: any = storageRef.child(path);
   await imgRef.delete();
 }
 
-export const uploadImage = async (dataUrl: string, userName: StaticRangeInit, id: string | number) => {
-  const path = `library/${userName}/photo:${id}`;
+export const uploadImage = async (dataUrl: string, userID: string, userName: StaticRangeInit, id: string | number) => {
+  
+  const path = `library/${userID}/photo:${id}`;
   const imgRef: any = storageRef.child(path);
   await imgRef.putString(dataUrl, 'data_url');
   const imgUrl = await storage.refFromURL(`gs://${process.env.REACT_APP_STORAGE_BUCKET}/${path}`).getDownloadURL()

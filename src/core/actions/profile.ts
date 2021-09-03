@@ -6,10 +6,12 @@ import {
   DEL_CLICKED,
   DEL_USER_IMAGE_FROM_DB,
   DEL_USER_IMAGE_FROM_DB_SUCCEEDED,
-  DEL_USER_IMAGE_FROM_DB_FAILED
+  DEL_USER_IMAGE_FROM_DB_FAILED,
+  GET_USER_ID
 } from './actions.types';
 
 export const getUserNameAC = () => ({ type: GET_USER_NAME});
+export const getUserIDAC = () => ({ type: GET_USER_ID});
 export const getUserImagesFromDbAC = () => ({ type: GET_IMAGES_FROM_DB });
 export const getUserImagesFromDbSucceededAC = (payload: any) => ({ type: GET_IMAGES_FROM_DB_SUCCEEDED, payload});
 export const getUserImagesFromDbFailedAC = (payload: any) => ({ type: GET_IMAGES_FROM_DB_FAILED, payload });

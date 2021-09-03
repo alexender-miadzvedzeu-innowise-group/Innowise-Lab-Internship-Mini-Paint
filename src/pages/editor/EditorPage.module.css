@@ -77,3 +77,8 @@
   display: flex;
   justify-content: space-around;
 }
+.slider_text {
+  font-size: 0.6rem; 
+  margin-bottom: 5px;
+  color: #969fa5;
+}

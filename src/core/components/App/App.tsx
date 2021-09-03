@@ -8,6 +8,7 @@ import HomePage from '../../../pages/home/HomePage';
 import Navbar from '../Navbar/Navbar';
 import EditorPage from '../../../pages/editor/EditorPage';
 import ProfilePage from '../../../pages/profile/ProfilePage';
+import { getCookie } from '../../helpers/getCookie';
 
 const App: React.FunctionComponent = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const App: React.FunctionComponent = () => {
   const checkUserAftorization = () => {
     dispatch(checkUserAftorizationAC())
   }
+
   const isLoged = useSelector((state: any) => state.authReducer.isLoged)
 
   return(
