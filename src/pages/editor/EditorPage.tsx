@@ -5,17 +5,16 @@ import Canvas from '../../core/components/Canvas/Canvas';
 import Radium from 'radium';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import CreateIcon from '@material-ui/icons/Create';
 import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC, openUploadWindowsAC } from '../../core/actions/editor';
 import Button from '@material-ui/core/Button';
 import { State } from '../../core/types/types';
 import { getCookie } from '../../core/helpers/getCookie'
 import styled, { keyframes } from 'styled-components';
+import { withStyles, Theme } from '@material-ui/core/styles';
 
 const flashAnimation = keyframes`${fadeInDown}`;
 const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
@@ -31,8 +30,40 @@ const styles: Istyles = {
   }
 }
 
-const EditorPage: React.FunctionComponent = () => {
+const PrettoSlider = withStyles({
+  root: {
+    margin: 0,
+    padding: 0,
+    color: '#0b1519'
+  },
+  thumb: {
+    backgroundColor: '#878f93',
+    border: '2px solid #0b1519',
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  valueLabel: {
+    left: '-12px',
+  },
+})(Slider);
 
+const UploadButton = withStyles((theme: Theme) => ({
+  root: {
+    color: '#000',
+    backgroundColor: '#878f93',
+    height: '25px',
+    position: 'absolute',
+    right: '1%',
+    '&:hover': {
+      backgroundColor: '#0b1519',
+      color: '#fff'
+    },
+  },
+}))(Button);
+
+const EditorPage: React.FunctionComponent = () => {
+  
   const dispatch = useDispatch();
   const setLineColor = (lineColor: string) => {
     dispatch(setLineColorAC(lineColor))
@@ -66,7 +97,6 @@ const EditorPage: React.FunctionComponent = () => {
   }
 
   return(
-    //@ts-ignore
     <Radium.StyleRoot>
       <div className={classes.wrapper} style={styles.fadeIn}>
         <div className={classes.buttons_navbar}>
@@ -76,10 +106,9 @@ const EditorPage: React.FunctionComponent = () => {
           <div className={instrumentName === 'pencil' ? classes.button_checked : classes.button} onClick={onClicksetInstrument('pencil')}><CreateIcon /></div>
           
           <div className = {classes.size_slider}>
-            <Typography style={{fontSize: '0.6rem', margin: '0', color: '#969fa5'}} id="discrete-slider" gutterBottom>Line weight</Typography>
-            <Slider
+            <p className={classes.slider_text}>Line weight</p>
+            <PrettoSlider
               onChange={onChangeWeight}
-              style={{padding: '0', color: '#969fa5'}}
               defaultValue={0}
               getAriaValueText={valuetext}
               aria-labelledby="discrete-slider"
@@ -91,16 +120,10 @@ const EditorPage: React.FunctionComponent = () => {
             />
           </div>
           <input type="color" onChange={onChangeColor} />
-          <Button 
+          <UploadButton 
             onClick={showHideUploadWindow}
-            style={{
-              background: '#969fa5',
-              position: 'absolute',
-              right: '1%',
-              height: '25px'
-            }} 
             variant="contained"
-          >Upload</Button>
+          >Upload</UploadButton>
         </div>
         <Canvas />
       </div>

@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './Navbar.module.css';
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { signOutAC } from '../../actions/auth';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Logo from '../../../assets/icons/Logo.jpg'
+import { fadeInDown } from 'react-animations';
+import styled, { keyframes } from 'styled-components';
+
+const flashAnimation = keyframes`${fadeInDown}`;
+const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
 
 const Navbar: React.FunctionComponent = (props:any) => {
+
+  const [isClicked, setIsClicked] = useState(false);
+  const onClickDelClicked = () => setIsClicked(!isClicked);
 
   const dispatch = useDispatch();
   const signOut = () => {
@@ -39,25 +47,64 @@ const Navbar: React.FunctionComponent = (props:any) => {
 
   const materialStyles = useStyles();
 
+  const Navbutton = withStyles((theme: Theme) => ({
+  root: {
+    color: '#000',
+    backgroundColor: '#878f93',
+    height: '25px',
+    margin: '0 1%',
+    alignSelf: 'center',
+    '&:hover': {
+      backgroundColor: '#878f93',
+    }
+  },
+  }))(Button);
+
+  const LogOutbutton = withStyles((theme: Theme) => ({
+  root: {
+    color: '#fff',
+    backgroundColor: '#0b1519',
+    height: '25px',
+    margin: '0 1%',
+    gridColumn: '11/13',
+    alignSelf: 'center',
+    '&:hover': {
+      backgroundColor: '#0b1519',
+    }
+  },
+  }))(Button);
+
   return(
     <div className={classes.wrapper}>
       <AppBar position="static" className={materialStyles.toolBar} >
           <div className={classes.logo_container}>
             <img className={classes.logo} src={Logo} alt="LOGO" />
           </div>
-          <Button className={materialStyles.nav__link}>
+          <Navbutton>
             <NavLink to='/ ' activeClassName={classes.activeNav__link} className={classes.nav__link}>Home</NavLink>
-          </Button>
-          <Button className={materialStyles.nav__link}>
+          </Navbutton>
+          <Navbutton>
             <NavLink to='/editor' activeClassName={classes.activeNav__link} className={classes.nav__link}>Editor</NavLink>
-          </Button>
-          <Button className={materialStyles.nav__link}>
+          </Navbutton>
+          <Navbutton>
             <NavLink to='/profile' activeClassName={classes.activeNav__link} className={classes.nav__link}>Profile</NavLink>
-          </Button>
-          <Button className={materialStyles.nav__link_logOut} onClick={signOut}>
+          </Navbutton>
+          <LogOutbutton onClick={onClickDelClicked}>
             Log out
-          </Button>
+          </LogOutbutton>
       </AppBar>
+      {isClicked &&
+          <div className={classes.modal_window_background}>
+            <FlashDiv className={classes.animation_wrapper}>
+              <div className={classes.modal_window}>
+                  <p className={classes.modal_window__text}>Do you want to log out?</p>
+                  <div className={classes.modal_window__buttonst_container}>
+                    <Button onClick={onClickDelClicked} variant="contained">No</Button>
+                    <Button onClick={signOut} variant="contained" color="secondary">Yes</Button>
+                  </div>
+              </div>
+            </FlashDiv>
+          </div> }
     </div>
   )
 }
