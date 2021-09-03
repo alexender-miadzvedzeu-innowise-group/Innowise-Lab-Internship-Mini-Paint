@@ -21,14 +21,14 @@ interface Action {
   error?: any
 }
 
-interface State {
+interface IauthState {
   loading: boolean,
   error: boolean,
   isLoged: boolean,
   errorMessage: string | null
 }
 
-const initialState: State = {
+const initialState: IauthState = {
   loading: false,
   error: false,
   isLoged: false,

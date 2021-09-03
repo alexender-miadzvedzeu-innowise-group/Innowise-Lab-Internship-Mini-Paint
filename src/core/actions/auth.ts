@@ -11,11 +11,11 @@ import {
   SET_LOCAL_USER_ERROR_MESSAGE
 } from './actions.types';
 
-export const createUserWithEmailAC = (payload: any) => ({ type: CREATE_USER_WITH_E_MAIL, payload})
+export const createUserWithEmailAC = (payload:{email:string, password: string}) => ({ type: CREATE_USER_WITH_E_MAIL, payload})
 export const createUserWithEmailSucceededAC = (payload: any) => ({ type: CREATE_USER_WITH_E_MAIL_SUCCEEDED, payload})
 export const createUserWithEmailFailedAC = (error: any) => ({ type: CREATE_USER_WITH_E_MAIL_FAILED, error})
 
-export const signInWithEmailAC = (payload: any) => ({ type: SIGN_IN_WITH_E_MAIL, payload})
+export const signInWithEmailAC = (payload:{email:string, password: string}) => ({ type: SIGN_IN_WITH_E_MAIL, payload})
 export const signInWithEmailSucceededAC = (payload: any) => ({ type: SIGN_IN_WITH_E_MAIL_SUCCEEDED, payload})
 export const signInWithEmailFailedAC = (error: any) => ({ type: SIGN_IN_WITH_E_MAIL_FAILED, error})
 export const resetErrorMessageAC = () => ({ type: RESET_ERROR_MESSAGE })

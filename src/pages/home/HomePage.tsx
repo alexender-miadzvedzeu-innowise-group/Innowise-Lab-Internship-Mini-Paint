@@ -22,7 +22,7 @@ const styles: Istyles = {
   }
 }
 
-const HomePage: React.FunctionComponent = ({signOut}:any) => {
+const HomePage: React.FunctionComponent = () => {
 
   const [inputValue, setInputValue] = useState('')
 

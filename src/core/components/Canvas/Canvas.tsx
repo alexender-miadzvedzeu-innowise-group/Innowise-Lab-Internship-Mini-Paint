@@ -2,12 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import classes from './Canvas.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCanvasSizeAC, setMainCtxAC, setMouseDownPositionAC, setSubCtxAC } from '../../actions/editor';
-import { State } from '../../types/types';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-interface IProps {
-  ref: object
-}
 
 const Canvas: React.FunctionComponent = () => {
   
@@ -16,10 +11,10 @@ const Canvas: React.FunctionComponent = () => {
   const subCanvasRef = useRef<HTMLCanvasElement | null>(null);
   
   const dispatch = useDispatch();
-  const setCanvasSize = (windowsSize: object) => {
+  const setCanvasSize = (windowsSize: {width: number, height: number}) => {
     dispatch(setCanvasSizeAC(windowsSize))
   }
-  const setMouseDownPosition = (mouseDownPosition: object) => {
+  const setMouseDownPosition = (mouseDownPosition: {x?: number, y?: number}) => {
     dispatch(setMouseDownPositionAC(mouseDownPosition))
   }
   const setMainCtx = (context: any) => {
@@ -34,7 +29,7 @@ const Canvas: React.FunctionComponent = () => {
   const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName)
   const canvasSize = useSelector((state: any) => state.editorReducer.canvasSize)
   const mouseDownPosition = useSelector((state: any) => state.editorReducer.mouseDownPosition)
-  const mainCtx = useSelector((state: State) => state.editorReducer.mainCtx)
+  const mainCtx = useSelector((state: any) => state.editorReducer.mainCtx)
   const subCtx = useSelector((state: any) => state.editorReducer.subCtx)
   const loading = useSelector((state: any) => state.editorReducer.loading)
 

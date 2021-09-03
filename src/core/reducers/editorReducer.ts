@@ -31,7 +31,7 @@ interface Action {
   readonly payload: any,
 }
 
-interface State {
+interface IeditorState {
   lineColor: string,
   lineWeight: string,
   instrumentName: string,
@@ -53,7 +53,7 @@ interface State {
   uploadWindowsOpened: boolean
 }
 
-const initialState: State = {
+const initialState: IeditorState = {
   lineColor: '#000',
   lineWeight: '1',
   instrumentName: '',

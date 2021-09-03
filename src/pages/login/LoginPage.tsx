@@ -42,11 +42,11 @@ const LoginPage: React.FC = () => {
 
   const errorMessage = useSelector((state: any) => state.authReducer.errorMessage);
 
-  const signIn = (payload: object) => {
+  const signIn = (payload:{email:string, password: string}) => {
     dispatch(signInWithEmailAC(payload))
   }
 
-  const createUser = (payload: object) => {
+  const createUser = (payload:{email:string, password: string}) => {
     dispatch(createUserWithEmailAC(payload))
   }
 
@@ -58,7 +58,7 @@ const LoginPage: React.FC = () => {
     dispatch(setLocalUserErrorMessageAC(error))
   }
 
-  const onSubmit = (e: any) => {
+  const onSubmit = () => {
     switch (login) {
       case true:
         if (!isEmptyFields([data.email, data.password])) {

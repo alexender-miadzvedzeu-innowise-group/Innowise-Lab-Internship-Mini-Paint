@@ -25,7 +25,7 @@ const styles: Istyles = {
 const flashAnimation = keyframes`${fadeInDown}`;
 const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
 
-const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
+const ProfilePage: React.FunctionComponent = () => {
   
   const dispatch= useDispatch()
   const user = useSelector((state:any) => state.profileReducer.userName);
@@ -36,7 +36,7 @@ const ProfilePage: React.FunctionComponent = ({signOut}:any) => {
   const loading = useSelector((state: any) => state.profileReducer.loading)
 
   const delCicked = (id: number | null) => dispatch(delClickedAC(id));
-  const onClickDel = (id: number | null) => (e:any) => delCicked(id)
+  const onClickDel = (id: number | null) => () => delCicked(id)
   const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(idToDel, userID))
 
   useEffect(() => {
