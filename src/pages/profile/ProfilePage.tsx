@@ -28,7 +28,8 @@ const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
 const ProfilePage: React.FunctionComponent = () => {
   
   const dispatch= useDispatch()
-  const user = useSelector((state:any) => state.profileReducer.userName);
+  const userName = useSelector((state:any) => state.authReducer.userName);
+  console.log(userName);
   const userID = useSelector((state:any) => state.profileReducer.userID);
   const images = useSelector((state:any) => state.profileReducer.imagesData)
   const isClicked = useSelector((state:any) => state.profileReducer.delCicked)
@@ -42,15 +43,15 @@ const ProfilePage: React.FunctionComponent = () => {
   useEffect(() => {
     dispatch(getUserNameAC());
     dispatch(getUserIDAC());
-    dispatch(getUserImagesFromDbAC())
-  }, [dispatch])
+    dispatch(getUserImagesFromDbAC(userName))
+  }, [dispatch, userName])
 
   return(
     <Radium.StyleRoot>
       <div className={classes.wrapper} style={styles.fadeIn}>
         <div className={classes.user_info}>
-          <Avatar>{user.substr(0, 1).toUpperCase()}</Avatar>
-          <h3 className={classes.user_name}>{user}</h3>
+          <Avatar>{userName.substr(0, 1).toUpperCase()}</Avatar>
+          <h3 className={classes.user_name}>{userName}</h3>
         </div>
         <div className={classes.images_container}>
           {

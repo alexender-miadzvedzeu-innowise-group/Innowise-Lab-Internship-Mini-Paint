@@ -27,7 +27,6 @@ const initialState: IhomeState = {
   sortedImagesData: {}
 }
 
-
 export const homeReducer = (state = initialState, action: Action ):object => {
   switch (action.type) {
     case GET_IMAGES_FROM_DB:

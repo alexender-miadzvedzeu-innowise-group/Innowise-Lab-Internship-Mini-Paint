@@ -1,5 +1,4 @@
 import { 
-  GET_USER_NAME,
   GET_USER_IMAGES_FROM_DB,
   GET_USER_IMAGES_FROM_DB_SUCCEEDED,
   GET_USER_IMAGES_FROM_DB_FAILED,
@@ -7,18 +6,16 @@ import {
   DEL_USER_IMAGE_FROM_DB,
   DEL_USER_IMAGE_FROM_DB_SUCCEEDED,
   DEL_USER_IMAGE_FROM_DB_FAILED,
-  GET_USER_ID
-} from '../actions/actions.types'
-import { getCookie } from '../helpers/getCookie';
+} from '../actions/actions.types';
 
 interface Action {
   type: string,
   payload: [],
-  id: number | null
+  id: number | null,
+  userName: string
 }
 
 interface IprofileState {
-  userName: string,
   loading: boolean,
   error: boolean,
   successed: boolean,
@@ -29,7 +26,6 @@ interface IprofileState {
 }
 
 const initialState: IprofileState = {
-  userName: '',
   loading: false,
   error: false,
   successed: false,
@@ -41,14 +37,11 @@ const initialState: IprofileState = {
 
 export const profileReducer = (state = initialState, action: Action ):object => {
   switch (action.type) {
-    case GET_USER_NAME:
-      return {...state, userName: JSON.parse(getCookie('user')).split('@').slice(0,1).join()};
-    case GET_USER_ID:
-      return {...state, userID: JSON.parse(getCookie('userID'))}
     case GET_USER_IMAGES_FROM_DB:
       return {...state, loading: true, error: false, successed: false, delCicked: false};
     case GET_USER_IMAGES_FROM_DB_SUCCEEDED:
-      return {...state, loading: false, imagesData: action.payload.filter((img: any) => img.userName === state.userName)};
+      console.log(action.payload);
+      return {...state, loading: false, imagesData: action.payload };
     case GET_USER_IMAGES_FROM_DB_FAILED:
       return {...state, loading: false};
     case DEL_CLICKED:

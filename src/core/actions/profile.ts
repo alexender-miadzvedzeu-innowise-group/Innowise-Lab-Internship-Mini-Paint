@@ -12,7 +12,7 @@ import {
 
 export const getUserNameAC = () => ({ type: GET_USER_NAME});
 export const getUserIDAC = () => ({ type: GET_USER_ID});
-export const getUserImagesFromDbAC = () => ({ type: GET_USER_IMAGES_FROM_DB });
+export const getUserImagesFromDbAC = (userName: string) => ({ type: GET_USER_IMAGES_FROM_DB, userName });
 export const getUserImagesFromDbSucceededAC = (payload: any) => ({ type: GET_USER_IMAGES_FROM_DB_SUCCEEDED, payload});
 export const getUserImagesFromDbFailedAC = (payload: any) => ({ type: GET_USER_IMAGES_FROM_DB_FAILED, payload });
 

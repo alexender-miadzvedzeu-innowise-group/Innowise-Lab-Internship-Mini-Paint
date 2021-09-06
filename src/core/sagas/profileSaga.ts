@@ -1,17 +1,16 @@
 import { takeEvery, call, all, put } from "@redux-saga/core/effects";
 import { GET_USER_IMAGES_FROM_DB, DEL_USER_IMAGE_FROM_DB } from '../actions/actions.types';
 import { AnyAction } from "redux";
-import { getUserImagesFromDbSucceededAC, getUserImagesFromDbFailedAC, delUserImageFromDbSucceededAC, delUserImageFromDbFailedAC, delUserImageFromDbAC } from "../actions/profile";
+import { getUserImagesFromDbSucceededAC, getUserImagesFromDbFailedAC, delUserImageFromDbSucceededAC, delUserImageFromDbFailedAC } from "../actions/profile";
 import { delUserImage, getUserImages } from "../services/firebase/currentUserFetches";
+import { sortUserImages } from '../helpers/sortUserImages'
 
-interface IDoc {
-  data: () => never
-}
 
 export function* getUserImageFetch(payload: AnyAction): Generator {
   try {
-    const data = yield getUserImages()
-    yield put(getUserImagesFromDbSucceededAC(data));
+    const data = yield call(getUserImages);
+    const sortedData = yield call(sortUserImages, data, payload.userName)
+    yield put(getUserImagesFromDbSucceededAC(sortedData));
   } catch (error) {
     yield put(getUserImagesFromDbFailedAC(error))
   }
