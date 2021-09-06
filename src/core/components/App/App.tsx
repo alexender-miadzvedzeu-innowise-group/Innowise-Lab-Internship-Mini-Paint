@@ -17,8 +17,7 @@ const App: React.FunctionComponent = () => {
   const dispatch = useDispatch();
 
   const isLoged = useSelector((state: IState) => state.authReducer.isLoged);
-  const state = useSelector((state: IState) => state);
-  console.log(state);
+
   useEffect(() => {
     app.auth().onAuthStateChanged((user) => {
       if (user && user.email && user.uid) {
