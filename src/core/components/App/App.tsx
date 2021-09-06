@@ -31,19 +31,13 @@ const App: React.FunctionComponent = () => {
         <div>
           <Navbar />
           <Switch>
-            <Route path='/editor'>
-              <EditorPage />
-            </Route>
-            <Route path='/profile'>
-              <ProfilePage />
-            </Route>
-            <Route path='/'>
-              <HomePage />
-            </Route>
+            <Route path='/editor' component={EditorPage}/>
+            <Route path='/profile' component={ProfilePage}/>
+            <Route path='/' component={HomePage}/>
           </Switch>
         </div> : 
         <Route path='/'>
-          {!isLoged && <Redirect to="/"/>}
+          {!isLoged && <Redirect to='/'/>}
           <LoginPage />
         </Route>
       }
