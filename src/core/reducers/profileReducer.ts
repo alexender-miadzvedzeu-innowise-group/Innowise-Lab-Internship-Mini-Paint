@@ -13,7 +13,7 @@ interface Action {
   payload: [],
   id: number | null,
   userName: string
-}
+};
 
 interface IprofileState {
   loading: boolean,
@@ -23,7 +23,7 @@ interface IprofileState {
   delConfurm: boolean,
   imagesData: [],
   idTodell: number | null
-}
+};
 
 const initialState: IprofileState = {
   loading: false,
@@ -33,7 +33,7 @@ const initialState: IprofileState = {
   delConfurm: false,
   imagesData: [],
   idTodell: null
-}
+};
 
 export const profileReducer = (state = initialState, action: Action ):object => {
   switch (action.type) {
@@ -44,16 +44,16 @@ export const profileReducer = (state = initialState, action: Action ):object => 
     case GET_USER_IMAGES_FROM_DB_FAILED:
       return {...state, loading: false};
     case DEL_CLICKED:
-      return {...state, delCicked: !state.delCicked, idTodell: action.id}
+      return {...state, delCicked: !state.delCicked, idTodell: action.id};
     case DEL_USER_IMAGE_FROM_DB:
-      return {...state, loading: true}
+      return {...state, loading: true};
     case DEL_USER_IMAGE_FROM_DB_SUCCEEDED:
-      return {...state, imagesData: state.imagesData.filter((img: any) => img.id !== state.idTodell), loading: false, delCicked: false, idToDel: null }
+      return {...state, imagesData: state.imagesData.filter((img: any) => img.id !== state.idTodell), loading: false, delCicked: false, idToDel: null };
     case DEL_USER_IMAGE_FROM_DB_FAILED:
-      return {...state, loading: false, delCicked: false}
+      return {...state, loading: false, delCicked: false};
     default:
       return state;
   }
-}
+};
 
 export default profileReducer;

@@ -7,6 +7,6 @@ export const devideImages = (data: any): object => {
           sortedData[img.userName] = [];
           sortedData[img.userName].push(img.imgUrl);
         }
-      })
+      });
   return sortedData;
-}
+};

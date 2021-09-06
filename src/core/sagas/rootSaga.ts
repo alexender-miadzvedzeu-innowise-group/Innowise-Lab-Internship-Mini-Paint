@@ -14,5 +14,5 @@ export default function* rootSaga() {
         call(homeSaga),
         call(profileSaga),
         call(signOutSaga),
-    ])
+    ]);
 }

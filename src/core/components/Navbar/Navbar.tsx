@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classes from './Navbar.module.css';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signOutAC } from '../../actions/auth';
 import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import Logo from '../../../assets/icons/Logo.jpg'
+import Logo from '../../../assets/icons/Logo.jpg';
 import { fadeInDown } from 'react-animations';
 import styled, { keyframes } from 'styled-components';
 
@@ -20,8 +20,8 @@ const Navbar: React.FunctionComponent = (props:any) => {
 
   const dispatch = useDispatch();
   const signOut = () => {
-    dispatch(signOutAC())
-  }
+    dispatch(signOutAC());
+  };
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,7 +43,8 @@ const Navbar: React.FunctionComponent = (props:any) => {
         color: '#fff',
         gridColumn: '11/13'
       },
-    }));
+    })
+  );
 
   const materialStyles = useStyles();
 
@@ -106,7 +107,7 @@ const Navbar: React.FunctionComponent = (props:any) => {
             </FlashDiv>
           </div> }
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

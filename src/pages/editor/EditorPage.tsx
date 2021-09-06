@@ -26,7 +26,7 @@ const styles: Istyles = {
     animation: 'x 1s',
     animationName: Radium.keyframes(fadeIn, 'fadeIn')
   }
-}
+};
 
 const PrettoSlider = withStyles({
   root: {
@@ -63,37 +63,37 @@ const UploadButton = withStyles((theme: Theme) => ({
 const EditorPage: React.FunctionComponent = () => {
   const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName);
   const subCtx = useSelector((state: any) => state.editorReducer.subCtx);
-  const uploadWindowsOpened = useSelector((state: any) => state.editorReducer.uploadWindowsOpened)
+  const uploadWindowsOpened = useSelector((state: any) => state.editorReducer.uploadWindowsOpened);
   const userID = useSelector((state: any) => state.authReducer.userID);
   const userName = useSelector((state: any) => state.authReducer.userName);
 
   const dispatch = useDispatch();
   
   const setLineColor = (lineColor: string) => {
-    dispatch(setLineColorAC(lineColor))
-  }
+    dispatch(setLineColorAC(lineColor));
+  };
   const setLineWeight = (lineWeight: string) => {
-    dispatch(setLineWeightAC(lineWeight))
-  }
+    dispatch(setLineWeightAC(lineWeight));
+  };
   const setInstrument = (instrumentName: string) => {
-    dispatch(setInstrumentAC(instrumentName))
-  }
+    dispatch(setInstrumentAC(instrumentName));
+  };
   const setDataUrl = (dataUrl: string) => {
     dispatch(setDataUrlAC(dataUrl, userID, userName));
-  }
+  };
 
   const showHideUploadWindow = () => {
-    dispatch(openUploadWindowsAC())  
-  } 
+    dispatch(openUploadWindowsAC());
+  };
 
-  const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value)
+  const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value);
   const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'));
   const onClicksetInstrument = (type:string) => (e: React.MouseEvent) => setInstrument(type);
-  const valuetext = (value: any) => value
+  const valuetext = (value: any) => value;
   const uploadImage = () => {
     setDataUrl(subCtx.canvas.toDataURL());
-    showHideUploadWindow()
-  }
+    showHideUploadWindow();
+  };
 
   return(
     <Radium.StyleRoot>
@@ -139,7 +139,7 @@ const EditorPage: React.FunctionComponent = () => {
           </FlashDiv>
         </div>}
     </Radium.StyleRoot>
-  )
-}
+  );
+};
 
 export default EditorPage;

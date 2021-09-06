@@ -10,11 +10,11 @@ import {
   SIGN_OUT_SUCCEEDED,
   SIGN_OUT_FAILED,
   SET_LOGGED
-} from '../actions/actions.types'
+} from '../actions/actions.types';
 
 interface Action {
-  readonly type: string,
-  readonly payload: {} | any,
+  type: string,
+  payload: {} | any,
   error?: any,
   userName: string,
   userID: string
@@ -36,37 +36,37 @@ const initialState: IauthState = {
   errorMessage: null,
   userName: '',
   userID: ''
-}
+};
 
 export const authReducer = (state = initialState, action: Action ):object => {
   switch (action.type) {
     case SET_LOGGED:
-      return {...state, isLoged: true, userName: action.userName, userID: action.userID}
+      return {...state, isLoged: true, userName: action.userName, userID: action.userID};
     case CREATE_USER_WITH_E_MAIL:
-      return {...state, loading: true, error: false}
+      return {...state, loading: true, error: false};
     case CREATE_USER_WITH_E_MAIL_SUCCEEDED:
-      return {...state, loading: false, error: false, isLoged: true}
+      return {...state, loading: false, error: false, isLoged: true};
     case CREATE_USER_WITH_E_MAIL_FAILED:
-      return {...state, loading: false, error: true, errorMessage: action.error.message}
+      return {...state, loading: false, error: true, errorMessage: action.error.message};
     case SIGN_IN_WITH_E_MAIL:
-      return {...state, loading: true, error: false}
+      return {...state, loading: true, error: false};
     case SIGN_IN_WITH_E_MAIL_SUCCEEDED:
-      return {...state, loading: false, error: false, isLoged: true, userName: action.payload.userName, userID: action.payload.userID}
+      return {...state, loading: false, error: false, isLoged: true, userName: action.payload.userName, userID: action.payload.userID};
     case SIGN_IN_WITH_E_MAIL_FAILED:
-      return {...state, loading: false, error: true, errorMessage: action.error.message}
+      return {...state, loading: false, error: true, errorMessage: action.error.message};
     case SIGN_OUT_SUCCEEDED:
-      return {...state, isLoged: false}
+      return {...state, isLoged: false};
     case SIGN_OUT_FAILED:
-      return {...state, error: action.error}
+      return {...state, error: action.error};
     case RESET_ERROR_MESSAGE:
       if (state.error) {
-        return {...state, error: false, errorMessage: null}
-      } else return state
+        return {...state, error: false, errorMessage: null};
+      } else return state;
     case SET_LOCAL_USER_ERROR_MESSAGE:
-      return {...state, error: true, errorMessage: action.error}
+      return {...state, error: true, errorMessage: action.error};
     default:
       return state;
   }
-}
+};
 
 export default authReducer;

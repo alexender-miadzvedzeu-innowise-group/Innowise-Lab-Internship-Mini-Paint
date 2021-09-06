@@ -21,24 +21,24 @@ const styles: Istyles = {
     animation: 'x 1s',
     animationName: Radium.keyframes(fadeIn, 'fadeIn')
   }
-}
+};
 
 const HomePage: React.FunctionComponent = () => {
 
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState('');
 
   const dispatch = useDispatch();
   const sortImagesData = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    return dispatch(sortImagesDataAC(onClicksortedImagesData(imagesData, e.target.value)))
-  }
+    return dispatch(sortImagesDataAC(onClicksortedImagesData(imagesData, e.target.value)));
+  };
 
-  const imagesData = useSelector((state: any) => state.homeReducer.imagesData)
-  const sortedImagesData = useSelector((state: any) => state.homeReducer.sortedImagesData)
+  const imagesData = useSelector((state: any) => state.homeReducer.imagesData);
+  const sortedImagesData = useSelector((state: any) => state.homeReducer.sortedImagesData);
   
   useEffect(() => {
-    dispatch(getimagesFromDbAC())
-  }, [dispatch])
+    dispatch(getimagesFromDbAC());
+  }, [dispatch]);
 
   return(
     <Radium.StyleRoot>
@@ -78,17 +78,17 @@ const HomePage: React.FunctionComponent = () => {
                         <div className={classes.imgWrapper} key ={key}>
                           <img className={classes.img} src={img} alt={img} />
                         </div>
-                      )
+                      );
                     })
                   }
                 </div>
               </div>
-            )
+            );
           })
         }
       </div>
     </Radium.StyleRoot>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

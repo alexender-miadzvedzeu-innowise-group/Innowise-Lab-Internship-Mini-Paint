@@ -1,6 +1,6 @@
-import { takeEvery, put, call, all } from "@redux-saga/core/effects";
+import { takeEvery, put, call, all } from '@redux-saga/core/effects';
 import { SIGN_OUT } from '../actions/actions.types';
-import { signOutACSucceededAC, signOutACFailedAC } from '../actions/auth'
+import { signOutACSucceededAC, signOutACFailedAC } from '../actions/auth';
 import { signOutUser } from '../services/firebase/authFetches';
 
 interface FirebaseSignOutResonse {
@@ -9,11 +9,11 @@ interface FirebaseSignOutResonse {
 
 export function* signOutFetchAsyncWorker() {
     try {
-        const response: FirebaseSignOutResonse =  yield call(signOutUser)
+        const response: FirebaseSignOutResonse =  yield call(signOutUser);
         yield put(signOutACSucceededAC(response));
     } catch (error) {
         yield put(signOutACFailedAC(error));
-    }
+    };
 }
 
 export function* signOutFetchAsyncWatcher() {
@@ -23,5 +23,5 @@ export function* signOutFetchAsyncWatcher() {
 export default function* signOutSaga(): any {
     yield all([
         call(signOutFetchAsyncWatcher)
-    ])
+    ]);
 }

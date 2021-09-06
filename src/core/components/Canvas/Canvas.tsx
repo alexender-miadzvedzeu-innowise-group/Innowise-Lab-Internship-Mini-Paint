@@ -6,59 +6,59 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Canvas: React.FunctionComponent = () => {
   
-  const wrapperRef = useRef<HTMLDivElement | null>(null)
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const subCanvasRef = useRef<HTMLCanvasElement | null>(null);
   
   const dispatch = useDispatch();
   const setCanvasSize = (windowsSize: {width: number, height: number}) => {
-    dispatch(setCanvasSizeAC(windowsSize))
-  }
+    dispatch(setCanvasSizeAC(windowsSize));
+  };
   const setMouseDownPosition = (mouseDownPosition: {x?: number, y?: number}) => {
-    dispatch(setMouseDownPositionAC(mouseDownPosition))
-  }
+    dispatch(setMouseDownPositionAC(mouseDownPosition));
+  };
   const setMainCtx = (context: any) => {
-    dispatch(setMainCtxAC(context))
-  }
+    dispatch(setMainCtxAC(context));
+  };
   const setSubCtx = (context: any) => {
-    dispatch(setSubCtxAC(context))
-  }
+    dispatch(setSubCtxAC(context));
+  };
 
-  const lineColor = useSelector((state: any) => state.editorReducer.lineColor,)
-  const lineWeight = useSelector((state: any) => state.editorReducer.lineWeight)
-  const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName)
-  const canvasSize = useSelector((state: any) => state.editorReducer.canvasSize)
-  const mouseDownPosition = useSelector((state: any) => state.editorReducer.mouseDownPosition)
-  const mainCtx = useSelector((state: any) => state.editorReducer.mainCtx)
-  const subCtx = useSelector((state: any) => state.editorReducer.subCtx)
-  const loading = useSelector((state: any) => state.editorReducer.loading)
+  const lineColor = useSelector((state: any) => state.editorReducer.lineColor,);
+  const lineWeight = useSelector((state: any) => state.editorReducer.lineWeight);
+  const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName);
+  const canvasSize = useSelector((state: any) => state.editorReducer.canvasSize);
+  const mouseDownPosition = useSelector((state: any) => state.editorReducer.mouseDownPosition);
+  const mainCtx = useSelector((state: any) => state.editorReducer.mainCtx);
+  const subCtx = useSelector((state: any) => state.editorReducer.subCtx);
+  const loading = useSelector((state: any) => state.editorReducer.loading);
 
   useEffect(() => {
     if (canvasRef.current && subCanvasRef.current && wrapperRef.current?.clientWidth) {
-      setCanvasSize({width: wrapperRef.current.offsetWidth, height: wrapperRef.current.offsetHeight})
+      setCanvasSize({width: wrapperRef.current.offsetWidth, height: wrapperRef.current.offsetHeight});
       const mainCtx = canvasRef.current.getContext('2d');
       const subCtx = subCanvasRef.current.getContext('2d');
       setMainCtx(mainCtx);
       setSubCtx(subCtx);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (canvasRef.current && subCanvasRef.current && wrapperRef.current?.clientWidth) {
       canvasRef.current.width = subCanvasRef.current.width = canvasSize.width;
       canvasRef.current.height = subCanvasRef.current.height = canvasSize.height;
     }
-  }, [canvasSize, loading])
+  }, [canvasSize, loading]);
 
   const onMouseDown = (e: any) => {   
     if (instrumentName && wrapperRef.current?.offsetLeft) setMouseDownPosition({x: e.clientX - wrapperRef.current?.offsetLeft, y: e.clientY - 104});
-  }
+  };
 
   const onMouseMove = (e: any) => {
     if (mouseDownPosition.x && mouseDownPosition.y && wrapperRef.current && canvasRef.current) {
       mainCtx.strokeStyle = lineColor;
       mainCtx.lineWidth = lineWeight;
-      mainCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+      mainCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
       switch (instrumentName) {
         case 'rectangle':
           mainCtx.strokeRect(
@@ -66,7 +66,7 @@ const Canvas: React.FunctionComponent = () => {
             mouseDownPosition.y,
             e.clientX - mouseDownPosition.x - wrapperRef.current.offsetLeft,
             e.clientY - mouseDownPosition.y - 104
-          )
+          );
           mainCtx.stroke(); 
           break;
         case 'circle':
@@ -97,20 +97,20 @@ const Canvas: React.FunctionComponent = () => {
           mainCtx.lineTo(
             e.clientX - wrapperRef.current.offsetLeft,
             e.clientY - 104
-          )
+          );
           mainCtx.stroke();
-          break
+          break;
         default:
           break;
       }
     }
-  }
+  };
 
   const onMouseUp = (e: any) => {
     subCtx.drawImage(canvasRef.current, 0, 0);
     mainCtx.beginPath();
-    setMouseDownPosition({})
-  }
+    setMouseDownPosition({});
+  };
 
   return(
     <div className={classes.wrapper} ref={wrapperRef}>
@@ -120,7 +120,7 @@ const Canvas: React.FunctionComponent = () => {
         {loading ? <CircularProgress color="inherit"/> : null}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Canvas
+export default Canvas;
