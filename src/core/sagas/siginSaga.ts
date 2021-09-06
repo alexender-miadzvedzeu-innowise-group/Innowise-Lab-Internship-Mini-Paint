@@ -5,12 +5,7 @@ import { AnyAction } from "redux";
 import { signInUser } from '../services/firebase/authFetches'
 import { sliceUserNameFromEmail } from '../helpers/sliceUserNameFromEmail';
 
-interface FirebaseSignInResonse {
-    userCredentional?: any
-    user: {uid: string, email: string}
-}
-
-export function* signInWithEmailFetch(data: AnyAction) {
+export function* signInWithEmailFetchWorker(data: AnyAction) {
     const { payload } = data;
     let userData: { userName: string, userID: string} = {
         userName: '',
@@ -30,12 +25,12 @@ export function* signInWithEmailFetch(data: AnyAction) {
     }
 }
 
-export function* watchSignInWithEmailFetchAsync() {
-    yield takeEvery(SIGN_IN_WITH_E_MAIL, signInWithEmailFetch);
+export function* signInWithEmailFetchAsyncWatcher() {
+    yield takeEvery(SIGN_IN_WITH_E_MAIL, signInWithEmailFetchWorker);
 }
 
 export default function* signInSaga(): any {
     yield all([
-        call(watchSignInWithEmailFetchAsync)
+        call(signInWithEmailFetchAsyncWatcher)
     ])
 }

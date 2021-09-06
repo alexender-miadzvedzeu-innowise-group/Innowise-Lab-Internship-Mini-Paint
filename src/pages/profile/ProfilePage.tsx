@@ -28,9 +28,8 @@ const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
 const ProfilePage: React.FunctionComponent = () => {
   
   const dispatch= useDispatch()
-  const userName = useSelector((state:any) => state.authReducer.userName);
-  console.log(userName);
-  const userID = useSelector((state:any) => state.profileReducer.userID);
+  const userName = useSelector((state:any) => state.authReducer.userName);  
+  const userID = useSelector((state:any) => state.authReducer.userID);
   const images = useSelector((state:any) => state.profileReducer.imagesData)
   const isClicked = useSelector((state:any) => state.profileReducer.delCicked)
   const idToDel = useSelector((state: any) => state.profileReducer.idTodell)

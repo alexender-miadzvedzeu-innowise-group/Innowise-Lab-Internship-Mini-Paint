@@ -10,6 +10,7 @@ import { TextField } from '@material-ui/core';
 import { useState } from 'react';
 import { isEmptyObj } from '../../core/helpers/isEmptyObj';
 import Alert from '@material-ui/lab/Alert';
+import { onClicksortedImagesData } from '../../core/helpers/onClicksortedImagesData';
 
 interface Istyles {
     fadeIn: any
@@ -28,8 +29,8 @@ const HomePage: React.FunctionComponent = () => {
 
   const dispatch = useDispatch();
   const sortImagesData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-    return dispatch(sortImagesDataAC(e.target.value))
+    setInputValue(e.target.value);
+    return dispatch(sortImagesDataAC(onClicksortedImagesData(imagesData, e.target.value)))
   }
 
   const imagesData = useSelector((state: any) => state.homeReducer.imagesData)

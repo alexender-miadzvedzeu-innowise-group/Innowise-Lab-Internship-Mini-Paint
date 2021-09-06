@@ -4,23 +4,23 @@ import { AnyAction } from "redux";
 import { uploadImageFailedAC, uploadImageSuccessedAC } from "../../core/actions/editor";
 import { uploadImage } from "../services/firebase/currentUserFetches"
 
-export function* uploadImageFetch(payload: AnyAction): Generator {
+export function* uploadImageFetchWorker(payload: AnyAction): Generator {
   const {dataUrl, userID, userName} = payload;
   const id = Date.now();
   try {
-    const response = yield uploadImage(dataUrl, userID, userName, id);
+    const response = yield call(uploadImage, dataUrl, userID, userName, id);
     yield put(uploadImageSuccessedAC(response));
   } catch (error) {
     yield put(uploadImageFailedAC(error))
   }
 }
 
-export function* watchUploadImageFetchAsync() {
-    yield takeEvery(SET_DATA_URL, uploadImageFetch);
+export function* uploadImageFetchAsyncWatcher() {
+    yield takeEvery(SET_DATA_URL, uploadImageFetchWorker);
 }
 
 export default function* editorSaga(): any {
   yield all([
-    call(watchUploadImageFetchAsync)
+    call(uploadImageFetchAsyncWatcher)
   ])
 }

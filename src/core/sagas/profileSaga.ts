@@ -6,7 +6,7 @@ import { delUserImage, getUserImages } from "../services/firebase/currentUserFet
 import { sortUserImages } from '../helpers/sortUserImages'
 
 
-export function* getUserImageFetch(payload: AnyAction): Generator {
+export function* getUserImageFetchWorker(payload: AnyAction): Generator {
   try {
     const data = yield call(getUserImages);
     const sortedData = yield call(sortUserImages, data, payload.userName)
@@ -16,27 +16,27 @@ export function* getUserImageFetch(payload: AnyAction): Generator {
   }
 }
 
-export function* delImageFetch(payload: AnyAction): Generator {
+export function* delImageFetchWorker(payload: AnyAction): Generator {
   const { id, userName } = payload;
   try {
-    yield delUserImage(id, userName)
+    yield call(delUserImage, id, userName)
     yield put(delUserImageFromDbSucceededAC())
   } catch (error) {
     yield put(delUserImageFromDbFailedAC(error))
   }
 }
 
-export function* watchgdelImageFetchAsync() {
-  yield takeEvery(DEL_USER_IMAGE_FROM_DB, delImageFetch)
+export function* delImageFetchAsyncWatcher() {
+  yield takeEvery(DEL_USER_IMAGE_FROM_DB, delImageFetchWorker)
 }
 
-export function* watchgetUserImageFetchAsync() {
-  yield takeEvery(GET_USER_IMAGES_FROM_DB, getUserImageFetch);
+export function* getUserImageFetchAsyncWatcher() {
+  yield takeEvery(GET_USER_IMAGES_FROM_DB, getUserImageFetchWorker);
 }
 
 export default function* profileSaga(): any {
   yield all([
-    call(watchgetUserImageFetchAsync),
-    call(watchgdelImageFetchAsync)
+    call(getUserImageFetchAsyncWatcher),
+    call(delImageFetchAsyncWatcher)
   ])
 }

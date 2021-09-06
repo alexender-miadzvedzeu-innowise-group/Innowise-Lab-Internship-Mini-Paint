@@ -13,6 +13,7 @@ import {
   SET_LOCAL_USER_ERROR_MESSAGE,
   SET_LOGGED
 } from './actions.types';
+import { IauthError, IauthPayload } from '../interfaces/Iauth';
 
 export const createUserWithEmailAC = (payload:{email:string, password: string}) => ({ type: CREATE_USER_WITH_E_MAIL, payload})
 export const createUserWithEmailSucceededAC = (payload: any) => ({ type: CREATE_USER_WITH_E_MAIL_SUCCEEDED, payload})

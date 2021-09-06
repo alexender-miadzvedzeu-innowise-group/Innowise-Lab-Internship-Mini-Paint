@@ -40,7 +40,6 @@ export const profileReducer = (state = initialState, action: Action ):object => 
     case GET_USER_IMAGES_FROM_DB:
       return {...state, loading: true, error: false, successed: false, delCicked: false};
     case GET_USER_IMAGES_FROM_DB_SUCCEEDED:
-      console.log(action.payload);
       return {...state, loading: false, imagesData: action.payload };
     case GET_USER_IMAGES_FROM_DB_FAILED:
       return {...state, loading: false};

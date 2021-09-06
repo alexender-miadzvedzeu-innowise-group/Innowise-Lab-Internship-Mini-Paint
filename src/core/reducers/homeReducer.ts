@@ -8,7 +8,8 @@ import {
 interface Action {
   type: string,
   payload: [],
-  userName: string
+  userName: string,
+  data: {}
 }
 
 interface IhomeState {
@@ -32,28 +33,11 @@ export const homeReducer = (state = initialState, action: Action ):object => {
     case GET_IMAGES_FROM_DB:
       return {...state, loading: true, error: false, successed: false}
     case GET_IMAGES_FROM_DB_SUCCEEDED:
-      let sortedData: any = {};
-      action.payload.forEach((img:any) => {
-        if (sortedData[img.userName]) {
-          sortedData[img.userName].push(img.imgUrl);
-        } else {
-          sortedData[img.userName] = [];
-          sortedData[img.userName].push(img.imgUrl);
-        }
-      })
-      return {...state, imagesData: sortedData};
+      return {...state, imagesData: action.payload};
     case GET_IMAGES_FROM_DB_FAILED:
       return {...state, loading: false, error: true, successed: false}
     case SORT_IMAGES_DATA:
-      let index = action.userName.length;
-      let sortedImagesData: any = {};
-      Object.keys(state.imagesData).forEach((user: string) => {
-        if (user.substr(0, index) === action.userName) {
-          //@ts-ignore
-          sortedImagesData[user] = state.imagesData[user]
-        }
-      })
-      return {...state, sortedImagesData: sortedImagesData}
+      return {...state, sortedImagesData: action.data}
     default:
       return state;
   }

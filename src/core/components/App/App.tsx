@@ -10,6 +10,7 @@ import EditorPage from '../../../pages/editor/EditorPage';
 import ProfilePage from '../../../pages/profile/ProfilePage';
 import { app } from '../../firebase/firebase';
 import { sliceUserNameFromEmail } from '../../helpers/sliceUserNameFromEmail';
+import { Redirect } from 'react-router';
 
 const App: React.FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const App: React.FunctionComponent = () => {
           </Switch>
         </div> : 
         <Route path='/'>
+          {!isLoged && <Redirect to="/"/>}
           <LoginPage />
         </Route>
       }

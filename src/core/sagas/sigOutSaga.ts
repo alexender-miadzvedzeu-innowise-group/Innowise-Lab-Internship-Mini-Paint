@@ -7,7 +7,7 @@ interface FirebaseSignOutResonse {
     userCredentional?: any
 }
 
-export function* signOutFetchAsync() {
+export function* signOutFetchAsyncWorker() {
     try {
         const response: FirebaseSignOutResonse =  yield call(signOutUser)
         yield put(signOutACSucceededAC(response));
@@ -16,12 +16,12 @@ export function* signOutFetchAsync() {
     }
 }
 
-export function* watchSignOutFetchAsync() {
-    yield takeEvery(SIGN_OUT, signOutFetchAsync);
+export function* signOutFetchAsyncWatcher() {
+    yield takeEvery(SIGN_OUT, signOutFetchAsyncWorker);
 }
 
 export default function* signOutSaga(): any {
     yield all([
-        call(watchSignOutFetchAsync)
+        call(signOutFetchAsyncWatcher)
     ])
 }
