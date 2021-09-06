@@ -11,12 +11,14 @@ import ProfilePage from '../../../pages/profile/ProfilePage';
 import { app } from '../../firebase/firebase';
 import { sliceUserNameFromEmail } from '../../helpers/sliceUserNameFromEmail';
 import { Redirect } from 'react-router';
+import { IState } from '../../interfaces/Istate';
 
 const App: React.FunctionComponent = () => {
   const dispatch = useDispatch();
 
-  const isLoged = useSelector((state: any) => state.authReducer.isLoged);
-
+  const isLoged = useSelector((state: IState) => state.authReducer.isLoged);
+  const state = useSelector((state: IState) => state);
+  console.log(state);
   useEffect(() => {
     app.auth().onAuthStateChanged((user) => {
       if (user && user.email && user.uid) {

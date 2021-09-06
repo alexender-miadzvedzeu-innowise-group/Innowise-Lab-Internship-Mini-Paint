@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { isEmptyObj } from '../../core/helpers/isEmptyObj';
 import Alert from '@material-ui/lab/Alert';
 import { onClicksortedImagesData } from '../../core/helpers/onClicksortedImagesData';
+import { IState } from '../../core/interfaces/Istate';
 
 interface Istyles {
     fadeIn: any
@@ -33,8 +34,8 @@ const HomePage: React.FunctionComponent = () => {
     return dispatch(sortImagesDataAC(onClicksortedImagesData(imagesData, e.target.value)));
   };
 
-  const imagesData = useSelector((state: any) => state.homeReducer.imagesData);
-  const sortedImagesData = useSelector((state: any) => state.homeReducer.sortedImagesData);
+  const imagesData = useSelector((state: IState) => state.homeReducer.imagesData);
+  const sortedImagesData = useSelector((state: IState) => state.homeReducer.sortedImagesData);
   
   useEffect(() => {
     dispatch(getimagesFromDbAC());

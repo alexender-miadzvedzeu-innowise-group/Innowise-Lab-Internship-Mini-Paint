@@ -15,7 +15,7 @@ interface Action {
   userName: string
 };
 
-interface IprofileState {
+export interface IprofileState {
   loading: boolean,
   error: boolean,
   successed: boolean,

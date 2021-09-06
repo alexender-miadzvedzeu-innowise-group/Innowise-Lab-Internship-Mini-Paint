@@ -10,6 +10,7 @@ import { delClickedAC, } from '../../core/actions/profile';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled, { keyframes } from 'styled-components';
+import { IState } from '../../core/interfaces/Istate';
 
 interface Istyles {
   fadeIn: any
@@ -28,12 +29,12 @@ const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
 const ProfilePage: React.FunctionComponent = () => {
   
   const dispatch= useDispatch();
-  const userName = useSelector((state:any) => state.authReducer.userName);  
-  const userID = useSelector((state:any) => state.authReducer.userID);
-  const images = useSelector((state:any) => state.profileReducer.imagesData);
-  const isClicked = useSelector((state:any) => state.profileReducer.delCicked);
-  const idToDel = useSelector((state: any) => state.profileReducer.idTodell);
-  const loading = useSelector((state: any) => state.profileReducer.loading);
+  const userName = useSelector((state:IState) => state.authReducer.userName);  
+  const userID = useSelector((state:IState) => state.authReducer.userID);
+  const images = useSelector((state:IState) => state.profileReducer.imagesData);
+  const isClicked = useSelector((state:IState) => state.profileReducer.delCicked);
+  const idToDel = useSelector((state: IState) => state.profileReducer.idTodell);
+  const loading = useSelector((state: IState) => state.profileReducer.loading);
 
   const delCicked = (id: number | null) => dispatch(delClickedAC(id));
   const onClickDel = (id: number | null) => () => delCicked(id);

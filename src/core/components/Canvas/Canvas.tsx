@@ -3,6 +3,7 @@ import classes from './Canvas.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCanvasSizeAC, setMainCtxAC, setMouseDownPositionAC, setSubCtxAC } from '../../actions/editor';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { IState } from '../../interfaces/Istate';
 
 const Canvas: React.FunctionComponent = () => {
   
@@ -24,14 +25,14 @@ const Canvas: React.FunctionComponent = () => {
     dispatch(setSubCtxAC(context));
   };
 
-  const lineColor = useSelector((state: any) => state.editorReducer.lineColor,);
-  const lineWeight = useSelector((state: any) => state.editorReducer.lineWeight);
-  const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName);
-  const canvasSize = useSelector((state: any) => state.editorReducer.canvasSize);
-  const mouseDownPosition = useSelector((state: any) => state.editorReducer.mouseDownPosition);
-  const mainCtx = useSelector((state: any) => state.editorReducer.mainCtx);
-  const subCtx = useSelector((state: any) => state.editorReducer.subCtx);
-  const loading = useSelector((state: any) => state.editorReducer.loading);
+  const lineColor = useSelector((state: IState) => state.editorReducer.lineColor,);
+  const lineWeight = useSelector((state: IState) => state.editorReducer.lineWeight);
+  const instrumentName = useSelector((state: IState) => state.editorReducer.instrumentName);
+  const canvasSize = useSelector((state: IState) => state.editorReducer.canvasSize);
+  const mouseDownPosition = useSelector((state: IState) => state.editorReducer.mouseDownPosition);
+  const mainCtx = useSelector((state: IState) => state.editorReducer.mainCtx);
+  const subCtx = useSelector((state: IState) => state.editorReducer.subCtx);
+  const loading = useSelector((state: IState) => state.editorReducer.loading);
 
   useEffect(() => {
     if (canvasRef.current && subCanvasRef.current && wrapperRef.current?.clientWidth) {
@@ -55,7 +56,7 @@ const Canvas: React.FunctionComponent = () => {
   };
 
   const onMouseMove = (e: any) => {
-    if (mouseDownPosition.x && mouseDownPosition.y && wrapperRef.current && canvasRef.current) {
+    if (mainCtx && mouseDownPosition.x && mouseDownPosition.y && wrapperRef.current && canvasRef.current) {
       mainCtx.strokeStyle = lineColor;
       mainCtx.lineWidth = lineWeight;
       mainCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
@@ -107,9 +108,11 @@ const Canvas: React.FunctionComponent = () => {
   };
 
   const onMouseUp = (e: any) => {
-    subCtx.drawImage(canvasRef.current, 0, 0);
-    mainCtx.beginPath();
-    setMouseDownPosition({});
+    if (subCtx && mainCtx) {
+      subCtx.drawImage(canvasRef.current, 0, 0);
+      mainCtx.beginPath();
+      setMouseDownPosition({});
+    }
   };
 
   return(

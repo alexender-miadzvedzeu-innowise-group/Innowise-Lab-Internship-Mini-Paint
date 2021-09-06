@@ -31,7 +31,7 @@ interface Action {
   payload: any,
 }
 
-interface IeditorState {
+export interface IeditorState {
   lineColor: string,
   lineWeight: string,
   instrumentName: string,
@@ -43,8 +43,32 @@ interface IeditorState {
     x?: number,
     y?: number
   },
-  mainCtx: object,
-  subCtx: object,
+  mainCtx?: {
+    strokeStyle: string,
+    lineWidth: string,
+    canvas: HTMLCanvasElement,
+    clearRect: (x: number, y:number, toX: number, toY: number) => void,
+    strokeRect: (x: number, y:number, toX: number, toY: number) => void,
+    stroke: () => void,
+    beginPath: () => void,
+    arc: (x: number, y: number, radius: number, arcStart: number, arcEnd: number, right: boolean) => void,
+    moveTo: (x: number, y: number) => void,
+    lineTo: (x: number, y: number) => void,
+    drawImage: (ref: HTMLCanvasElement | null, x: number, y: number) => void
+  },
+  subCtx?: {
+    strokeStyle: string,
+    lineWidth: string,
+    canvas: HTMLCanvasElement,
+    clearRect: (x: number, y:number, toX: number, toY: number) => void,
+    strokeRect: (x: number, y:number, toX: number, toY: number) => void,
+    stroke: () => void,
+    beginPath: () => void,
+    arc: (x: number, y: number, radius: number, arcStart: number, arcEnd: number, right: boolean) => void,
+    moveTo: (x: number, y: number) => void,
+    lineTo: (x: number, y: number) => void,
+    drawImage: (ref: HTMLCanvasElement | null, x: number, y: number) => void
+  },
   subCtxDataUrl: string,
   imgName: string,
   loading: boolean,
@@ -62,8 +86,8 @@ const initialState: IeditorState = {
     height: 0
   },
   mouseDownPosition: {},
-  mainCtx: {},
-  subCtx: {},
+  // mainCtx: {},
+  // subCtx: {},
   subCtxDataUrl: '',
   imgName: '',
   loading: false,

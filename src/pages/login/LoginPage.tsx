@@ -8,6 +8,7 @@ import { fadeIn } from 'react-animations';
 import Radium from 'radium';
 import Alert from '@material-ui/lab/Alert';
 import { isEmptyFields } from '../../core/helpers/isEmptyFields';
+import { IState } from '../../core/interfaces/Istate';
 
 interface Istyles {
     fadeIn: any,
@@ -40,7 +41,7 @@ const LoginPage: React.FC = () => {
     setData({...data, [e.target.name]: e.target.value});
   };
 
-  const errorMessage = useSelector((state: any) => state.authReducer.errorMessage);
+  const errorMessage = useSelector((state: IState) => state.authReducer.errorMessage);
 
   const signIn = (payload:{email:string, password: string}) => {
     dispatch(signInWithEmailAC(payload));

@@ -18,6 +18,6 @@ export const getUserImagesFromDbFailedAC = (payload: any) => ({ type: GET_USER_I
 
 export const delClickedAC = (id: number | null) => ({ type: DEL_CLICKED, id});
 
-export const delUserImageFromDbAC = (id: number, userName: string) => ({ type: DEL_USER_IMAGE_FROM_DB, id, userName });
+export const delUserImageFromDbAC = (idToDel: number | null, userName: string) => ({ type: DEL_USER_IMAGE_FROM_DB, idToDel, userName });
 export const delUserImageFromDbSucceededAC = () => ({ type: DEL_USER_IMAGE_FROM_DB_SUCCEEDED });
 export const delUserImageFromDbFailedAC = (payload: any) => ({ type: DEL_USER_IMAGE_FROM_DB_FAILED, payload });

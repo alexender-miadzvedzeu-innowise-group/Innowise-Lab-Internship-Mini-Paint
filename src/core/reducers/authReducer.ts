@@ -20,7 +20,7 @@ interface Action {
   userID: string
 }
 
-interface IauthState {
+export interface IauthState {
   loading: boolean,
   error: boolean,
   isLoged: boolean,

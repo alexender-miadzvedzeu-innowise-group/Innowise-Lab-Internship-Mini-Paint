@@ -13,6 +13,7 @@ import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC, openUpl
 import Button from '@material-ui/core/Button';
 import styled, { keyframes } from 'styled-components';
 import { withStyles, Theme } from '@material-ui/core/styles';
+import { IState } from '../../core/interfaces/Istate';
 
 const flashAnimation = keyframes`${fadeInDown}`;
 const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
@@ -61,11 +62,11 @@ const UploadButton = withStyles((theme: Theme) => ({
 }))(Button);
 
 const EditorPage: React.FunctionComponent = () => {
-  const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName);
-  const subCtx = useSelector((state: any) => state.editorReducer.subCtx);
-  const uploadWindowsOpened = useSelector((state: any) => state.editorReducer.uploadWindowsOpened);
-  const userID = useSelector((state: any) => state.authReducer.userID);
-  const userName = useSelector((state: any) => state.authReducer.userName);
+  const instrumentName = useSelector((state: IState) => state.editorReducer.instrumentName);
+  const subCtx = useSelector((state: IState) => state.editorReducer.subCtx);
+  const uploadWindowsOpened = useSelector((state: IState) => state.editorReducer.uploadWindowsOpened);
+  const userID = useSelector((state: IState) => state.authReducer.userID);
+  const userName = useSelector((state: IState) => state.authReducer.userName);
 
   const dispatch = useDispatch();
   
@@ -91,8 +92,10 @@ const EditorPage: React.FunctionComponent = () => {
   const onClicksetInstrument = (type:string) => (e: React.MouseEvent) => setInstrument(type);
   const valuetext = (value: any) => value;
   const uploadImage = () => {
-    setDataUrl(subCtx.canvas.toDataURL());
-    showHideUploadWindow();
+    if (subCtx) {
+      setDataUrl(subCtx?.canvas.toDataURL());
+      showHideUploadWindow();
+    }
   };
 
   return(

@@ -12,11 +12,11 @@ interface Action {
   data: {}
 };
 
-interface IhomeState {
+export interface IhomeState {
   loading: boolean,
   error: boolean,
   successed: boolean,
-  imagesData: {},
+  imagesData: any,
   sortedImagesData: {}
 };
 
