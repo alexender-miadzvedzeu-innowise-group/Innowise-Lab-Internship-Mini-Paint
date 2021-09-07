@@ -8,13 +8,13 @@ interface FirebaseCreateUserResonse {
     userCredentional?: any
 }
 
+
 export function* createUserWithEmailFetchWorker(data: AnyAction) {
     const { payload } = data;
     try {
         const response: FirebaseCreateUserResonse = yield call(createUser, payload);
         yield put(createUserWithEmailSucceededAC(response));
     } catch (error) {
-        console.log(error);
         yield put(createUserWithEmailFailedAC(error));
     }
 }

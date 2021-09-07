@@ -20,7 +20,7 @@ export const createUserWithEmailSucceededAC = (payload: any) => ({ type: CREATE_
 export const createUserWithEmailFailedAC = (error: any) => ({ type: CREATE_USER_WITH_E_MAIL_FAILED, error});
 
 export const signInWithEmailAC = (payload:{email:string, password: string}) => ({ type: SIGN_IN_WITH_E_MAIL, payload});
-export const signInWithEmailSucceededAC = (payload: any) => ({ type: SIGN_IN_WITH_E_MAIL_SUCCEEDED, payload});
+export const signInWithEmailSucceededAC = (payload: { userName: string, userID: string}) => ({ type: SIGN_IN_WITH_E_MAIL_SUCCEEDED, payload});
 export const signInWithEmailFailedAC = (error: any) => ({ type: SIGN_IN_WITH_E_MAIL_FAILED, error});
 export const resetErrorMessageAC = () => ({ type: RESET_ERROR_MESSAGE });
 export const setLocalUserErrorMessageAC = (error: string) => ({ type: SET_LOCAL_USER_ERROR_MESSAGE, error });

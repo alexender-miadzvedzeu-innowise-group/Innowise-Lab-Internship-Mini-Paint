@@ -81,15 +81,9 @@ const Navbar: React.FunctionComponent = (props:any) => {
           <div className={classes.logo_container}>
             <img className={classes.logo} src={Logo} alt="LOGO" />
           </div>
-          <Navbutton>
             <NavLink to='/ ' activeClassName={classes.activeNav__link} className={classes.nav__link}>Home</NavLink>
-          </Navbutton>
-          <Navbutton>
             <NavLink to='/editor' activeClassName={classes.activeNav__link} className={classes.nav__link}>Editor</NavLink>
-          </Navbutton>
-          <Navbutton>
             <NavLink to='/profile' activeClassName={classes.activeNav__link} className={classes.nav__link}>Profile</NavLink>
-          </Navbutton>
           <LogOutbutton onClick={onClickDelClicked}>
             Log out
           </LogOutbutton>
