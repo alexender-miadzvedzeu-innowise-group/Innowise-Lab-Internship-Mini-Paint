@@ -6,7 +6,7 @@ import { uploadImage } from '../services/firebase/currentUserFetches';
 
 export function* uploadImageFetchWorker(payload: AnyAction): Generator {
   const {dataUrl, userID, userName} = payload;
-  const id = Date.now();
+  const id = Date.now().toString();
   try {
     const response = yield call(uploadImage, dataUrl, userID, userName, id);
     yield put(uploadImageSuccessedAC(response));

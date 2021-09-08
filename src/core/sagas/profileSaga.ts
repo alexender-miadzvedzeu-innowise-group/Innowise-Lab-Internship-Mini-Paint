@@ -19,7 +19,7 @@ export function* getUserImageFetchWorker(payload: AnyAction): Generator {
 export function* delImageFetchWorker(payload: AnyAction): Generator {
   const { id, userName } = payload;
   try {
-    yield call(delUserImage, id, userName);
+    // yield call(delUserImage, id, userName);
     yield put(delUserImageFromDbSucceededAC());
   } catch (error) {
     yield put(delUserImageFromDbFailedAC(error));

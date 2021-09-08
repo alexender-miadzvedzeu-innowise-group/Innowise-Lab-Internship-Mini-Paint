@@ -13,13 +13,13 @@ const firebaseConfig = {
 };
 
 // const firebaseConfig = {
-//   apiKey: "AIzaSyApar0IRJfh8xAjc1HSiI03nLexS_awh6E",
-//   authDomain: "tets-8be4b.firebaseapp.com",
-//   projectId: "tets-8be4b",
-//   storageBucket: "tets-8be4b.appspot.com",
-//   messagingSenderId: "670959739286",
-//   appId: "1:670959739286:web:a97fd22ce32d8dd702bdb7",
-//   measurementId: "G-0P0XWCSR9T"
+//   apiKey: 'AIzaSyApar0IRJfh8xAjc1HSiI03nLexS_awh6E',
+//   authDomain: 'tets-8be4b.firebaseapp.com',
+//   projectId: 'tets-8be4b',
+//   storageBucket: 'tets-8be4b.appspot.com',
+//   messagingSenderId: '670959739286',
+//   appId: '1:670959739286:web:a97fd22ce32d8dd702bdb7',
+//   measurementId: 'G-0P0XWCSR9T'
 // };
 
 export const app = firebase.initializeApp(firebaseConfig);
@@ -28,4 +28,4 @@ export const db = firebase.firestore();
 export const storage = firebase.storage();
 export const storageRef = storage.ref();
 
-export default firebase ;
+export default firebase;
