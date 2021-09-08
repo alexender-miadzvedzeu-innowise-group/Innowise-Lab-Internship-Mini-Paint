@@ -12,7 +12,8 @@ interface Action {
   type: string,
   payload: [],
   id: number | null,
-  userName: string
+  userName: string,
+  imgUrl: string | null
 };
 
 export interface IprofileState {
@@ -22,7 +23,8 @@ export interface IprofileState {
   delCicked: boolean,
   delConfurm: boolean,
   imagesData: [],
-  idTodell: number | null
+  idTodell: number | null,
+  imgUrlToDell: string | null
 };
 
 const initialState: IprofileState = {
@@ -32,7 +34,8 @@ const initialState: IprofileState = {
   delCicked: false,
   delConfurm: false,
   imagesData: [],
-  idTodell: null
+  idTodell: null,
+  imgUrlToDell: null
 };
 
 export const profileReducer = (state = initialState, action: Action ):object => {
@@ -44,7 +47,7 @@ export const profileReducer = (state = initialState, action: Action ):object => 
     case GET_USER_IMAGES_FROM_DB_FAILED:
       return {...state, loading: false};
     case DEL_CLICKED:
-      return {...state, delCicked: !state.delCicked, idTodell: action.id};
+      return {...state, delCicked: !state.delCicked, idTodell: action.id, imgUrlToDell:action.imgUrl};
     case DEL_USER_IMAGE_FROM_DB:
       return {...state, loading: true};
     case DEL_USER_IMAGE_FROM_DB_SUCCEEDED:

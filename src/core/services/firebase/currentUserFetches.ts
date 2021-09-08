@@ -4,13 +4,14 @@ interface IDoc {
   data: () => never
 }
 
-export const getUserImages = async (userID: string = 'userID') => {
+export const getUserImages = async (userID: string) => {
   let images:[] = [];
   const imagesRef = await db.collection('images').doc(userID);
   await imagesRef.get().then((doc) => {
     const payload = doc.data();
     if (payload) return images = payload.images;
   });
+  console.log(images);
   return images;
 };
 

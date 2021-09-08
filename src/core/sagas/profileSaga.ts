@@ -3,23 +3,22 @@ import { GET_USER_IMAGES_FROM_DB, DEL_USER_IMAGE_FROM_DB } from '../actions/acti
 import { AnyAction } from 'redux';
 import { getUserImagesFromDbSucceededAC, getUserImagesFromDbFailedAC, delUserImageFromDbSucceededAC, delUserImageFromDbFailedAC } from '../actions/profile';
 import { delUserImage, getUserImages } from '../services/firebase/currentUserFetches';
-import { sortUserImages } from '../helpers/sortUserImages';
 
 
 export function* getUserImageFetchWorker(payload: AnyAction): Generator {
+  const { userID } = payload;
   try {
-    const data = yield call(getUserImages);
-    const sortedData = yield call(sortUserImages, data, payload.userName);
-    yield put(getUserImagesFromDbSucceededAC(sortedData));
+    const data = yield call(getUserImages, userID);
+    yield put(getUserImagesFromDbSucceededAC(data));
   } catch (error) {
     yield put(getUserImagesFromDbFailedAC(error));
   }
 }
 
 export function* delImageFetchWorker(payload: AnyAction): Generator {
-  const { id, userName } = payload;
+  const { id, userID, imgUrl } = payload;
   try {
-    // yield call(delUserImage, id, userName);
+    yield call(delUserImage, id, userID, imgUrl);
     yield put(delUserImageFromDbSucceededAC());
   } catch (error) {
     yield put(delUserImageFromDbFailedAC(error));
