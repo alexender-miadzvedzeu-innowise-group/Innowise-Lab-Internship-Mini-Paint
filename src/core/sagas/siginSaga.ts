@@ -1,29 +1,36 @@
-import { takeEvery, put, call, all } from "@redux-saga/core/effects";
+import { takeEvery, put, call, all } from '@redux-saga/core/effects';
 import { SIGN_IN_WITH_E_MAIL } from '../actions/actions.types';
-import { signInWithEmailSucceededAC, signInWithEmailFailedAC } from '../actions/auth'
-import { AnyAction } from "redux";
-import { signInUser } from '../services/firebase/authFetches'
+import { signInWithEmailSucceededAC, signInWithEmailFailedAC } from '../actions/auth';
+import { AnyAction } from 'redux';
+import { signInUser } from '../services/firebase/authFetches';
+import { sliceUserNameFromEmail } from '../helpers/sliceUserNameFromEmail';
 
-interface FirebaseSignInResonse {
-    userCredentional?: any
-}
-
-export function* signInWithEmailFetch(data: AnyAction) {
+export function* signInWithEmailFetchWorker(data: AnyAction) {
     const { payload } = data;
+    let userData: { userName: string, userID: string} = {
+        userName: '',
+        userID: ''
+    };
+
     try {
-        const response: FirebaseSignInResonse = yield signInUser(payload)
-        yield put(signInWithEmailSucceededAC(response));
+        yield signInUser(payload).then(data => {
+            if (data.user && data.user?.email) {
+                userData.userID = data.user?.uid;
+                userData.userName = sliceUserNameFromEmail(data.user?.email);
+            }
+        });
+        yield put(signInWithEmailSucceededAC(userData));
     } catch (error) {
         yield put(signInWithEmailFailedAC(error));
     }
 }
 
-export function* watchSignInWithEmailFetchAsync() {
-    yield takeEvery(SIGN_IN_WITH_E_MAIL, signInWithEmailFetch);
+export function* signInWithEmailFetchAsyncWatcher() {
+    yield takeEvery(SIGN_IN_WITH_E_MAIL, signInWithEmailFetchWorker);
 }
 
 export default function* signInSaga(): any {
     yield all([
-        call(watchSignInWithEmailFetchAsync)
-    ])
+        call(signInWithEmailFetchAsyncWatcher)
+    ]);
 }

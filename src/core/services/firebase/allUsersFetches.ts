@@ -9,4 +9,4 @@ export const getAllUsersImages = async () => {
   const fetchImages:any = await db.collection('images').get();
   fetchImages.docs.map((doc: IDoc) => data.push(doc.data()));
   return data;
-}
+};

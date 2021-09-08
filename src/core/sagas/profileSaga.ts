@@ -1,43 +1,42 @@
-import { takeEvery, call, all, put } from "@redux-saga/core/effects";
+import { takeEvery, call, all, put } from '@redux-saga/core/effects';
 import { GET_USER_IMAGES_FROM_DB, DEL_USER_IMAGE_FROM_DB } from '../actions/actions.types';
-import { AnyAction } from "redux";
-import { getUserImagesFromDbSucceededAC, getUserImagesFromDbFailedAC, delUserImageFromDbSucceededAC, delUserImageFromDbFailedAC, delUserImageFromDbAC } from "../actions/profile";
-import { delUserImage, getUserImages } from "../services/firebase/currentUserFetches";
+import { AnyAction } from 'redux';
+import { getUserImagesFromDbSucceededAC, getUserImagesFromDbFailedAC, delUserImageFromDbSucceededAC, delUserImageFromDbFailedAC } from '../actions/profile';
+import { delUserImage, getUserImages } from '../services/firebase/currentUserFetches';
+import { sortUserImages } from '../helpers/sortUserImages';
 
-interface IDoc {
-  data: () => never
-}
 
-export function* getUserImageFetch(payload: AnyAction): Generator {
+export function* getUserImageFetchWorker(payload: AnyAction): Generator {
   try {
-    const data = yield getUserImages()
-    yield put(getUserImagesFromDbSucceededAC(data));
+    const data = yield call(getUserImages);
+    const sortedData = yield call(sortUserImages, data, payload.userName);
+    yield put(getUserImagesFromDbSucceededAC(sortedData));
   } catch (error) {
-    yield put(getUserImagesFromDbFailedAC(error))
+    yield put(getUserImagesFromDbFailedAC(error));
   }
 }
 
-export function* delImageFetch(payload: AnyAction): Generator {
+export function* delImageFetchWorker(payload: AnyAction): Generator {
   const { id, userName } = payload;
   try {
-    yield delUserImage(id, userName)
-    yield put(delUserImageFromDbSucceededAC())
+    yield call(delUserImage, id, userName);
+    yield put(delUserImageFromDbSucceededAC());
   } catch (error) {
-    yield put(delUserImageFromDbFailedAC(error))
+    yield put(delUserImageFromDbFailedAC(error));
   }
 }
 
-export function* watchgdelImageFetchAsync() {
-  yield takeEvery(DEL_USER_IMAGE_FROM_DB, delImageFetch)
+export function* delImageFetchAsyncWatcher() {
+  yield takeEvery(DEL_USER_IMAGE_FROM_DB, delImageFetchWorker);
 }
 
-export function* watchgetUserImageFetchAsync() {
-  yield takeEvery(GET_USER_IMAGES_FROM_DB, getUserImageFetch);
+export function* getUserImageFetchAsyncWatcher() {
+  yield takeEvery(GET_USER_IMAGES_FROM_DB, getUserImageFetchWorker);
 }
 
 export default function* profileSaga(): any {
   yield all([
-    call(watchgetUserImageFetchAsync),
-    call(watchgdelImageFetchAsync)
-  ])
+    call(getUserImageFetchAsyncWatcher),
+    call(delImageFetchAsyncWatcher)
+  ]);
 }

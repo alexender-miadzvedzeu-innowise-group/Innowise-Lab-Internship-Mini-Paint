@@ -8,6 +8,7 @@ import { fadeIn } from 'react-animations';
 import Radium from 'radium';
 import Alert from '@material-ui/lab/Alert';
 import { isEmptyFields } from '../../core/helpers/isEmptyFields';
+import { IState } from '../../core/interfaces/Istate';
 
 interface Istyles {
     fadeIn: any,
@@ -18,7 +19,7 @@ const styles: Istyles = {
     animation: 'x 1s',
     animationName: Radium.keyframes(fadeIn, 'fadeIn')
   }
-}
+};
 
 interface Idata {
   email: string;
@@ -32,51 +33,51 @@ const LoginPage: React.FC = () => {
     password: '',
     confirmPassword: ''
   });
-  const [login, setlogin] = useState(true)
+  const [login, setlogin] = useState(true);
 
   const dispatch = useDispatch();
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({...data, [e.target.name]: e.target.value})
-  }
+    setData({...data, [e.target.name]: e.target.value});
+  };
 
-  const errorMessage = useSelector((state: any) => state.authReducer.errorMessage);
+  const errorMessage = useSelector((state: IState) => state.authReducer.errorMessage);
 
   const signIn = (payload:{email:string, password: string}) => {
-    dispatch(signInWithEmailAC(payload))
-  }
+    dispatch(signInWithEmailAC(payload));
+  };
 
   const createUser = (payload:{email:string, password: string}) => {
-    dispatch(createUserWithEmailAC(payload))
-  }
+    dispatch(createUserWithEmailAC(payload));
+  };
 
   const resetErrorMessage = () => {
-    dispatch(resetErrorMessageAC())
-  }
+    dispatch(resetErrorMessageAC());
+  };
 
   const setLocalUserErrorMessage = (error: string) => {
-    dispatch(setLocalUserErrorMessageAC(error))
-  }
+    dispatch(setLocalUserErrorMessageAC(error));
+  };
 
   const onSubmit = () => {
     switch (login) {
       case true:
         if (!isEmptyFields([data.email, data.password])) {
-          signIn(data)
+          signIn(data);
         }
       break; 
       case false: 
         if (!isEmptyFields([data.email, data.password, data.confirmPassword]) &&
           data.password === data.confirmPassword
         ) {
-          createUser(data)
+          createUser(data);
         } else {
-          setLocalUserErrorMessage('Passwords must be at least 6 characters long and be the same')
+          setLocalUserErrorMessage('Passwords must be at least 6 characters long and be the same');
         }
     }
-  }
+  };
 
-  const onClickSetlogin = () => setlogin(!login)
+  const onClickSetlogin = () => setlogin(!login);
   
   return(
     <Radium.StyleRoot>
@@ -144,7 +145,7 @@ const LoginPage: React.FC = () => {
       </div>
     </Radium.StyleRoot>
     
-  )
-}
+  );
+};
 
 export default LoginPage;

@@ -17,6 +17,10 @@ export const SIGN_IN_WITH_E_MAIL: string = 'SIGN_IN_WITH_E_MAIL';
 export const SIGN_IN_WITH_E_MAIL_SUCCEEDED: string = 'SIGN_IN_WITH_E_MAIL_SUCCEEDED';
 export const SIGN_IN_WITH_E_MAIL_FAILED: string = 'SIGN_IN_WITH_E_MAIL_FAILED';
 export const SIGN_OUT: string = 'SIGN_OUT';
+export const SIGN_OUT_SUCCEEDED: string = 'SIGN_OUT_SUCCEEDED';
+export const SIGN_OUT_FAILED: string = 'SIGN_OUT_FAILED';
+export const SET_LOGGED: string = 'SET_LOGGED';
+
 export const CHECK_USER_AFTORIZATION: string = 'CHECK_USER_AFTORIZATION';
 export const RESET_ERROR_MESSAGE: string = 'RESET_ERROR_MESSAGE';
 export const SET_LOCAL_USER_ERROR_MESSAGE: string = 'SET_LOCAL_USER_ERROR_MESSAGE';

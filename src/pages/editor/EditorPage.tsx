@@ -11,9 +11,9 @@ import Slider from '@material-ui/core/Slider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setInstrumentAC, setLineColorAC, setLineWeightAC, setDataUrlAC, openUploadWindowsAC } from '../../core/actions/editor';
 import Button from '@material-ui/core/Button';
-import { getCookie } from '../../core/helpers/getCookie'
 import styled, { keyframes } from 'styled-components';
 import { withStyles, Theme } from '@material-ui/core/styles';
+import { IState } from '../../core/interfaces/Istate';
 
 const flashAnimation = keyframes`${fadeInDown}`;
 const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
@@ -27,7 +27,7 @@ const styles: Istyles = {
     animation: 'x 1s',
     animationName: Radium.keyframes(fadeIn, 'fadeIn')
   }
-}
+};
 
 const PrettoSlider = withStyles({
   root: {
@@ -62,39 +62,41 @@ const UploadButton = withStyles((theme: Theme) => ({
 }))(Button);
 
 const EditorPage: React.FunctionComponent = () => {
+  const instrumentName = useSelector((state: IState) => state.editorReducer.instrumentName);
+  const subCtx = useSelector((state: IState) => state.editorReducer.subCtx);
+  const uploadWindowsOpened = useSelector((state: IState) => state.editorReducer.uploadWindowsOpened);
+  const userID = useSelector((state: IState) => state.authReducer.userID);
+  const userName = useSelector((state: IState) => state.authReducer.userName);
 
   const dispatch = useDispatch();
   
   const setLineColor = (lineColor: string) => {
-    dispatch(setLineColorAC(lineColor))
-  }
+    dispatch(setLineColorAC(lineColor));
+  };
   const setLineWeight = (lineWeight: string) => {
-    dispatch(setLineWeightAC(lineWeight))
-  }
+    dispatch(setLineWeightAC(lineWeight));
+  };
   const setInstrument = (instrumentName: string) => {
-    dispatch(setInstrumentAC(instrumentName))
-  }
+    dispatch(setInstrumentAC(instrumentName));
+  };
   const setDataUrl = (dataUrl: string) => {
-    let userID = JSON.parse(getCookie('userID'));
-    let userName = JSON.parse(getCookie('user')).split('@').slice(0,1).join();
     dispatch(setDataUrlAC(dataUrl, userID, userName));
-  }
+  };
+
   const showHideUploadWindow = () => {
-    dispatch(openUploadWindowsAC())  
-  }
+    dispatch(openUploadWindowsAC());
+  };
 
-  const instrumentName = useSelector((state: any) => state.editorReducer.instrumentName);
-  const subCtx = useSelector((state: any) => state.editorReducer.subCtx);
-  const uploadWindowsOpened = useSelector((state: any) => state.editorReducer.uploadWindowsOpened)
-
-  const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value)
+  const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value);
   const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'));
   const onClicksetInstrument = (type:string) => (e: React.MouseEvent) => setInstrument(type);
-  const valuetext = (value: any) => value
+  const valuetext = (value: any) => value;
   const uploadImage = () => {
-    setDataUrl(subCtx.canvas.toDataURL());
-    showHideUploadWindow()
-  }
+    if (subCtx) {
+      setDataUrl(subCtx?.canvas.toDataURL());
+      showHideUploadWindow();
+    }
+  };
 
   return(
     <Radium.StyleRoot>
@@ -140,7 +142,7 @@ const EditorPage: React.FunctionComponent = () => {
           </FlashDiv>
         </div>}
     </Radium.StyleRoot>
-  )
-}
+  );
+};
 
 export default EditorPage;

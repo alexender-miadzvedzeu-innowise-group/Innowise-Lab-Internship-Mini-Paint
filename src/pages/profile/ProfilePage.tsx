@@ -10,6 +10,7 @@ import { delClickedAC, } from '../../core/actions/profile';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled, { keyframes } from 'styled-components';
+import { IState } from '../../core/interfaces/Istate';
 
 interface Istyles {
   fadeIn: any
@@ -20,37 +21,37 @@ const styles: Istyles = {
     animation: 'x 1s',
     animationName: Radium.keyframes(fadeIn, 'fadeIn')
   }
-}
+};
 
 const flashAnimation = keyframes`${fadeInDown}`;
 const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
 
 const ProfilePage: React.FunctionComponent = () => {
   
-  const dispatch= useDispatch()
-  const user = useSelector((state:any) => state.profileReducer.userName);
-  const userID = useSelector((state:any) => state.profileReducer.userID);
-  const images = useSelector((state:any) => state.profileReducer.imagesData)
-  const isClicked = useSelector((state:any) => state.profileReducer.delCicked)
-  const idToDel = useSelector((state: any) => state.profileReducer.idTodell)
-  const loading = useSelector((state: any) => state.profileReducer.loading)
+  const dispatch= useDispatch();
+  const userName = useSelector((state:IState) => state.authReducer.userName);  
+  const userID = useSelector((state:IState) => state.authReducer.userID);
+  const images = useSelector((state:IState) => state.profileReducer.imagesData);
+  const isClicked = useSelector((state:IState) => state.profileReducer.delCicked);
+  const idToDel = useSelector((state: IState) => state.profileReducer.idTodell);
+  const loading = useSelector((state: IState) => state.profileReducer.loading);
 
   const delCicked = (id: number | null) => dispatch(delClickedAC(id));
-  const onClickDel = (id: number | null) => () => delCicked(id)
-  const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(idToDel, userID))
+  const onClickDel = (id: number | null) => () => delCicked(id);
+  const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(idToDel, userID));
 
   useEffect(() => {
     dispatch(getUserNameAC());
     dispatch(getUserIDAC());
-    dispatch(getUserImagesFromDbAC())
-  }, [dispatch])
+    dispatch(getUserImagesFromDbAC(userName));
+  }, [dispatch, userName]);
 
   return(
     <Radium.StyleRoot>
       <div className={classes.wrapper} style={styles.fadeIn}>
         <div className={classes.user_info}>
-          <Avatar>{user.substr(0, 1).toUpperCase()}</Avatar>
-          <h3 className={classes.user_name}>{user}</h3>
+          <Avatar>{userName.substr(0, 1).toUpperCase()}</Avatar>
+          <h3 className={classes.user_name}>{userName}</h3>
         </div>
         <div className={classes.images_container}>
           {
@@ -64,7 +65,7 @@ const ProfilePage: React.FunctionComponent = () => {
                     <Button onClick={onClickDel(image.id)} className={classes.button_icon} variant="contained" color="secondary" >Delete</Button>
                   </div>
                 </div>
-              )
+              );
             })
           }
         </div>
@@ -83,7 +84,7 @@ const ProfilePage: React.FunctionComponent = () => {
           </div> }
       </div>
     </Radium.StyleRoot>
-  )
-}
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

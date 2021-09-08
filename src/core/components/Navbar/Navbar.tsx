@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classes from './Navbar.module.css';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signOutAC } from '../../actions/auth';
 import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import Logo from '../../../assets/icons/Logo.jpg'
+import Logo from '../../../assets/icons/Logo.jpg';
 import { fadeInDown } from 'react-animations';
 import styled, { keyframes } from 'styled-components';
 
@@ -20,8 +20,8 @@ const Navbar: React.FunctionComponent = (props:any) => {
 
   const dispatch = useDispatch();
   const signOut = () => {
-    dispatch(signOutAC())
-  }
+    dispatch(signOutAC());
+  };
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -43,7 +43,8 @@ const Navbar: React.FunctionComponent = (props:any) => {
         color: '#fff',
         gridColumn: '11/13'
       },
-    }));
+    })
+  );
 
   const materialStyles = useStyles();
 
@@ -80,15 +81,9 @@ const Navbar: React.FunctionComponent = (props:any) => {
           <div className={classes.logo_container}>
             <img className={classes.logo} src={Logo} alt="LOGO" />
           </div>
-          <Navbutton>
             <NavLink to='/ ' activeClassName={classes.activeNav__link} className={classes.nav__link}>Home</NavLink>
-          </Navbutton>
-          <Navbutton>
             <NavLink to='/editor' activeClassName={classes.activeNav__link} className={classes.nav__link}>Editor</NavLink>
-          </Navbutton>
-          <Navbutton>
             <NavLink to='/profile' activeClassName={classes.activeNav__link} className={classes.nav__link}>Profile</NavLink>
-          </Navbutton>
           <LogOutbutton onClick={onClickDelClicked}>
             Log out
           </LogOutbutton>
@@ -106,7 +101,7 @@ const Navbar: React.FunctionComponent = (props:any) => {
             </FlashDiv>
           </div> }
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

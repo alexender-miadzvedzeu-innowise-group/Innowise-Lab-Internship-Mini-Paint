@@ -4,6 +4,7 @@ import editorSaga from './editorSaga';
 import signInSaga from './siginSaga';
 import homeSaga from './homeSaga';
 import profileSaga from './profileSaga';
+import signOutSaga from './sigOutSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga() {
         call(signInSaga),
         call(editorSaga),
         call(homeSaga),
-        call(profileSaga)
-    ])
+        call(profileSaga),
+        call(signOutSaga),
+    ]);
 }
