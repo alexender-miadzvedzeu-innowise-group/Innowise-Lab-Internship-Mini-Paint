@@ -9,6 +9,7 @@ import Radium from 'radium';
 import Alert from '@material-ui/lab/Alert';
 import { isEmptyFields } from '../../core/helpers/isEmptyFields';
 import { IState } from '../../core/interfaces/Istate';
+import { isValidEmail } from '../../core/helpers/isValidEmail';
 
 interface Istyles {
     fadeIn: any,
@@ -38,6 +39,11 @@ const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === 'email' && !isValidEmail(e.target.value)) {
+      setLocalUserErrorMessage('email shoul de as: example@tut.by');
+    } else {
+      resetErrorMessage();
+    }
     setData({...data, [e.target.name]: e.target.value});
   };
 
@@ -62,12 +68,13 @@ const LoginPage: React.FC = () => {
   const onSubmit = () => {
     switch (login) {
       case true:
-        if (!isEmptyFields([data.email, data.password])) {
+        if (!isEmptyFields([data.email, data.password]) && isValidEmail(data.email)) {
           signIn(data);
         }
       break; 
       case false: 
         if (!isEmptyFields([data.email, data.password, data.confirmPassword]) &&
+          isValidEmail(data.email) &&
           data.password === data.confirmPassword
         ) {
           createUser(data);
@@ -78,7 +85,7 @@ const LoginPage: React.FC = () => {
   };
 
   const onClickSetlogin = () => setlogin(!login);
-  
+
   return(
     <Radium.StyleRoot>
       <div className={classes.wrapper} style={styles.fadeIn} >

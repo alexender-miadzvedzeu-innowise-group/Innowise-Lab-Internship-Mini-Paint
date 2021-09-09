@@ -27,7 +27,6 @@ Level 1: Mini Paint
         /helpers
           delCookie.ts
           getCookie.ts
-          setCookie.ts 
         /reducers
           authReducer.ts
           editorReducer.ts
