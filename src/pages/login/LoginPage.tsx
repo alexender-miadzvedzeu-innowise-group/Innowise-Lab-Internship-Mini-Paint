@@ -4,23 +4,15 @@ import { signInWithEmailAC, createUserWithEmailAC, resetErrorMessageAC, setLocal
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import classes from './LoginPage.module.css';
-import { fadeIn } from 'react-animations';
-import Radium from 'radium';
 import Alert from '@material-ui/lab/Alert';
 import { isEmptyFields } from '../../core/helpers/isEmptyFields';
 import { IState } from '../../core/interfaces/Istate';
 import { isValidEmail } from '../../core/helpers/isValidEmail';
+import styled, { keyframes } from 'styled-components';
+import { fadeIn } from 'react-animations';
 
-interface Istyles {
-    fadeIn: any,
-  }
-
-const styles: Istyles = {
-  fadeIn: {
-    animation: 'x 1s',
-    animationName: Radium.keyframes(fadeIn, 'fadeIn')
-  }
-};
+const fadeInAnimation = keyframes`${fadeIn}`;
+const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
 
 interface Idata {
   email: string;
@@ -87,8 +79,8 @@ const LoginPage: React.FC = () => {
   const onClickSetlogin = () => setlogin(!login);
 
   return(
-    <Radium.StyleRoot>
-      <div className={classes.wrapper} style={styles.fadeIn} >
+    <FadeInDiv>
+      <div className={classes.wrapper}>
         <div className={classes.form_wrapper}>
           {
             errorMessage ? 
@@ -150,7 +142,7 @@ const LoginPage: React.FC = () => {
           <span>or you can <span className={classes.span_link} onClick={onClickSetlogin}>Login</span> with account</span>}
         </p>
       </div>
-    </Radium.StyleRoot>
+    </FadeInDiv>
     
   );
 };

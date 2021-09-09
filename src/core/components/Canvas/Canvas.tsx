@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, MouseEvent } from 'react';
 import classes from './Canvas.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCanvasSizeAC, setMainCtxAC, setMouseDownPositionAC, setSubCtxAC } from '../../actions/editor';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { IState } from '../../interfaces/Istate';
+import { Context } from '../../types/canvas.types';
 
 const Canvas: React.FunctionComponent = () => {
   
@@ -18,10 +19,10 @@ const Canvas: React.FunctionComponent = () => {
   const setMouseDownPosition = (mouseDownPosition: {x?: number, y?: number}) => {
     dispatch(setMouseDownPositionAC(mouseDownPosition));
   };
-  const setMainCtx = (context: any) => {
+  const setMainCtx = (context: Context | CanvasRenderingContext2D | null) => {
     dispatch(setMainCtxAC(context));
   };
-  const setSubCtx = (context: any) => {
+  const setSubCtx = (context: Context | CanvasRenderingContext2D | null) => {
     dispatch(setSubCtxAC(context));
   };
 
@@ -51,11 +52,11 @@ const Canvas: React.FunctionComponent = () => {
     }
   }, [canvasSize, loading]);
 
-  const onMouseDown = (e: any) => {   
+  const onMouseDown = (e: MouseEvent<HTMLCanvasElement>) => {   
     if (instrumentName && wrapperRef.current?.offsetLeft) setMouseDownPosition({x: e.clientX - wrapperRef.current?.offsetLeft, y: e.clientY - 104});
   };
 
-  const onMouseMove = (e: any) => {
+  const onMouseMove = (e: MouseEvent<HTMLCanvasElement>) => {
     if (mainCtx && mouseDownPosition.x && mouseDownPosition.y && wrapperRef.current && canvasRef.current) {
       mainCtx.strokeStyle = lineColor;
       mainCtx.lineWidth = lineWeight;
@@ -107,7 +108,7 @@ const Canvas: React.FunctionComponent = () => {
     }
   };
 
-  const onMouseUp = (e: any) => {
+  const onMouseUp = (e: MouseEvent<HTMLCanvasElement>) => {
     if (subCtx && mainCtx) {
       subCtx.drawImage(canvasRef.current, 0, 0);
       mainCtx.beginPath();

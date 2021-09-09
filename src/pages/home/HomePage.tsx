@@ -1,7 +1,5 @@
 import React from 'react';
 import classes from './HomePage.module.css';
-import { fadeIn } from 'react-animations';
-import Radium from 'radium';
 import { useDispatch, useSelector } from 'react-redux';
 import { getimagesFromDbAC, sortImagesDataAC } from '../../core/actions/home';
 import { useEffect } from 'react';
@@ -12,17 +10,11 @@ import { isEmptyObj } from '../../core/helpers/isEmptyObj';
 import Alert from '@material-ui/lab/Alert';
 import { onClicksortedImagesData } from '../../core/helpers/onClicksortedImagesData';
 import { IState } from '../../core/interfaces/Istate';
+import styled, { keyframes } from 'styled-components';
+import { fadeIn } from 'react-animations';
 
-interface Istyles {
-    fadeIn: any
-  }
-
-const styles: Istyles = {
-  fadeIn: {
-    animation: 'x 1s',
-    animationName: Radium.keyframes(fadeIn, 'fadeIn')
-  }
-};
+const fadeInAnimation = keyframes`${fadeIn}`;
+const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
 
 const HomePage: React.FunctionComponent = () => {
 
@@ -41,8 +33,8 @@ const HomePage: React.FunctionComponent = () => {
   }, [dispatch]);
 
   return(
-    <Radium.StyleRoot>
-      <div className={classes.wrapper} style={styles.fadeIn}>
+    <FadeInDiv>
+      <div className={classes.wrapper}>
         <div className={classes.search_input_wrapper}>
           <span className={classes.search_input_head}>Find user</span>
           <TextField
@@ -87,7 +79,7 @@ const HomePage: React.FunctionComponent = () => {
           })
         }
       </div>
-    </Radium.StyleRoot>
+    </FadeInDiv>
   );
 };
 

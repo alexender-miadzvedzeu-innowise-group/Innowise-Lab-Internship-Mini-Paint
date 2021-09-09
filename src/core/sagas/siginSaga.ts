@@ -29,7 +29,7 @@ export function* signInWithEmailFetchAsyncWatcher() {
     yield takeEvery(SIGN_IN_WITH_E_MAIL, signInWithEmailFetchWorker);
 }
 
-export default function* signInSaga(): any {
+export default function* signInSaga(): Generator {
     yield all([
         call(signInWithEmailFetchAsyncWatcher)
     ]);

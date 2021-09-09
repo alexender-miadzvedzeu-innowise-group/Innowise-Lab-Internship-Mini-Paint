@@ -11,12 +11,15 @@ interface Action {
   userName: string,
   data: {}
 };
-
+type img = {
+  index: number,
+  map: (callback: (img: {imgUrl: string}, key: string) => JSX.Element) => [JSX.Element];
+}
 export interface IhomeState {
   loading: boolean,
   error: boolean,
   successed: boolean,
-  imagesData: any,
+  imagesData: {[key: string]: img},
   sortedImagesData: {}
 };
 

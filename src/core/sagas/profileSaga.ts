@@ -8,7 +8,7 @@ import { delUserImage, getUserImages } from '../services/firebase/currentUserFet
 export function* getUserImageFetchWorker(payload: AnyAction): Generator {
   const { userID, userName } = payload;
   try {
-    const data = yield call(getUserImages, userID, userName);
+    const data:[object] | unknown = yield call(getUserImages, userID, userName);
     yield put(getUserImagesFromDbSucceededAC(data));
   } catch (error) {
     yield put(getUserImagesFromDbFailedAC(error));
@@ -16,9 +16,9 @@ export function* getUserImageFetchWorker(payload: AnyAction): Generator {
 }
 
 export function* delImageFetchWorker(payload: AnyAction): Generator {
-  const { id, userID, imgUrl } = payload;
+  const { id, userID, imgUrl, userName } = payload;
   try {
-    yield call(delUserImage, id, userID, imgUrl);
+    yield call(delUserImage, id, userID, imgUrl, userName);
     yield put(delUserImageFromDbSucceededAC());
   } catch (error) {
     yield put(delUserImageFromDbFailedAC(error));
@@ -33,7 +33,7 @@ export function* getUserImageFetchAsyncWatcher() {
   yield takeEvery(GET_USER_IMAGES_FROM_DB, getUserImageFetchWorker);
 }
 
-export default function* profileSaga(): any {
+export default function* profileSaga(): Generator {
   yield all([
     call(getUserImageFetchAsyncWatcher),
     call(delImageFetchAsyncWatcher)

@@ -2,7 +2,6 @@ import React from 'react';
 import classes from './EditorPage.module.css';
 import { fadeIn, fadeInDown } from 'react-animations';
 import Canvas from '../../core/components/Canvas/Canvas';
-import Radium from 'radium';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import LinearScaleIcon from '@material-ui/icons/LinearScale';
@@ -18,16 +17,8 @@ import { IState } from '../../core/interfaces/Istate';
 const flashAnimation = keyframes`${fadeInDown}`;
 const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
 
-interface Istyles {
-  fadeIn: any
-}
-
-const styles: Istyles = {
-  fadeIn: {
-    animation: 'x 1s',
-    animationName: Radium.keyframes(fadeIn, 'fadeIn')
-  }
-};
+const fadeInAnimation = keyframes`${fadeIn}`;
+const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
 
 const PrettoSlider = withStyles({
   root: {
@@ -73,7 +64,7 @@ const EditorPage: React.FunctionComponent = () => {
   const setLineColor = (lineColor: string) => {
     dispatch(setLineColorAC(lineColor));
   };
-  const setLineWeight = (lineWeight: string) => {
+  const setLineWeight = (lineWeight: string | null) => {
     dispatch(setLineWeightAC(lineWeight));
   };
   const setInstrument = (instrumentName: string) => {
@@ -88,9 +79,10 @@ const EditorPage: React.FunctionComponent = () => {
   };
 
   const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value);
-  const onChangeWeight = (e: any) => setLineWeight(e.target.getAttribute('aria-valuetext'));
+  const onChangeWeight = () => (e: Event) => setLineWeight((e.target as HTMLElement).getAttribute('aria-valuetext'));
   const onClicksetInstrument = (type:string) => (e: React.MouseEvent) => setInstrument(type);
-  const valuetext = (value: any) => value;
+  const valuetext = (value: number): string => value.toString();
+
   const uploadImage = () => {
     if (subCtx) {
       setDataUrl(subCtx?.canvas.toDataURL());
@@ -99,8 +91,8 @@ const EditorPage: React.FunctionComponent = () => {
   };
 
   return(
-    <Radium.StyleRoot>
-      <div className={classes.wrapper} style={styles.fadeIn}>
+    <FadeInDiv>
+      <div className={classes.wrapper}>
         <div className={classes.buttons_navbar}>
           <div className={instrumentName === 'rectangle' ? classes.button_checked : classes.button} onClick={onClicksetInstrument('rectangle')}><CheckBoxOutlineBlankIcon /></div>
           <div className={instrumentName === 'circle' ? classes.button_checked : classes.button} onClick={onClicksetInstrument('circle')}><RadioButtonUncheckedIcon /></div>
@@ -141,7 +133,7 @@ const EditorPage: React.FunctionComponent = () => {
             </div>
           </FlashDiv>
         </div>}
-    </Radium.StyleRoot>
+    </FadeInDiv>
   );
 };
 

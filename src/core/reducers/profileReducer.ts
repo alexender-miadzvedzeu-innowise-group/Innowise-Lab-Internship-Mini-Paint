@@ -51,7 +51,7 @@ export const profileReducer = (state = initialState, action: Action ):object => 
     case DEL_USER_IMAGE_FROM_DB:
       return {...state, loading: true};
     case DEL_USER_IMAGE_FROM_DB_SUCCEEDED:
-      return {...state, imagesData: state.imagesData.filter((img: any) => img.id !== state.idTodell), loading: false, delCicked: false, idToDel: null };
+      return {...state, imagesData: state.imagesData.filter((img: {id: string | number}) => img.id !== state.idTodell), loading: false, delCicked: false, idToDel: null };
     case DEL_USER_IMAGE_FROM_DB_FAILED:
       return {...state, loading: false, delCicked: false};
     default:

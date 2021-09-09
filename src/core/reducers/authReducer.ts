@@ -14,8 +14,14 @@ import {
 
 interface Action {
   type: string,
-  payload: {} | any,
-  error?: any,
+  payload: {
+    userName: string, 
+    userID: string
+  },
+  error: {
+    code:string, 
+    message: string
+  },
   userName: string,
   userID: string
 }

@@ -28,7 +28,20 @@ interface Action {
   context: object,
   dataUrl: string,
   imgName: number,
-  payload: any,
+}
+
+export interface IContext {
+  strokeStyle: string,
+  lineWidth: string,
+  canvas: HTMLCanvasElement,
+  clearRect: (x: number, y:number, toX: number, toY: number) => void,
+  strokeRect: (x: number, y:number, toX: number, toY: number) => void,
+  stroke: () => void,
+  beginPath: () => void,
+  arc: (x: number, y: number, radius: number, arcStart: number, arcEnd: number, right: boolean) => void,
+  moveTo: (x: number, y: number) => void,
+  lineTo: (x: number, y: number) => void,
+  drawImage: (ref: HTMLCanvasElement | null, x: number, y: number) => void
 }
 
 export interface IeditorState {
@@ -43,32 +56,8 @@ export interface IeditorState {
     x?: number,
     y?: number
   },
-  mainCtx?: {
-    strokeStyle: string,
-    lineWidth: string,
-    canvas: HTMLCanvasElement,
-    clearRect: (x: number, y:number, toX: number, toY: number) => void,
-    strokeRect: (x: number, y:number, toX: number, toY: number) => void,
-    stroke: () => void,
-    beginPath: () => void,
-    arc: (x: number, y: number, radius: number, arcStart: number, arcEnd: number, right: boolean) => void,
-    moveTo: (x: number, y: number) => void,
-    lineTo: (x: number, y: number) => void,
-    drawImage: (ref: HTMLCanvasElement | null, x: number, y: number) => void
-  },
-  subCtx?: {
-    strokeStyle: string,
-    lineWidth: string,
-    canvas: HTMLCanvasElement,
-    clearRect: (x: number, y:number, toX: number, toY: number) => void,
-    strokeRect: (x: number, y:number, toX: number, toY: number) => void,
-    stroke: () => void,
-    beginPath: () => void,
-    arc: (x: number, y: number, radius: number, arcStart: number, arcEnd: number, right: boolean) => void,
-    moveTo: (x: number, y: number) => void,
-    lineTo: (x: number, y: number) => void,
-    drawImage: (ref: HTMLCanvasElement | null, x: number, y: number) => void
-  },
+  mainCtx?: IContext,
+  subCtx?: IContext,
   subCtxDataUrl: string,
   imgName: string,
   loading: boolean,

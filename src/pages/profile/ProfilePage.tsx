@@ -12,16 +12,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import styled, { keyframes } from 'styled-components';
 import { IState } from '../../core/interfaces/Istate';
 
-interface Istyles {
-  fadeIn: any
-}
-
-const styles: Istyles = {
-  fadeIn: {
-    animation: 'x 1s',
-    animationName: Radium.keyframes(fadeIn, 'fadeIn')
-  }
-};
+const fadeInAnimation = keyframes`${fadeIn}`;
+const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
 
 const flashAnimation = keyframes`${fadeInDown}`;
 const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
@@ -38,7 +30,7 @@ const ProfilePage: React.FunctionComponent = () => {
   const loading = useSelector((state: IState) => state.profileReducer.loading);
   const delCicked = (id: string | null, imgUrl: string | null) => dispatch(delClickedAC(id, imgUrl));
   const onClickDel = (id: string | null, imgUrl: string | null) => () => delCicked(id, imgUrl);
-  const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(id, userID, imgUrl));
+  const delUserImageFromDB = () => dispatch(delUserImageFromDbAC(id, userID, imgUrl, userName));
   useEffect(() => {
     dispatch(getUserNameAC());
     dispatch(getUserIDAC());
@@ -46,15 +38,15 @@ const ProfilePage: React.FunctionComponent = () => {
   }, [dispatch, userName]);
 
   return(
-    <Radium.StyleRoot>
-      <div className={classes.wrapper} style={styles.fadeIn}>
+    <FadeInDiv>
+      <div className={classes.wrapper}>
         <div className={classes.user_info}>
           <Avatar>{userName.substr(0, 1).toUpperCase()}</Avatar>
           <h3 className={classes.user_name}>{userName}</h3>
         </div>
         <div className={classes.images_container}>
           {
-            images.map((image: any, key: any) => {
+            images.map((image: {id: string, imgUrl: string}, key: number) => {
               return (
                 <div className={classes.image_wrapper} key={key} >
                   <div className={classes.img_container}>
@@ -84,7 +76,7 @@ const ProfilePage: React.FunctionComponent = () => {
             </FlashDiv>
           </div> }
       </div>
-    </Radium.StyleRoot>
+    </FadeInDiv>
   );
 };
 

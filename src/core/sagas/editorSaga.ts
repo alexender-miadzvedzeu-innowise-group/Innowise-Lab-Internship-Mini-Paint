@@ -8,8 +8,8 @@ export function* uploadImageFetchWorker(payload: AnyAction): Generator {
   const {dataUrl, userID, userName} = payload;
   const id = Date.now().toString();
   try {
-    const response = yield call(uploadImage, dataUrl, userID, userName, id);
-    yield put(uploadImageSuccessedAC(response));
+    yield call(uploadImage, dataUrl, userID, userName, id);
+    yield put(uploadImageSuccessedAC());
   } catch (error) {
     yield put(uploadImageFailedAC(error));
   }
@@ -19,7 +19,7 @@ export function* uploadImageFetchAsyncWatcher() {
     yield takeEvery(SET_DATA_URL, uploadImageFetchWorker);
 }
 
-export default function* editorSaga(): any {
+export default function* editorSaga(): Generator {
   yield all([
     call(uploadImageFetchAsyncWatcher)
   ]);

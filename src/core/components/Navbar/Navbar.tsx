@@ -13,7 +13,7 @@ import styled, { keyframes } from 'styled-components';
 const flashAnimation = keyframes`${fadeInDown}`;
 const FlashDiv = styled.div`animation: 1s ${flashAnimation};`;
 
-const Navbar: React.FunctionComponent = (props:any) => {
+const Navbar: React.FunctionComponent = () => {
 
   const [isClicked, setIsClicked] = useState(false);
   const onClickDelClicked = () => setIsClicked(!isClicked);
