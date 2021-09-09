@@ -4,14 +4,13 @@ interface IDoc {
   data: () => never
 }
 
-export const getUserImages = async (userID: string) => {
+export const getUserImages = async (userID: string, userName: string) => {
   let images:[] = [];
   const imagesRef = await db.collection('images').doc(userID);
   await imagesRef.get().then((doc) => {
     const payload = doc.data();
-    if (payload) return images = payload.images;
+    if (payload) return images = payload[userName];
   });
-  console.log(images);
   return images;
 };
 
@@ -26,13 +25,12 @@ export const delUserImage = async (id: string, userID: string, imgUrl: string) =
 };
 
 export const uploadImage = async (dataUrl: string, userID: string, userName: string, id: string) => {
-  
   const path = `library/${userID}/photo:${id}`;
   const imgRef: any = storageRef.child(path);
   await imgRef.putString(dataUrl, 'data_url');
   const imgUrl = await storage.refFromURL(`gs://${process.env.REACT_APP_STORAGE_BUCKET}/${path}`).getDownloadURL();
   const uploadImageToDB = () => db.collection('images').doc(userID.toString()).update({
-    images: firebase.firestore.FieldValue.arrayUnion({imgUrl, id})
+    [userName]: firebase.firestore.FieldValue.arrayUnion({imgUrl, id})
   });
 
   db.collection('images').doc(userID.toString()).get().then(doc =>{

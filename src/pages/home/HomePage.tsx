@@ -36,7 +36,6 @@ const HomePage: React.FunctionComponent = () => {
 
   const imagesData = useSelector((state: IState) => state.homeReducer.imagesData);
   const sortedImagesData = useSelector((state: IState) => state.homeReducer.sortedImagesData);
-  
   useEffect(() => {
     dispatch(getimagesFromDbAC());
   }, [dispatch]);
@@ -74,10 +73,10 @@ const HomePage: React.FunctionComponent = () => {
                 </div>
                 <div className={classes.container}>
                   {
-                    imagesData[elem].map((img: string, key: string) => {
+                    imagesData[elem].map((img: {imgUrl: string}, key: string) => {
                       return (
                         <div className={classes.imgWrapper} key ={key}>
-                          <img className={classes.img} src={img} alt={img} />
+                          <img className={classes.img} src={img.imgUrl} alt={img.imgUrl} />
                         </div>
                       );
                     })

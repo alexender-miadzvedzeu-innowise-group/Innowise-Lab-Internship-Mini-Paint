@@ -42,7 +42,7 @@ const ProfilePage: React.FunctionComponent = () => {
   useEffect(() => {
     dispatch(getUserNameAC());
     dispatch(getUserIDAC());
-    dispatch(getUserImagesFromDbAC(userID));
+    dispatch(getUserImagesFromDbAC(userID, userName));
   }, [dispatch, userName]);
 
   return(

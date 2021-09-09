@@ -6,9 +6,9 @@ import { delUserImage, getUserImages } from '../services/firebase/currentUserFet
 
 
 export function* getUserImageFetchWorker(payload: AnyAction): Generator {
-  const { userID } = payload;
+  const { userID, userName } = payload;
   try {
-    const data = yield call(getUserImages, userID);
+    const data = yield call(getUserImages, userID, userName);
     yield put(getUserImagesFromDbSucceededAC(data));
   } catch (error) {
     yield put(getUserImagesFromDbFailedAC(error));
