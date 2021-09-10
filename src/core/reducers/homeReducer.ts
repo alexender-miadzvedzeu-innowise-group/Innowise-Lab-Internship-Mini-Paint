@@ -11,21 +11,24 @@ interface Action {
   userName: string,
   data: {}
 };
-
+type img = {
+  index: number,
+  map: (callback: (img: {imgUrl: string}, key: string) => JSX.Element) => [JSX.Element];
+}
 export interface IhomeState {
   loading: boolean,
   error: boolean,
   successed: boolean,
-  imagesData: any,
-  sortedImagesData: {}
+  imagesData: [],
+  sortedImagesData: []
 };
 
 const initialState: IhomeState = {
   loading: false,
   error: false,
   successed: false,
-  imagesData: {},
-  sortedImagesData: {}
+  imagesData: [],
+  sortedImagesData: []
 };
 
 export const homeReducer = (state = initialState, action: Action ):object => {

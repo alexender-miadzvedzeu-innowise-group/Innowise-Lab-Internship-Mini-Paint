@@ -13,7 +13,7 @@ import {
 } from './actions.types';
 import { Context } from '../types/canvas.types';
 
-export const setLineWeightAC = (lineWeight: string) => ({ type: SET_LINE_WEIGHT, lineWeight});
+export const setLineWeightAC = (lineWeight: string | null) => ({ type: SET_LINE_WEIGHT, lineWeight});
 export const setLineColorAC = (lineColor: string) => ({ type: SET_LINE_COLOR, lineColor});
 export const setInstrumentAC = (instrumentName: string) => ({ type: SET_INSTRUMENT, instrumentName});
 
@@ -23,9 +23,9 @@ export const setMouseDownPositionAC = (mouseDownPosition: {x?: number, y?: numbe
 
 export const openUploadWindowsAC = () => ({ type: OPEN_UPLOAD_WINDOW });
 
-export const setMainCtxAC = (context: Context) => ({ type: SET_MAIN_CTX, context});
-export const setSubCtxAC = (context: Context) => ({ type: SET_SUB_CTX, context});
+export const setMainCtxAC = (context: Context | CanvasRenderingContext2D | null) => ({ type: SET_MAIN_CTX, context});
+export const setSubCtxAC = (context: Context | CanvasRenderingContext2D | null) => ({ type: SET_SUB_CTX, context});
 
 export const setDataUrlAC = (dataUrl: string, userID: string, userName: string) => ({type: SET_DATA_URL, dataUrl, userID, userName});
-export const uploadImageSuccessedAC = (payload: any) => ({type: UPLOAD_IMAGE_SUCCEEDED, payload});
-export const uploadImageFailedAC = (payload: any) => ({type: UPLOAD_IMAGE_FAILED, payload});
+export const uploadImageSuccessedAC = () => ({type: UPLOAD_IMAGE_SUCCEEDED});
+export const uploadImageFailedAC = (payload: {code:string, message: string} | unknown) => ({type: UPLOAD_IMAGE_FAILED, payload});

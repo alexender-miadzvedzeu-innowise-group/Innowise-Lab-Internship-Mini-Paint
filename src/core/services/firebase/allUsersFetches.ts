@@ -6,7 +6,9 @@ interface IDoc {
 
 export const getAllUsersImages = async () => {
   let data:[] = [];
-  const fetchImages:any = await db.collection('images').get();
-  fetchImages.docs.map((doc: IDoc) => data.push(doc.data()));
+  const fetchImages:any = await db.collection('users').get();
+  fetchImages.docs.map((doc: IDoc) => {
+    data.push(doc.data());
+  });
   return data;
 };

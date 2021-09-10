@@ -7,7 +7,6 @@ import HomePage from '../../../pages/home/HomePage';
 import EditorPage from '../../../pages/editor/EditorPage';
 import ProfilePage from '../../../pages/profile/ProfilePage';
 import { app } from '../../firebase/firebase';
-import { sliceUserNameFromEmail } from '../../helpers/sliceUserNameFromEmail';
 import { Redirect } from 'react-router';
 import { IState } from '../../interfaces/Istate';
 import PrivateRoute from '../../routes/PrivateRoute';
@@ -20,7 +19,7 @@ const App: React.FunctionComponent = () => {
   useEffect(() => {
     app.auth().onAuthStateChanged((user) => {
       if (user && user.email && user.uid) {
-        dispatch(setLoggedAC(sliceUserNameFromEmail(user.email), user.uid));
+        dispatch(setLoggedAC(user.email, user.uid));
       }
     });
   }, [dispatch]);

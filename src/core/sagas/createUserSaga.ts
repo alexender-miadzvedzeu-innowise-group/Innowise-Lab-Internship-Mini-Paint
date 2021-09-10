@@ -5,9 +5,9 @@ import { AnyAction } from 'redux';
 import { createUser } from '../services/firebase/authFetches';
 
 interface FirebaseCreateUserResonse {
-    userCredentional?: any
+    userID: string,
+    userName: string
 }
-
 
 export function* createUserWithEmailFetchWorker(data: AnyAction) {
     const { payload } = data;
@@ -23,7 +23,7 @@ export function* createUserWithEmailFetchAsyncWatcher() {
     yield takeEvery(CREATE_USER_WITH_E_MAIL, createUserWithEmailFetchWorker);
 }
 
-export default function* createUserSaga(): any {
+export default function* createUserSaga(): Generator {
     yield all([
         call(createUserWithEmailFetchAsyncWatcher)
     ]);

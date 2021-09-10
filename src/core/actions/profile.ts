@@ -12,12 +12,12 @@ import {
 
 export const getUserNameAC = () => ({ type: GET_USER_NAME});
 export const getUserIDAC = () => ({ type: GET_USER_ID});
-export const getUserImagesFromDbAC = (userName: string) => ({ type: GET_USER_IMAGES_FROM_DB, userName });
-export const getUserImagesFromDbSucceededAC = (payload: any) => ({ type: GET_USER_IMAGES_FROM_DB_SUCCEEDED, payload});
-export const getUserImagesFromDbFailedAC = (payload: any) => ({ type: GET_USER_IMAGES_FROM_DB_FAILED, payload });
+export const getUserImagesFromDbAC = (userID: string, userName: string) => ({ type: GET_USER_IMAGES_FROM_DB, userID, userName });
+export const getUserImagesFromDbSucceededAC = (payload: [object] | unknown) => ({ type: GET_USER_IMAGES_FROM_DB_SUCCEEDED, payload});
+export const getUserImagesFromDbFailedAC = (payload: {code:string, message: string} | unknown) => ({ type: GET_USER_IMAGES_FROM_DB_FAILED, payload });
 
-export const delClickedAC = (id: number | null) => ({ type: DEL_CLICKED, id});
+export const delClickedAC = (id: string | null, imgUrl: string | null) => ({ type: DEL_CLICKED, id, imgUrl});
 
-export const delUserImageFromDbAC = (id: number | null, userName: string) => ({ type: DEL_USER_IMAGE_FROM_DB, id, userName });
+export const delUserImageFromDbAC = (id: number | null, userID: string, imgUrl: string | null, userName: string) => ({ type: DEL_USER_IMAGE_FROM_DB, id, userID, imgUrl, userName });
 export const delUserImageFromDbSucceededAC = () => ({ type: DEL_USER_IMAGE_FROM_DB_SUCCEEDED });
-export const delUserImageFromDbFailedAC = (payload: any) => ({ type: DEL_USER_IMAGE_FROM_DB_FAILED, payload });
+export const delUserImageFromDbFailedAC = (payload: {code:string, message: string} | unknown) => ({ type: DEL_USER_IMAGE_FROM_DB_FAILED, payload });

@@ -4,22 +4,15 @@ import { signInWithEmailAC, createUserWithEmailAC, resetErrorMessageAC, setLocal
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import classes from './LoginPage.module.css';
-import { fadeIn } from 'react-animations';
-import Radium from 'radium';
 import Alert from '@material-ui/lab/Alert';
 import { isEmptyFields } from '../../core/helpers/isEmptyFields';
 import { IState } from '../../core/interfaces/Istate';
+import { isValidEmail } from '../../core/helpers/isValidEmail';
+import styled, { keyframes } from 'styled-components';
+import { fadeIn } from 'react-animations';
 
-interface Istyles {
-    fadeIn: any,
-  }
-
-const styles: Istyles = {
-  fadeIn: {
-    animation: 'x 1s',
-    animationName: Radium.keyframes(fadeIn, 'fadeIn')
-  }
-};
+const fadeInAnimation = keyframes`${fadeIn}`;
+const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
 
 interface Idata {
   email: string;
@@ -41,6 +34,8 @@ const LoginPage: React.FC = () => {
     setData({...data, [e.target.name]: e.target.value});
   };
 
+  const checkEmail = () => !isValidEmail(data.email) && setLocalUserErrorMessage('email shoul de as: example@tut.by');
+
   const errorMessage = useSelector((state: IState) => state.authReducer.errorMessage);
 
   const signIn = (payload:{email:string, password: string}) => {
@@ -60,28 +55,27 @@ const LoginPage: React.FC = () => {
   };
 
   const onSubmit = () => {
-    switch (login) {
-      case true:
-        if (!isEmptyFields([data.email, data.password])) {
-          signIn(data);
-        }
-      break; 
-      case false: 
-        if (!isEmptyFields([data.email, data.password, data.confirmPassword]) &&
-          data.password === data.confirmPassword
-        ) {
-          createUser(data);
-        } else {
-          setLocalUserErrorMessage('Passwords must be at least 6 characters long and be the same');
-        }
+    if (login) {
+      if (!isEmptyFields([data.email, data.password]) && isValidEmail(data.email)) {
+        signIn(data);
+      }
+    } else {
+      if (!isEmptyFields([data.email, data.password, data.confirmPassword]) &&
+        isValidEmail(data.email) &&
+        data.password === data.confirmPassword
+      ) {
+        createUser(data);
+      } else {
+        setLocalUserErrorMessage('Passwords must be at least 6 characters long and be the same');
+      }
     }
   };
 
   const onClickSetlogin = () => setlogin(!login);
-  
+
   return(
-    <Radium.StyleRoot>
-      <div className={classes.wrapper} style={styles.fadeIn} >
+    <FadeInDiv>
+      <div className={classes.wrapper}>
         <div className={classes.form_wrapper}>
           {
             errorMessage ? 
@@ -93,6 +87,7 @@ const LoginPage: React.FC = () => {
             <TextField
               onChange={onInputChange}
               onFocus={resetErrorMessage}
+              onBlur={checkEmail}
               className={classes.login}
               variant="outlined"
               id="email"
@@ -105,6 +100,7 @@ const LoginPage: React.FC = () => {
             <TextField
               onChange={onInputChange}
               onFocus={resetErrorMessage}
+              onBlur={checkEmail}
               className={classes.password}
               variant="outlined"
               name="password"
@@ -143,7 +139,7 @@ const LoginPage: React.FC = () => {
           <span>or you can <span className={classes.span_link} onClick={onClickSetlogin}>Login</span> with account</span>}
         </p>
       </div>
-    </Radium.StyleRoot>
+    </FadeInDiv>
     
   );
 };

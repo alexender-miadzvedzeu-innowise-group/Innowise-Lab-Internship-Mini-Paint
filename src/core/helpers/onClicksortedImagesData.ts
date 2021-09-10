@@ -1,10 +1,1 @@
-export const onClicksortedImagesData = (imagesData: any, userName: string) => {
-  let index = userName.length;
-    let sortedImagesData: any = {};
-    Object.keys(imagesData).forEach((user: string) => {
-      if (user.substr(0, index) === userName) {
-        sortedImagesData[user] = imagesData[user];
-      }
-    });
-    return sortedImagesData;
-};
+export const onClicksortedImagesData = (imagesData: [], userName: string) => imagesData.filter((userImages: {userName: string}) => userImages.userName.substr(0, userName.length) === userName);

@@ -6,7 +6,7 @@ import homeSaga from './homeSaga';
 import profileSaga from './profileSaga';
 import signOutSaga from './sigOutSaga';
 
-export default function* rootSaga() {
+export default function* rootSaga(): Generator {
     yield all([
         call(createUserSaga),
         call(signInSaga),

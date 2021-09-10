@@ -1,1 +1,0 @@
-export const sortUserImages = (data: any, userName: string) => data.filter((elem: {userName: string}) => elem.userName === userName);

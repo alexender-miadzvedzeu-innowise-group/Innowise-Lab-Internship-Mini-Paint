@@ -1,7 +1,5 @@
 import React from 'react';
 import classes from './HomePage.module.css';
-import { fadeIn } from 'react-animations';
-import Radium from 'radium';
 import { useDispatch, useSelector } from 'react-redux';
 import { getimagesFromDbAC, sortImagesDataAC } from '../../core/actions/home';
 import { useEffect } from 'react';
@@ -12,17 +10,12 @@ import { isEmptyObj } from '../../core/helpers/isEmptyObj';
 import Alert from '@material-ui/lab/Alert';
 import { onClicksortedImagesData } from '../../core/helpers/onClicksortedImagesData';
 import { IState } from '../../core/interfaces/Istate';
+import styled, { keyframes } from 'styled-components';
+import { fadeIn } from 'react-animations';
+import { sliceUserNameFromEmail } from '../../core/helpers/sliceUserNameFromEmail';
 
-interface Istyles {
-    fadeIn: any
-  }
-
-const styles: Istyles = {
-  fadeIn: {
-    animation: 'x 1s',
-    animationName: Radium.keyframes(fadeIn, 'fadeIn')
-  }
-};
+const fadeInAnimation = keyframes`${fadeIn}`;
+const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
 
 const HomePage: React.FunctionComponent = () => {
 
@@ -33,17 +26,16 @@ const HomePage: React.FunctionComponent = () => {
     setInputValue(e.target.value);
     return dispatch(sortImagesDataAC(onClicksortedImagesData(imagesData, e.target.value)));
   };
-
+  
   const imagesData = useSelector((state: IState) => state.homeReducer.imagesData);
   const sortedImagesData = useSelector((state: IState) => state.homeReducer.sortedImagesData);
-  
   useEffect(() => {
     dispatch(getimagesFromDbAC());
   }, [dispatch]);
 
   return(
-    <Radium.StyleRoot>
-      <div className={classes.wrapper} style={styles.fadeIn}>
+    <FadeInDiv>
+      <div className={classes.wrapper}>
         <div className={classes.search_input_wrapper}>
           <span className={classes.search_input_head}>Find user</span>
           <TextField
@@ -65,19 +57,19 @@ const HomePage: React.FunctionComponent = () => {
           }
         </div>
         {
-          Object.keys(isEmptyObj(sortedImagesData) ? imagesData : sortedImagesData).map((elem, key) => {
+          (isEmptyObj(sortedImagesData) ? imagesData : sortedImagesData).map((elem:{userName: string, images: []}, key) => {
             return (
               <div className={classes.user_container} key={key}>
                 <div className={classes.name_container}>
-                  <Avatar alt="Remy Sharp" >{elem.substr(0, 1).toUpperCase()}</Avatar>
-                  <h3 className={classes.user_name}>{elem}</h3>
+                  <Avatar alt="Remy Sharp" >{elem.userName.substr(0, 1).toUpperCase()}</Avatar>
+                  <h3 className={classes.user_name}>{sliceUserNameFromEmail(elem.userName)}</h3>
                 </div>
                 <div className={classes.container}>
                   {
-                    imagesData[elem].map((img: string, key: string) => {
+                    elem.images.map((images: {imgUrl: string}, key) => {
                       return (
                         <div className={classes.imgWrapper} key ={key}>
-                          <img className={classes.img} src={img} alt={img} />
+                          <img className={classes.img} src={images.imgUrl} alt={images.imgUrl} />
                         </div>
                       );
                     })
@@ -88,7 +80,7 @@ const HomePage: React.FunctionComponent = () => {
           })
         }
       </div>
-    </Radium.StyleRoot>
+    </FadeInDiv>
   );
 };
 
