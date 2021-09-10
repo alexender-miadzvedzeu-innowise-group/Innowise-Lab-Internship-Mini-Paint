@@ -12,7 +12,6 @@ import { onClicksortedImagesData } from '../../core/helpers/onClicksortedImagesD
 import { IState } from '../../core/interfaces/Istate';
 import styled, { keyframes } from 'styled-components';
 import { fadeIn } from 'react-animations';
-import { sliceUserNameFromEmail } from '../../core/helpers/sliceUserNameFromEmail';
 
 const fadeInAnimation = keyframes`${fadeIn}`;
 const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
@@ -58,11 +57,12 @@ const HomePage: React.FunctionComponent = () => {
         </div>
         {
           (isEmptyObj(sortedImagesData) ? imagesData : sortedImagesData).map((elem:{userName: string, images: []}, key) => {
+            if (elem.images.length) {
             return (
               <div className={classes.user_container} key={key}>
                 <div className={classes.name_container}>
                   <Avatar alt="Remy Sharp" >{elem.userName.substr(0, 1).toUpperCase()}</Avatar>
-                  <h3 className={classes.user_name}>{sliceUserNameFromEmail(elem.userName)}</h3>
+                  <h3 className={classes.user_name}>{elem.userName}</h3>
                 </div>
                 <div className={classes.container}>
                   {
@@ -77,6 +77,7 @@ const HomePage: React.FunctionComponent = () => {
                 </div>
               </div>
             );
+            }
           })
         }
       </div>

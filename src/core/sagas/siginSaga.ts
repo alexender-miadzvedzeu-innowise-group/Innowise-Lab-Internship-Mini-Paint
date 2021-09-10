@@ -2,7 +2,7 @@ import { takeEvery, put, call, all } from '@redux-saga/core/effects';
 import { SIGN_IN_WITH_E_MAIL } from '../actions/actions.types';
 import { signInWithEmailSucceededAC, signInWithEmailFailedAC } from '../actions/auth';
 import { AnyAction } from 'redux';
-import { signInUser } from '../services/firebase/authFetches';
+import { signInUser } from '../services/firebase/auth';
 
 export function* signInWithEmailFetchWorker(data: AnyAction) {
     const { payload } = data;

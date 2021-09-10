@@ -1,7 +1,7 @@
 import { takeEvery, put, call, all } from '@redux-saga/core/effects';
 import { SIGN_OUT } from '../actions/actions.types';
 import { signOutACSucceededAC, signOutACFailedAC } from '../actions/auth';
-import { signOutUser } from '../services/firebase/authFetches';
+import { signOutUser } from '../services/firebase/auth';
 
 export function* signOutFetchAsyncWorker() {
     try {

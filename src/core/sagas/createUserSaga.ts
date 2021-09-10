@@ -2,7 +2,7 @@ import { takeEvery, put, call, all } from '@redux-saga/core/effects';
 import { CREATE_USER_WITH_E_MAIL } from '../actions/actions.types';
 import { createUserWithEmailSucceededAC, createUserWithEmailFailedAC } from '../../core/actions/auth';
 import { AnyAction } from 'redux';
-import { createUser } from '../services/firebase/authFetches';
+import { createUser } from '../services/firebase/auth';
 
 interface FirebaseCreateUserResonse {
     userID: string,

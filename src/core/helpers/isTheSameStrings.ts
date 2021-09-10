@@ -1,0 +1,1 @@
+export const isTheSameStrings = (strA: string, strB: string) => strA === strB;
