@@ -10,6 +10,7 @@ import { IState } from '../../core/interfaces/Istate';
 import { isValidEmail } from '../../core/helpers/isValidEmail';
 import styled, { keyframes } from 'styled-components';
 import { fadeIn } from 'react-animations';
+import { isTheSameStrings } from '../../core/helpers/isTheSameStrings';
 
 const fadeInAnimation = keyframes`${fadeIn}`;
 const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
@@ -34,7 +35,7 @@ const LoginPage: React.FC = () => {
     setData({...data, [e.target.name]: e.target.value});
   };
 
-  const checkEmail = () => !isValidEmail(data.email) && setLocalUserErrorMessage('email shoul de as: example@tut.by');
+  const checkEmail = () => !isValidEmail(data.email) && setLocalUserErrorMessage('email shoul be as: example@tut.by');
 
   const errorMessage = useSelector((state: IState) => state.authReducer.errorMessage);
 
@@ -58,15 +59,24 @@ const LoginPage: React.FC = () => {
     if (login) {
       if (!isEmptyFields([data.email, data.password]) && isValidEmail(data.email)) {
         signIn(data);
+      } else if (isEmptyFields([data.email, data.password])) {
+        setLocalUserErrorMessage('all fields should be not empty');
+      } else if (!isValidEmail(data.email)) {
+        setLocalUserErrorMessage('Email should be as: email@tut.by');
       }
     } else {
-      if (!isEmptyFields([data.email, data.password, data.confirmPassword]) &&
+      if (
+        !isEmptyFields([data.email, data.password, data.confirmPassword]) &&
         isValidEmail(data.email) &&
-        data.password === data.confirmPassword
+        isTheSameStrings(data.password, data.confirmPassword)
       ) {
         createUser(data);
-      } else {
-        setLocalUserErrorMessage('Passwords must be at least 6 characters long and be the same');
+      } else if (isEmptyFields([data.email, data.password, data.confirmPassword])) {
+        setLocalUserErrorMessage('all fields should be not empty');
+      } else if (!isValidEmail(data.email)) {
+        setLocalUserErrorMessage('Email should be as: email@tut.by');
+      } else if (!isTheSameStrings(data.password, data.confirmPassword)) {
+        setLocalUserErrorMessage('Fields Password and Confirm password should be the same');
       }
     }
   };
@@ -87,7 +97,6 @@ const LoginPage: React.FC = () => {
             <TextField
               onChange={onInputChange}
               onFocus={resetErrorMessage}
-              onBlur={checkEmail}
               className={classes.login}
               variant="outlined"
               id="email"
@@ -100,7 +109,6 @@ const LoginPage: React.FC = () => {
             <TextField
               onChange={onInputChange}
               onFocus={resetErrorMessage}
-              onBlur={checkEmail}
               className={classes.password}
               variant="outlined"
               name="password"

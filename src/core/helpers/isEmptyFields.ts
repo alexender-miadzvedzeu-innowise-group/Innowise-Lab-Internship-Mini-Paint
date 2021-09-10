@@ -1,1 +1,1 @@
-export const isEmptyFields = (values: Array<string>):boolean => Boolean(values.forEach((val: string) => val.length !== 0));
+export const isEmptyFields = (values: Array<string>):boolean => values.some((val: string) => val.length === 0);
