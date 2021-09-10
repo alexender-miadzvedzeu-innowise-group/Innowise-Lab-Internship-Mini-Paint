@@ -14,8 +14,7 @@ type Idata = [
 export function* getImageFetchWorker(): Generator {
   try {
     const data: any = yield call(getAllUsersImages);
-    const devidedData = yield call(devideImages, data);
-    yield put(getimagesFromDbSucceededAC(devidedData));
+    yield put(getimagesFromDbSucceededAC(data));
   } catch (error) {
     yield put(getimagesFromDbFailedAC(error));
   }

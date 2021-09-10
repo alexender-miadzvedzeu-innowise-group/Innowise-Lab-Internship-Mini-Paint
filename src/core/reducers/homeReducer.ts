@@ -19,16 +19,18 @@ export interface IhomeState {
   loading: boolean,
   error: boolean,
   successed: boolean,
-  imagesData: {[key: string]: img},
-  sortedImagesData: {}
+  // imagesData: {[key: string]: img},
+  // sortedImagesData: {}
+  imagesData: [],
+  sortedImagesData: []
 };
 
 const initialState: IhomeState = {
   loading: false,
   error: false,
   successed: false,
-  imagesData: {},
-  sortedImagesData: {}
+  imagesData: [],
+  sortedImagesData: []
 };
 
 export const homeReducer = (state = initialState, action: Action ):object => {

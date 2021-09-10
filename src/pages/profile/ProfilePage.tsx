@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled, { keyframes } from 'styled-components';
 import { IState } from '../../core/interfaces/Istate';
+import { sliceUserNameFromEmail } from '../../core/helpers/sliceUserNameFromEmail';
 
 const fadeInAnimation = keyframes`${fadeIn}`;
 const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
@@ -36,13 +37,13 @@ const ProfilePage: React.FunctionComponent = () => {
     dispatch(getUserIDAC());
     dispatch(getUserImagesFromDbAC(userID, userName));
   }, [dispatch, userName]);
-
+  console.log(images);
   return(
     <FadeInDiv>
       <div className={classes.wrapper}>
         <div className={classes.user_info}>
           <Avatar>{userName.substr(0, 1).toUpperCase()}</Avatar>
-          <h3 className={classes.user_name}>{userName}</h3>
+          <h3 className={classes.user_name}>{sliceUserNameFromEmail(userName)}</h3>
         </div>
         <div className={classes.images_container}>
           {

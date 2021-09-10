@@ -12,6 +12,7 @@ import { onClicksortedImagesData } from '../../core/helpers/onClicksortedImagesD
 import { IState } from '../../core/interfaces/Istate';
 import styled, { keyframes } from 'styled-components';
 import { fadeIn } from 'react-animations';
+import { sliceUserNameFromEmail } from '../../core/helpers/sliceUserNameFromEmail';
 
 const fadeInAnimation = keyframes`${fadeIn}`;
 const FadeInDiv = styled.div`animation: 1s ${fadeInAnimation};`;
@@ -25,7 +26,7 @@ const HomePage: React.FunctionComponent = () => {
     setInputValue(e.target.value);
     return dispatch(sortImagesDataAC(onClicksortedImagesData(imagesData, e.target.value)));
   };
-
+  
   const imagesData = useSelector((state: IState) => state.homeReducer.imagesData);
   const sortedImagesData = useSelector((state: IState) => state.homeReducer.sortedImagesData);
   useEffect(() => {
@@ -56,19 +57,19 @@ const HomePage: React.FunctionComponent = () => {
           }
         </div>
         {
-          Object.keys(isEmptyObj(sortedImagesData) ? imagesData : sortedImagesData).map((elem, key) => {
+          (isEmptyObj(sortedImagesData) ? imagesData : sortedImagesData).map((elem:{userName: string, images: []}, key) => {
             return (
               <div className={classes.user_container} key={key}>
                 <div className={classes.name_container}>
-                  <Avatar alt="Remy Sharp" >{elem.substr(0, 1).toUpperCase()}</Avatar>
-                  <h3 className={classes.user_name}>{elem}</h3>
+                  <Avatar alt="Remy Sharp" >{elem.userName.substr(0, 1).toUpperCase()}</Avatar>
+                  <h3 className={classes.user_name}>{sliceUserNameFromEmail(elem.userName)}</h3>
                 </div>
                 <div className={classes.container}>
                   {
-                    imagesData[elem].map((img: {imgUrl: string}, key: string) => {
+                    elem.images.map((images: {imgUrl: string}, key) => {
                       return (
                         <div className={classes.imgWrapper} key ={key}>
-                          <img className={classes.img} src={img.imgUrl} alt={img.imgUrl} />
+                          <img className={classes.img} src={images.imgUrl} alt={images.imgUrl} />
                         </div>
                       );
                     })
