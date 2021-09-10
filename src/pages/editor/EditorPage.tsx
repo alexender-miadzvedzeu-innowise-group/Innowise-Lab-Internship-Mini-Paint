@@ -79,7 +79,7 @@ const EditorPage: React.FunctionComponent = () => {
   };
 
   const onChangeColor = (e: React.ChangeEvent<HTMLInputElement>) => setLineColor(e.target.value);
-  const onChangeWeight = () => (e: Event) => setLineWeight((e.target as HTMLElement).getAttribute('aria-valuetext'));
+  const onChangeWeight = (e: any) => setLineWeight((e.target as HTMLElement).getAttribute('aria-valuetext'));
   const onClicksetInstrument = (type:string) => (e: React.MouseEvent) => setInstrument(type);
   const valuetext = (value: number): string => value.toString();
 
