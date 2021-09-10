@@ -75,8 +75,6 @@ const initialState: IeditorState = {
     height: 0
   },
   mouseDownPosition: {},
-  // mainCtx: {},
-  // subCtx: {},
   subCtxDataUrl: '',
   imgName: '',
   loading: false,

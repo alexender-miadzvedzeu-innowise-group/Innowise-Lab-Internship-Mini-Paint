@@ -31,13 +31,10 @@ const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'email' && !isValidEmail(e.target.value)) {
-      setLocalUserErrorMessage('email shoul de as: example@tut.by');
-    } else {
-      resetErrorMessage();
-    }
     setData({...data, [e.target.name]: e.target.value});
   };
+
+  const checkEmail = () => !isValidEmail(data.email) && setLocalUserErrorMessage('email shoul de as: example@tut.by');
 
   const errorMessage = useSelector((state: IState) => state.authReducer.errorMessage);
 
@@ -58,21 +55,19 @@ const LoginPage: React.FC = () => {
   };
 
   const onSubmit = () => {
-    switch (login) {
-      case true:
-        if (!isEmptyFields([data.email, data.password]) && isValidEmail(data.email)) {
-          signIn(data);
-        }
-      break; 
-      case false: 
-        if (!isEmptyFields([data.email, data.password, data.confirmPassword]) &&
-          isValidEmail(data.email) &&
-          data.password === data.confirmPassword
-        ) {
-          createUser(data);
-        } else {
-          setLocalUserErrorMessage('Passwords must be at least 6 characters long and be the same');
-        }
+    if (login) {
+      if (!isEmptyFields([data.email, data.password]) && isValidEmail(data.email)) {
+        signIn(data);
+      }
+    } else {
+      if (!isEmptyFields([data.email, data.password, data.confirmPassword]) &&
+        isValidEmail(data.email) &&
+        data.password === data.confirmPassword
+      ) {
+        createUser(data);
+      } else {
+        setLocalUserErrorMessage('Passwords must be at least 6 characters long and be the same');
+      }
     }
   };
 
@@ -92,6 +87,7 @@ const LoginPage: React.FC = () => {
             <TextField
               onChange={onInputChange}
               onFocus={resetErrorMessage}
+              onBlur={checkEmail}
               className={classes.login}
               variant="outlined"
               id="email"
@@ -104,6 +100,7 @@ const LoginPage: React.FC = () => {
             <TextField
               onChange={onInputChange}
               onFocus={resetErrorMessage}
+              onBlur={checkEmail}
               className={classes.password}
               variant="outlined"
               name="password"

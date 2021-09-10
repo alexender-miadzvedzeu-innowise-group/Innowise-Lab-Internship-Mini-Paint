@@ -19,8 +19,6 @@ export interface IhomeState {
   loading: boolean,
   error: boolean,
   successed: boolean,
-  // imagesData: {[key: string]: img},
-  // sortedImagesData: {}
   imagesData: [],
   sortedImagesData: []
 };

@@ -37,7 +37,7 @@ const ProfilePage: React.FunctionComponent = () => {
     dispatch(getUserIDAC());
     dispatch(getUserImagesFromDbAC(userID, userName));
   }, [dispatch, userName]);
-  console.log(images);
+
   return(
     <FadeInDiv>
       <div className={classes.wrapper}>
